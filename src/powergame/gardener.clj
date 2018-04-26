@@ -111,17 +111,21 @@
              :max-height (calchelper :100% - (-px menubar-height))}]
    [:table {:background-color :grey
             :margin "0 auto"}
-    [:tr {:background-color :green}
+    [:tr {:background-color :green
+          :transition ["background-color .2s"]
+          :border-width :3px
+          :border-style :solid}
      [:&.cursor-at {:background-color :red}]]
     [:td.board-area {:min-width (-px board-area-size)
                      :height (-px board-area-size)
                      :margin 0
-                     :padding 0}
+                     :padding 0
+                     :border :none}
      [:button {:width (-px board-area-size)
                :height (-px board-area-size)
                :text-align :center
                :background-color :transparent
-               :border-width :1px
+               :border-width :0px
                :padding 0
                :margin 0}
       [:&.selected {:background-color :blue}]]]]])

@@ -41,15 +41,20 @@
 (defn put-thing-at [{:keys [board y x type value]}]
   (sp/transform [(sp/keypath x y type)] (make-fn value) board))
 
-(defn process-input [{:keys [next-input board] :as state-map}]
-  (case type
-    (assoc state-map :board (put-thing-at (assoc next-input :board board)))))
-
 (defn deselect-all [{:keys [board] :as state-map}]
   (sp/setval [:board sp/ALL sp/ALL :selected] false state-map))
+
+(defn process-input [{:keys [next-input board] :as state-map}]
+  (println "Doin' " next-input)
+  (case (:type next-input)
+    :deselect-all (deselect-all state-map)
+    (assoc state-map :board (put-thing-at (assoc next-input :board board)))))
 
 (defn advance-cursor [{:keys [cursor-at height] :as app-state}]
   (let [next (inc cursor-at)
         adjusted (min height next)
         actual (if (= adjusted height) 0 adjusted)]
     (assoc app-state :cursor-at actual)))
+
+(defn charge-board [app-state]
+  (sp/transform [:board sp/ALL sp/ALL :power] inc app-state))

@@ -4,10 +4,13 @@
 
 (rum/defc board-area [{:keys [piece power status y x selected input-fn]}]
   [:td.board-area
-   [:button {:class (if selected "selected" "quiet")
+   [:button {:class (str
+                      (if selected "selected" "quiet")
+                      " "
+                      (name status))
              :type "button"
              :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
-    (str "(" x "," y ")")]])
+    (str power)]]) ;"(" x "," y ")")]])
 
 (rum/defc board-component [{:keys [board input-fn cursor-at]}]
   [:table
@@ -20,14 +23,15 @@
 
 (rum/defc game-frame < rum/reactive
   [app-state-atom]
-  (let [{:keys [board juice money knowhow] :as app-state} (rum/react app-state-atom)]
+  (let [{:keys [board juice money knowhow input-fn] :as app-state} (rum/react app-state-atom)]
     [:#frame
      [:#menubar-top [:ul#infobar
                      [:li.juice (str "Juice "juice)]
                      [:li.money (str "Money "money)]
                      [:li.knowhow (str "Know How "knowhow)]]
                 [:ul#buttonbar
-                 [:li [:button {:type "button"}
+                 [:li [:button {:type "button"
+                                :onClick #(input-fn {:type :deselect-all})}
                        "Deselect All"]]
                  [:li [:button {:type "button"}
                        "Info On Selected"]]
