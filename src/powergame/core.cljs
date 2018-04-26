@@ -1,7 +1,8 @@
 (ns powergame.core
-    (:require [rum.core :as rum]
-              [powergame.bizlogic :as gc]
-              [powergame.gameui :as gui]))
+  (:require [rum.core :as rum]
+            [powergame.bizlogic :as gc]
+            [powergame.gameui :as gui]
+            [clojure.core.async :as async]))
 
 (enable-console-print!)
 
@@ -9,15 +10,24 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
-(defonce app-state (atom (gc/init-game-state {:height 12 :width 12})))
+(defonce input-buffer (async/chan 10))
+(defn input-this! [{:keys [type y x value] :as input-event}]
+  (async/put! input-buffer input-event))
+(defonce last-render (atom (gc/init-game-state {:height 12 :width 12 :input-fn input-this!})))
+
+(async/go-loop []
+               (println "this is... started?")
+               (let [input-event (async/<! input-buffer)]
+                   (swap! last-render (fn [a] (gc/process-input (assoc a :next-input input-event))))
+                   (recur)))
 
 
 (rum/defc hello-world []
   [:div
-   [:h1 (:text @app-state)]
+   [:h1 (:text @last-render)]
    [:h3 "Edit this and watch it change!"]])
 
-(rum/mount (gui/game-frame app-state)
+(rum/mount (gui/game-frame last-render)
            (. js/document (getElementById "app")))
 
 (defn on-js-reload [])

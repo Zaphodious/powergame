@@ -74,17 +74,22 @@
                :height (-px menubar-height)}]
    [:#board {:position :fixed
              :top (-px menubar-height)
-             :left 0
-             :right 0
+             :left :5px
+             :right :5px
              :bottom (-px 20)
              :overflow :scroll
              :display :block
              :max-height (calchelper :100% - :20px)}]
    [:table {:background-color :grey
             :margin "0 auto"}
-            ;:width           :auto}
     [:td.board-area {:min-width (-px board-area-size)
                      :height (-px board-area-size)
-                     :border-width :3px
-                     :border-style :double}]]])
+                     :margin 0
+                     :padding 0}
+     [:button {:width (-px board-area-size)
+               :height (-px board-area-size)
+               :text-align :center
+               :padding 0
+               :margin 0}
+      [:&.selected {:background-color :blue}]]]]])
 

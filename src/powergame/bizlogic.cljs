@@ -5,39 +5,42 @@
   (->> height
        range
        (map-indexed
-         (fn [y a] (->> width
+         (fn [x a] (->> width
                         range
                         (map-indexed
-                          (fn [x b] {:piece {:type :empty}
-                                     :power 10
-                                     :x x
-                                     :y y
-                                     :status :ok}))
+                          (fn [y b] {:piece    {:type :empty}
+                                     :power    10
+                                     :y        y
+                                     :x        x
+                                     :status   :ok
+                                     :selected false}))
                         vec)))
        vec))
 
-(defn init-game-state [{:keys [height width] :as init-args}]
+(defn init-game-state [{:keys [height width input-fn] :as init-args}]
   {:height    height
    :width     width
    :board     (make-game-board init-args)
-   :travelers []})
+   :travelers []
+   :juice 10
+   :money 20
+   :knowhow 30
+   :input-fn input-fn})
 
 (defn- make-fn [thing]
   (if (fn? thing) thing
       (constantly thing)))
 
-(defn get-space [{:keys [board x y]}]
+(defn get-space [{:keys [board y x]}]
   (sp/select-first [(sp/keypath x y)] board))
 
-(defn put-space [{:keys [board x y space]}]
+(defn put-space [{:keys [board y x space]}]
   (sp/transform [(sp/keypath x y)] (make-fn space) board))
 
-(defn put-piece [{:keys [board x y piece]}]
-  (sp/transform [(sp/keypath x y :piece)] (make-fn piece) board))
+(defn put-thing-at [{:keys [board y x type value]}]
+  (sp/transform [(sp/keypath x y type)] (make-fn value) board))
 
-(defn put-power [{:keys [board x y power]}]
-  (sp/transform [(sp/keypath x y :piece)] (make-fn power) board))
-
-(defn put-status [{:keys [board x y status]}]
-  (sp/transform [(sp/keypath x y :status)] (make-fn status) board))
+(defn process-input [{:keys [next-input board] :as state-map}]
+  (case type
+    (assoc state-map :board (put-thing-at (assoc next-input :board board)))))
 
