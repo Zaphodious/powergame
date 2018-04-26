@@ -1,4 +1,4 @@
-(ns gardener
+(ns powergame.gardener
   (:require [garden.core :as g]
             [garden.def :as gd]
             [garden.media :as gm]
@@ -58,10 +58,5 @@
 
 (def main-color (gc/lighten (gc/from-name :blue) 40))
 
-(def style
+(gd/defstyles main
   [:* {:background-color main-color}])
-
-(defn write-style [style-vec]
-  (spit "resources/public/css/style.css" (g/css style-vec)))
-
-(write-style style)

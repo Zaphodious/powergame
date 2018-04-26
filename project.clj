@@ -11,12 +11,21 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.238"]
                  [org.clojure/core.async  "0.4.474"]
+                 [garden "1.3.5"]
+                 [com.rpl/specter "1.1.1"]
                  [rum "0.11.2"]]
 
+
   :plugins [[lein-figwheel "0.5.15"]
+            [lein-garden "0.3.0"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
+
+  :garden {:builds [{:id "main"
+                     :source-paths ["src"]
+                     :stylesheet powergame.gardener/main
+                     :compiler {:output-to "resources/public/css/main.css"}}]}
 
   :cljsbuild {:builds
               [{:id "dev"

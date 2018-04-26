@@ -1,5 +1,7 @@
 (ns powergame.core
-    (:require [rum.core :as rum]))
+    (:require [rum.core :as rum]
+              [powergame.bizlogic :as gc]
+              [powergame.gameui :as gui]))
 
 (enable-console-print!)
 
@@ -7,7 +9,7 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
-(defonce app-state (atom {:text "Hello world!"}))
+(defonce app-state (atom (gc/make-game-board {:width 4 :height 10})))
 
 
 (rum/defc hello-world []
@@ -15,11 +17,11 @@
    [:h1 (:text @app-state)]
    [:h3 "Edit this and watch it change!"]])
 
-(rum/mount (hello-world)
+(rum/mount (gui/game-frame app-state)
            (. js/document (getElementById "app")))
 
-(defn on-js-reload []
+(defn on-js-reload [])
   ;; optionally touch your app-state to force rerendering depending on
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
-)
+
