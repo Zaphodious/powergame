@@ -9,19 +9,30 @@
              :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
     (str "(" x "," y ")")]])
 
-(rum/defc board-component [{:keys [board input-fn]}]
+(rum/defc board-component [{:keys [board input-fn cursor-at]}]
   [:table
    [:tbody
-    (map (fn [a]
-           [:tr (map #(board-area (assoc % :input-fn input-fn))
-                     a)])
+    (map-indexed (fn [n a]
+                   [:tr {:class (when (= n cursor-at)"cursor-at")}
+                    (map #(board-area (assoc % :input-fn input-fn))
+                          a)])
          board)]])
 
 (rum/defc game-frame < rum/reactive
   [app-state-atom]
-  (let [{:keys [board] :as app-state} (rum/react app-state-atom)]
+  (let [{:keys [board juice money knowhow] :as app-state} (rum/react app-state-atom)]
     [:#frame
-     [:#menubar [:ul [:li "item 1"] [:li "item 2"]]]
+     [:#menubar-top [:ul#infobar
+                     [:li.juice (str "Juice "juice)]
+                     [:li.money (str "Money "money)]
+                     [:li.knowhow (str "Know How "knowhow)]]
+                [:ul#buttonbar
+                 [:li [:button {:type "button"}
+                       "Deselect All"]]
+                 [:li [:button {:type "button"}
+                       "Info On Selected"]]
+                 [:li [:button {:type "button"}
+                       "History"]]]]
      [:#board (board-component app-state)]
      ;[:#state-print (pr-str app-state)]
-     [:#footer]]))
+     [:#menubar-bottom]]))

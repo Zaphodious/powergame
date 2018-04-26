@@ -61,27 +61,58 @@
 (def menubar-height 60)
 
 (gd/defstyles main
-  [:html {:background-color main-color}
+  [:html {:background-color main-color
+          :position :fixed}
    [:#frame {:position :fixed
              :top 0
              :bottom 0
              :right 0
              :left 0}]
-   [:#menubar {:position :fixed
-               :top 0
-               :right 0
-               :left 0
-               :height (-px menubar-height)}]
+   [:ul {:display :inline-block
+         :padding 0
+         :margin 0}
+    [:li {:display :inline-block}]]
+
+   [:#menubar-top {:position :fixed
+                   :top          0
+                   :right        0
+                   :left         0
+                   :height       (-px menubar-height)}
+    [:ul#infobar {:position :fixed
+                  :top 0
+                  :right 0
+                  :left :3px
+                  :height (-px (- (/ menubar-height 2) 5))
+                  :width :100%}
+     [:li {:padding-left :7px
+           :padding-right :7px
+           :padding-bottom :0px
+           :padding-top :0px
+           :margin-right :7px
+           :border-bottom-right-radius :10px
+           :border-bottom-left-radius :10px
+           :border-width :1px
+           :border-style :solid
+           :width (calchelper :33.33% - :23px)
+           :text-align :center}]]
+    [:ul#buttonbar {:position :fixed
+                    :top (-px (- (/ menubar-height 2) 5))
+                    :right 0
+                    :left 0
+                    :height (-px (/ menubar-height 2))}
+     [:button {:height  (-px (/ menubar-height 2))}]]]
    [:#board {:position :fixed
              :top (-px menubar-height)
              :left :5px
              :right :5px
-             :bottom (-px 20)
+             :bottom (-px menubar-height)
              :overflow :scroll
              :display :block
-             :max-height (calchelper :100% - :20px)}]
+             :max-height (calchelper :100% - (-px menubar-height))}]
    [:table {:background-color :grey
             :margin "0 auto"}
+    [:tr {:background-color :green}
+     [:&.cursor-at {:background-color :red}]]
     [:td.board-area {:min-width (-px board-area-size)
                      :height (-px board-area-size)
                      :margin 0
@@ -89,6 +120,8 @@
      [:button {:width (-px board-area-size)
                :height (-px board-area-size)
                :text-align :center
+               :background-color :transparent
+               :border-width :1px
                :padding 0
                :margin 0}
       [:&.selected {:background-color :blue}]]]]])

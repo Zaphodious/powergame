@@ -25,6 +25,7 @@
    :juice 10
    :money 20
    :knowhow 30
+   :cursor-at 0
    :input-fn input-fn})
 
 (defn- make-fn [thing]
@@ -44,3 +45,11 @@
   (case type
     (assoc state-map :board (put-thing-at (assoc next-input :board board)))))
 
+(defn deselect-all [{:keys [board] :as state-map}]
+  (sp/setval [:board sp/ALL sp/ALL :selected] false state-map))
+
+(defn advance-cursor [{:keys [cursor-at height] :as app-state}]
+  (let [next (inc cursor-at)
+        adjusted (min height next)
+        actual (if (= adjusted height) 0 adjusted)]
+    (assoc app-state :cursor-at actual)))

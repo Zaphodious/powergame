@@ -10,22 +10,37 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
+(def tick-speed 1500)
 (defonce input-buffer (async/chan 10))
+(defonce logic-done-buffer (async/chan 1))
 (defn input-this! [{:keys [type y x value] :as input-event}]
   (async/put! input-buffer input-event))
 (defonce last-render (atom (gc/init-game-state {:height 12 :width 12 :input-fn input-this!})))
 
-(async/go-loop []
-               (println "this is... started?")
-               (let [input-event (async/<! input-buffer)]
-                   (swap! last-render (fn [a] (gc/process-input (assoc a :next-input input-event))))
+(defn setup-game-loop []
+  (async/go-loop []
+                 (println "this is... started?")
+                 (let [input-event (async/<! input-buffer)]
+                     (async/>! logic-done-buffer
+                               (gc/process-input (assoc @last-render :next-input input-event)))
+                     (recur)))
+
+  (async/go-loop []
+                 (let [new-state (async/<! logic-done-buffer)]
+                   (reset! last-render new-state)
                    (recur)))
 
+  (js/setInterval
+    (fn []
+      (async/put! logic-done-buffer (gc/advance-cursor @last-render)))
+    tick-speed))
 
 (rum/defc hello-world []
   [:div
    [:h1 (:text @last-render)]
    [:h3 "Edit this and watch it change!"]])
+
+(defonce started (setup-game-loop))
 
 (rum/mount (gui/game-frame last-render)
            (. js/document (getElementById "app")))
