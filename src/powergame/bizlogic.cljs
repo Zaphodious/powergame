@@ -1,18 +1,28 @@
 (ns powergame.bizlogic
   (:require [com.rpl.specter :as sp]))
 
-(defn make-game-board [{:keys [width height]}]
-  (->> width
+(defn make-game-board [{:keys [height width]}]
+  (->> height
        range
-       (map (fn [a] (->> height
-                         range
-                         (map (fn [b] {:piece {:type :empty}
-                                       :power 10
-                                       :status :ok}))
-                         vec)))
+       (map-indexed
+         (fn [y a] (->> width
+                        range
+                        (map-indexed
+                          (fn [x b] {:piece {:type :empty}
+                                     :power 10
+                                     :x x
+                                     :y y
+                                     :status :ok}))
+                        vec)))
        vec))
 
-(defn make-fn [thing]
+(defn init-game-state [{:keys [height width] :as init-args}]
+  {:height    height
+   :width     width
+   :board     (make-game-board init-args)
+   :travelers []})
+
+(defn- make-fn [thing]
   (if (fn? thing) thing
       (constantly thing)))
 
@@ -30,7 +40,4 @@
 
 (defn put-status [{:keys [board x y status]}]
   (sp/transform [(sp/keypath x y :status)] (make-fn status) board))
-
-
-
 

@@ -57,6 +57,34 @@
   (str "/'" n "/'"))
 
 (def main-color (gc/lighten (gc/from-name :blue) 40))
+(def board-area-size 40)
+(def menubar-height 60)
 
 (gd/defstyles main
-  [:* {:background-color main-color}])
+  [:html {:background-color main-color}
+   [:#frame {:position :fixed
+             :top 0
+             :bottom 0
+             :right 0
+             :left 0}]
+   [:#menubar {:position :fixed
+               :top 0
+               :right 0
+               :left 0
+               :height (-px menubar-height)}]
+   [:#board {:position :fixed
+             :top (-px menubar-height)
+             :left 0
+             :right 0
+             :bottom (-px 20)
+             :overflow :scroll
+             :display :block
+             :max-height (calchelper :100% - :20px)}]
+   [:table {:background-color :grey
+            :margin "0 auto"}
+            ;:width           :auto}
+    [:td.board-area {:min-width (-px board-area-size)
+                     :height (-px board-area-size)
+                     :border-width :3px
+                     :border-style :double}]]])
+

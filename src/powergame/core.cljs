@@ -9,7 +9,7 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
-(defonce app-state (atom (gc/make-game-board {:width 4 :height 10})))
+(defonce app-state (atom (gc/init-game-state {:height 12 :width 12})))
 
 
 (rum/defc hello-world []
