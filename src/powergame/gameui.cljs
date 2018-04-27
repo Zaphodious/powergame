@@ -38,12 +38,18 @@
                  [:li [:button {:type "button"}
                        "Info"]]
                  [:li [:button {:type "button"}
-                       "History"]]
-                 [:li [:button {:type "button"}
+                       "Guide"]]
+                 [:li [:button {:type "button"
+                                :onClick #(input-fn {:type :zoom-up})}
                        "Zoom +"]]
-                 [:li [:button {:type "button"}
+                 [:li [:button {:type "button"
+                                :onClick #(input-fn {:type :zoom-down})}
                        "Zoom -"]]]]
      [:#board  {:class (str "dragscroll zoom-level"zoom-level)}
       (board-component app-state)]
      ;[:#state-print (pr-str app-state)]
-     [:#menubar-bottom]]))
+     [:#menubar-bottom {:class "dragscroll"}
+      [:ul#buttonbar
+       (map (fn [a] [:li [:button {:type :button} (str a)]])
+            (range 30))]]]))
+

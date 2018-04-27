@@ -28,6 +28,7 @@
    :knowhow 1
    :cursor-at 0
    :zoom-level 1
+   :max-power 20
    :input-fn input-fn})
 
 (defn- make-fn [thing]
@@ -46,10 +47,12 @@
 (defn deselect-all [{:keys [board] :as state-map}]
   (sp/setval [:board sp/ALL sp/ALL :selected] false state-map))
 
-(defn process-input [{:keys [next-input board] :as state-map}]
+(defn process-input [{:keys [next-input board zoom-level] :as state-map}]
   (println "Doin' " next-input)
   (case (:type next-input)
     :deselect-all (deselect-all state-map)
+    :zoom-up (assoc state-map :zoom-level (-> zoom-level inc (min 5) (max 1)))
+    :zoom-down (assoc state-map :zoom-level (-> zoom-level dec (min 5) (max 1)))
     (assoc state-map :board (put-thing-at (assoc next-input :board board)))))
 
 (defn advance-cursor [{:keys [cursor-at height] :as app-state}]
@@ -59,4 +62,12 @@
     (assoc app-state :cursor-at actual)))
 
 (defn charge-board [app-state]
-  (sp/transform [:board sp/ALL sp/ALL :power] inc app-state))
+  (sp/transform [(sp/collect-one :max-power)
+                 :board sp/ALL sp/ALL
+                 :power] #(-> %2 inc (max 1) (min %1))
+                app-state))
+
+(defn make-tick [level-state]
+  (-> level-state
+      charge-board
+      advance-cursor))

@@ -13,11 +13,15 @@
 ;; define your app data so that it doesn't get over-written on reload
 
 (def tick-speed 500)
-(defonce input-buffer (async/chan 10))
-(defonce logic-done-buffer (async/chan 1))
+(defonce
+  input-buffer (async/chan 10))
+(defonce logic-done-buffer (async/chan 50))
 (defn input-this! [{:keys [type y x value] :as input-event}]
   (async/put! input-buffer input-event))
-(defonce last-render (atom (gc/init-game-state {:height 20 :width 20 :input-fn input-this!})))
+(def;once
+  last-render (atom (gc/init-game-state {:height 10 :width 10 :input-fn input-this!})))
+
+(def background-level (atom (gc/init-game-state {:height 100 :width 100 :input-fn input-this!})))
 
 (defn setup-game-loop []
   (async/go-loop []
@@ -36,10 +40,11 @@
   (let [interval-id
         (js/setInterval
           (fn []
-            (let [new-state (-> @last-render
-                                gc/charge-board
-                                gc/advance-cursor)]
-              (async/put! logic-done-buffer new-state)))
+            ;(println (pr-str background-level))
+            (async/go
+                (reset! background-level (gc/make-tick @background-level)))
+            (async/go
+              (async/put! logic-done-buffer (gc/make-tick @last-render))))
           tick-speed)]))
 
 

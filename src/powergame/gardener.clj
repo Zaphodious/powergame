@@ -65,6 +65,7 @@
 (gd/defstyles main
   [:html {:background-color :black
           :position :fixed
+          :font-family "\"Courier New\", Courier, monospace"
           :width :100%}
    [:body {:width :100%
            :display :inline-block
@@ -135,9 +136,31 @@
                :margin-left (-vmin 1)
                :padding [(-vmin 3) (-vmin 2)]
                :border :none
+               :font-family :inherit
                :background-color :white
                :box-shadow "0px 0px 3px 1px black"}
       [:&:active {:box-shadow "inset 0px 0px 3px 1px black"}]]]]
+   [:#menubar-bottom {:position   :absolute
+                      :bottom     0
+                      :right      0
+                      :left       0
+                      :max-height (-vmin menubar-height)
+                      :min-height (-vmin menubar-height)
+                      :width      :100%}
+    [:ul#buttonbar {:height :inherit
+                    :max-height :inherit
+                    :min-height :inherit
+                    :overflow-y :scroll}
+     [:li {:height :inherit
+           :max-height (-vmin (- (/ menubar-height 2) 0.5))
+           :min-height (-vmin (- (/ menubar-height 2) 0.5))
+           :max-width (-vmin (/ menubar-height 2))
+           :min-width (-vmin (/ menubar-height 2))}
+      [:button {:height :inherit
+                :max-height :inherit
+                :min-height :inherit
+                :max-width :inherit
+                :min-width :inherit}]]]]
    [:#board {:position :fixed
              ;:padding :100px
              :--board-zoom-level 1
@@ -154,8 +177,8 @@
    [:table {:position :relative
             :border-collapse :collapse
             :z-index -10
-            :margin-right (-vmin 2)
-            :margin-left (-vmin 2)
+            :margin-right :auto ;(-vmin 2)
+            :margin-left :auto ;(-vmin 2)
             :margin-top (-vmin menubar-height)
             :margin-bottom (-vmin menubar-height)}
             ;:background-color :grey
@@ -175,9 +198,8 @@
                      :padding 0
                      :border-style :solid
                      :border-width :0px}
-      [:button {:width (-px board-area-size)
-                 :height (-px board-area-size)
-                :font-family "\"Courier New\", Courier, monospace"
+      [:button {:min-width :inherit
+                 :height :inherit
                  :text-align :center
                  :text-shadow "0px 0px 3px white"
                  :color :white
@@ -193,7 +215,8 @@
             (range 12))
        [:&.selected
         {:background-image (url "../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png")}]
-       [:span.power-collected {:position :relative
-                               :font-size :10px
+       [:span.power-collected {:--board-zoom-level :inherit
+                               :position :relative
+                               :font-size (calchelper :10px * (-var :--board-zoom-level))
                                :top (-px (/ board-area-size 4))}]]]]])
 
