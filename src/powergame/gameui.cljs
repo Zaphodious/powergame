@@ -2,15 +2,17 @@
   (:require [rum.core :as rum]
             [powergame.bizlogic :as gc]))
 
-(rum/defc board-area [{:keys [piece power status y x selected input-fn]}]
+(rum/defc board-area [{:keys [piece power status y x selected input-fn terrain]}]
   [:td.board-area
    [:button {:class (str
                       (if selected "selected" "quiet")
                       " "
-                      (name status))
+                      (name status)
+                      " "
+                      (str terrain))
              :type "button"
              :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
-    (str power)]]) ;"(" x "," y ")")]])
+    [:span.power-collected (str power)]]]) ;"(" x "," y ")")]])
 
 (rum/defc board-component [{:keys [board input-fn cursor-at]}]
   [:table
@@ -23,20 +25,25 @@
 
 (rum/defc game-frame < rum/reactive
   [app-state-atom]
-  (let [{:keys [board juice money knowhow input-fn] :as app-state} (rum/react app-state-atom)]
+  (let [{:keys [board juice money knowhow input-fn zoom-level] :as app-state} (rum/react app-state-atom)]
     [:#frame
      [:#menubar-top [:ul#infobar
-                     [:li.juice (str "Juice "juice)]
-                     [:li.money (str "Money "money)]
-                     [:li.knowhow (str "Know How "knowhow)]]
+                     [:li.juice [:span.label "Juice"] [:span.value juice]]
+                     [:li.juice [:span.label "Money"] [:span.value money]]
+                     [:li.juice [:span.label "Know How"] [:span.value knowhow]]]
                 [:ul#buttonbar
                  [:li [:button {:type "button"
                                 :onClick #(input-fn {:type :deselect-all})}
-                       "Deselect All"]]
+                       "Deselect"]]
                  [:li [:button {:type "button"}
-                       "Info On Selected"]]
+                       "Info"]]
                  [:li [:button {:type "button"}
-                       "History"]]]]
-     [:#board (board-component app-state)]
+                       "History"]]
+                 [:li [:button {:type "button"}
+                       "Zoom +"]]
+                 [:li [:button {:type "button"}
+                       "Zoom -"]]]]
+     [:#board  {:class (str "dragscroll zoom-level"zoom-level)}
+      (board-component app-state)]
      ;[:#state-print (pr-str app-state)]
      [:#menubar-bottom]]))

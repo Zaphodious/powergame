@@ -1,0 +1,248 @@
+html {
+  background-color: black;
+  position: fixed;
+  width: 100%;
+}
+
+html body {
+  width: 100%;
+  right: 0.0%;
+  top: 0.0%;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  display: inline-block;
+  bottom: 0.0%;
+  left: 0.0%;
+}
+
+html #frame {
+  position: absolute;
+  top: 0.0%;
+  bottom: 0.0%;
+  right: 0.0%;
+  left: 0.0%;
+}
+
+html ul {
+  display: inline-block;
+  padding: 0.0%;
+  margin: 0.0%;
+}
+
+html ul li {
+  display: inline-block;
+}
+
+html #menubar-top {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  height: 20.0%;
+}
+
+html #menubar-top ul#infobar {
+  font-size: 4.0vmin;
+  position: relative;
+  display: block;
+  top: 0;
+  right: 0;
+  left: 0.5vmin;
+  height: 5.0vmin;
+  width: 100%;
+}
+
+html #menubar-top ul#infobar li {
+  width: 30.0vmin;
+  padding-bottom: 0px;
+  margin-right: 0.5vmin;
+  text-align: center;
+  border-bottom-right-radius: 3.0vmin;
+  border-bottom-left-radius: 3.0vmin;
+  margin-left: 0.5vmin;
+  background-color: white;
+  padding-right: 1.0vmin;
+  display: inline-block;
+  padding-left: 1.0vmin;
+  padding-top: 0px;
+}
+
+html #menubar-top ul#infobar li span.label {
+  width: 100%;
+  text-align: right;
+}
+
+html #menubar-top ul#infobar li span.value {
+  float: right;
+  padding-right: 1.0vmin;
+  padding-left: 1.0vmin;
+  border-width: 0;
+  border-left-width: 0.3vmin;
+  border-style: solid;
+  border-color: grey;
+}
+
+html #menubar-top ul#buttonbar {
+  position: fixed;
+  top: 7.0vmin;
+  right: 0;
+  left: 0;
+  height: 10.0vmin;
+}
+
+html #menubar-top ul#buttonbar button {
+  height: 10.0vmin;
+  width: 17.9vmin;
+  margin-right: 1.0vmin;
+  margin-left: 1.0vmin;
+  padding: 3.0vmin, 2.0vmin;
+  border: none;
+  background-color: white;
+  box-shadow: 0px 0px 3px 1px black;
+}
+
+html #menubar-top ul#buttonbar button:active {
+  box-shadow: inset 0px 0px 3px 1px black;
+}
+
+html #board {
+  position: fixed;
+  --board-zoom-level: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll;
+  display: block;
+}
+
+html #board.zoom-level2 {
+  --board-zoom-level: 1.3;
+}
+
+html #board.zoom-level3 {
+  --board-zoom-level: 1.7;
+}
+
+html #board.zoom-level4 {
+  --board-zoom-level: 2.1;
+}
+
+html #board.zoom-level5 {
+  --board-zoom-level: 2.7;
+}
+
+html table {
+  position: relative;
+  border-collapse: collapse;
+  z-index: -10;
+  margin-right: 2.0vmin;
+  margin-left: 2.0vmin;
+  margin-top: 20.0vmin;
+  margin-bottom: 20.0vmin;
+}
+
+html table tr {
+  background-color: hsla(120, 100%, 35.098038%, 1.0);
+  transition: background-color .2s;
+  border-width: 0px;
+  border-style: solid;
+}
+
+html table tr.cursor-at {
+  background-color: red;
+}
+
+html table tr.cursor-at td.board-area button {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/lava0.png);
+}
+
+html table tr.cursor-at td.board-area button.selected {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad_hot.png);
+}
+
+html table td.board-area {
+  --board-zoom-level: inherit;
+  min-width: calc(30.0px  *  var(--board-zoom-level));
+  height: calc(30.0px  *  var(--board-zoom-level));
+  margin: 0;
+  padding: 0;
+  border-style: solid;
+  border-width: 0px;
+}
+
+html table td.board-area button {
+  width: 30.0px;
+  border-width: 0px;
+  font-family: "Courier New", Courier, monospace;
+  height: 30.0px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-size: cover;
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood1.png);
+  text-shadow: 0px 0px 3px white;
+  color: white;
+}
+
+html table td.board-area button.floor0 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood1.png);
+}
+
+html table td.board-area button.floor1 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood2.png);
+}
+
+html table td.board-area button.floor2 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood3.png);
+}
+
+html table td.board-area button.floor3 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood4.png);
+}
+
+html table td.board-area button.floor4 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood5.png);
+}
+
+html table td.board-area button.floor5 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood6.png);
+}
+
+html table td.board-area button.floor6 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood7.png);
+}
+
+html table td.board-area button.floor7 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood8.png);
+}
+
+html table td.board-area button.floor8 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood9.png);
+}
+
+html table td.board-area button.floor9 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood10.png);
+}
+
+html table td.board-area button.floor10 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood11.png);
+}
+
+html table td.board-area button.floor11 {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood12.png);
+}
+
+html table td.board-area button.selected {
+  background-image: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png);
+}
+
+html table td.board-area button span.power-collected {
+  position: relative;
+  font-size: 10px;
+  top: 7.5px;
+}

@@ -13,6 +13,7 @@
                  [org.clojure/core.async  "0.4.474"]
                  [garden "1.3.5"]
                  [com.rpl/specter "1.1.1"]
+                 [binaryage/oops "0.6.1"]
                  [rum "0.11.2"]]
 
 

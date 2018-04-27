@@ -13,6 +13,7 @@
                                      :y        y
                                      :x        x
                                      :status   :ok
+                                     :terrain  (str "floor"(inc (rand-int 12)))
                                      :selected false}))
                         vec)))
        vec))
@@ -24,8 +25,9 @@
    :travelers []
    :juice 10
    :money 20
-   :knowhow 30
+   :knowhow 1
    :cursor-at 0
+   :zoom-level 1
    :input-fn input-fn})
 
 (defn- make-fn [thing]

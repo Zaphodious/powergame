@@ -2,7 +2,9 @@
   (:require [rum.core :as rum]
             [powergame.bizlogic :as gc]
             [powergame.gameui :as gui]
-            [clojure.core.async :as async]))
+            [clojure.core.async :as async]
+            [oops.core :refer [oget oset! ocall oapply ocall! oapply!
+                               oget+ oset!+ ocall+ oapply+ ocall!+ oapply!+]]))
 
 (enable-console-print!)
 
@@ -15,7 +17,7 @@
 (defonce logic-done-buffer (async/chan 1))
 (defn input-this! [{:keys [type y x value] :as input-event}]
   (async/put! input-buffer input-event))
-(defonce last-render (atom (gc/init-game-state {:height 12 :width 12 :input-fn input-this!})))
+(defonce last-render (atom (gc/init-game-state {:height 20 :width 20 :input-fn input-this!})))
 
 (defn setup-game-loop []
   (async/go-loop []
@@ -50,6 +52,8 @@
 
 (rum/mount (gui/game-frame last-render)
            (. js/document (getElementById "app")))
+
+(ocall js/window [:dragscroll :reset])
 
 (defn on-js-reload [])
   ;; optionally touch your app-state to force rerendering depending on
