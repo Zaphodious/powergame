@@ -19,3 +19,4 @@ pom.xml
 /.idea/
 /mong.bat
 .saved-commands
+resources/public/css/main.css

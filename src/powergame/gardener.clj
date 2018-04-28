@@ -8,7 +8,8 @@
             [clojure.string :as str]
             [clojure.set :as set]
             [garden.stylesheet :as gss :refer [at-media]]
-            [garden.types :as gt]))
+            [garden.types :as gt]
+            [powergame.board-defs :as board-defs]))
 
 
 (gd/defcssfn url)
@@ -160,6 +161,7 @@
            :max-width (-vmin (/ menubar-height 2))
            :min-width (-vmin (/ menubar-height 2))}
       [:button {:height :inherit
+                :background-color :white
                 :max-height :inherit
                 :min-height :inherit
                 :max-width :inherit
@@ -192,8 +194,8 @@
           :border-style :solid}
      [:&.cursor-at {:background-color :red}
       [:td.board-area
-       [:button {:background-image (url "../img/crawl-tiles/dc-dngn/floor/lava0.png")}
-        [:&.selected {:background-image (url "../img/crawl-tiles/dc-dngn/floor/tutorial_pad_hot.png")}]]]]]
+       [:button {:--tile (url "../img/crawl-tiles/dc-dngn/floor/lava0.png")}
+        [:&.selected {:--tile (url "../img/crawl-tiles/dc-dngn/floor/tutorial_pad_hot.png")}]]]]]
     [:td.board-area {:--board-zoom-level :inherit
                      :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
                      :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))
@@ -201,25 +203,32 @@
                      :padding 0
                      :border-style :solid
                      :border-width :0px}
-      [:button {:min-width :inherit
-                 :height :inherit
-                 :text-align :center
-                 :text-shadow "0px 0px 3px white"
-                 :color :white
-                 :border-width :0px
-                 :background-image (url "../img/crawl-tiles/dc-dngn/floor/cobble_blood1.png")
-                 :background-size :cover
-                 :padding 0
-                 :margin 0}
-       (map (fn [i]
-              [(keyword (str "&.floor" i))
-               {:background-image (url (str "../img/crawl-tiles/dc-dngn/floor/cobble_blood" (inc i)
-                                            ".png"))}])
-            (range 12))
+     (map (fn [[k {:keys [name sprite] :as v}]]
+            [(keyword (str "button.piece." name))
+             {:--sprite (url (str \" "../" sprite \"))}])
+          board-defs/units)
+     (map (fn [i]
+            [(keyword (str "button.floor" i))
+             {:--tile (url (str \" "../img/crawl-tiles/dc-dngn/floor/cobble_blood" i
+                                ".png" \"))}])
+          (range 13)
+      [:button {:--sprite (url "")
+                :--tile (url "")
+                :min-width       :inherit
+                :height          :inherit
+                :text-align      :center
+                :text-shadow     "0px 0px 3px white"
+                :color           :white
+                :border-width    :0px
+                :--background-thing [ (-var :--tile)(-var :--sprite)]
+                :background-image      [(-var :--sprite)(-var :--tile)]
+                :background-size [:cover :cover]
+                :padding         0
+                :margin          0}
        [:&.selected
-        {:background-image (url "../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png")}]
+        {:--tile (url "../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png")}]
        [:span.power-collected {:--board-zoom-level :inherit
                                :position :relative
                                :font-size (calchelper :10px * (-var :--board-zoom-level))
-                               :top (-px (/ board-area-size 4))}]]]]])
+                               :top (-px (/ board-area-size 4))}]])]]])
 

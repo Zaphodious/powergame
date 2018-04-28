@@ -141,6 +141,7 @@ html #menubar-bottom ul#buttonbar li {
 
 html #menubar-bottom ul#buttonbar li button {
   height: inherit;
+  background-color: white;
   max-height: inherit;
   min-height: inherit;
   max-width: inherit;
@@ -196,11 +197,11 @@ html table tr.cursor-at {
 }
 
 html table tr.cursor-at td.board-area button {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/lava0.png);
+  --tile: url(../img/crawl-tiles/dc-dngn/floor/lava0.png);
 }
 
 html table tr.cursor-at td.board-area button.selected {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad_hot.png);
+  --tile: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad_hot.png);
 }
 
 html table td.board-area {
@@ -213,6 +214,66 @@ html table td.board-area {
   border-width: 0px;
 }
 
+html table td.board-area button.piece.empty {
+  --sprite: url("../");
+}
+
+html table td.board-area button.piece.ooze {
+  --sprite: url("../img/crawl-tiles/dc-mon/acid_blob.png");
+}
+
+html table td.board-area button.floor0 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood0.png");
+}
+
+html table td.board-area button.floor1 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood1.png");
+}
+
+html table td.board-area button.floor2 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood2.png");
+}
+
+html table td.board-area button.floor3 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood3.png");
+}
+
+html table td.board-area button.floor4 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood4.png");
+}
+
+html table td.board-area button.floor5 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood5.png");
+}
+
+html table td.board-area button.floor6 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood6.png");
+}
+
+html table td.board-area button.floor7 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood7.png");
+}
+
+html table td.board-area button.floor8 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood8.png");
+}
+
+html table td.board-area button.floor9 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood9.png");
+}
+
+html table td.board-area button.floor10 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood10.png");
+}
+
+html table td.board-area button.floor11 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood11.png");
+}
+
+html table td.board-area button.floor12 {
+  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood12.png");
+}
+
 html table td.board-area button {
   min-width: inherit;
   border-width: 0px;
@@ -220,62 +281,17 @@ html table td.board-area button {
   margin: 0;
   padding: 0;
   text-align: center;
-  background-size: cover;
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood1.png);
+  --background-thing: var(--tile), var(--sprite);
+  --tile: url();
+  background-size: cover, cover;
+  --sprite: url();
+  background-image: var(--sprite), var(--tile);
   text-shadow: 0px 0px 3px white;
   color: white;
 }
 
-html table td.board-area button.floor0 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood1.png);
-}
-
-html table td.board-area button.floor1 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood2.png);
-}
-
-html table td.board-area button.floor2 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood3.png);
-}
-
-html table td.board-area button.floor3 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood4.png);
-}
-
-html table td.board-area button.floor4 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood5.png);
-}
-
-html table td.board-area button.floor5 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood6.png);
-}
-
-html table td.board-area button.floor6 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood7.png);
-}
-
-html table td.board-area button.floor7 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood8.png);
-}
-
-html table td.board-area button.floor8 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood9.png);
-}
-
-html table td.board-area button.floor9 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood10.png);
-}
-
-html table td.board-area button.floor10 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood11.png);
-}
-
-html table td.board-area button.floor11 {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/cobble_blood12.png);
-}
-
 html table td.board-area button.selected {
-  background-image: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png);
+  --tile: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png);
 }
 
 html table td.board-area button span.power-collected {
