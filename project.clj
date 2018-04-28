@@ -14,6 +14,7 @@
                  [garden "1.3.5"]
                  [com.rpl/specter "1.1.1"]
                  [binaryage/oops "0.6.1"]
+                 [servant "0.1.5"]
                  [rum "0.11.2"]]
 
 

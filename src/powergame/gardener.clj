@@ -93,7 +93,7 @@
                    :left         0
                    :width :100%
                    :display :block
-                   :height       (-% menubar-height)}
+                   :height       (-vmin menubar-height)}
     [:ul#infobar {:font-size (-vmin 4)
                   :position :relative
                   :display :block
@@ -146,7 +146,10 @@
                       :left       0
                       :max-height (-vmin menubar-height)
                       :min-height (-vmin menubar-height)
-                      :width      :100%}
+                      :width      :100%
+                      :border-top-style :double
+                      :border-width (-vmin 0.7)
+                      :border-color :white}
     [:ul#buttonbar {:height :inherit
                     :max-height :inherit
                     :min-height :inherit
