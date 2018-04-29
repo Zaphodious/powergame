@@ -39,22 +39,49 @@
 (defn get-space [{:keys [board y x]}]
   (sp/select-first [(sp/keypath x y)] board))
 
-(defn put-space [{:keys [board y x space]}]
-  (sp/transform [(sp/keypath x y)] (make-fn space) board))
-
-(defn put-thing-at [{:keys [board y x type value]}]
-  (sp/transform [(sp/keypath x y type)] (make-fn value) board))
 
 (defn deselect-all [{:keys [board] :as state-map}]
   (sp/setval [:board sp/ALL sp/ALL :selected] false state-map))
 
+(defmulti put-thing-at (fn [a] (-> a :next-input :type)))
+(defmethod put-thing-at :default
+  [{:keys [board]
+    {:keys [y x type value]} :next-input
+    :as statemap}]
+  (sp/transform [(sp/keypath x y type)] (make-fn value) board))
+
+(defmethod put-thing-at :selected
+  [{:keys [board select-amount]
+    {:keys [y x type value]} :next-input
+    :as statemap}]
+  (sp/transform [(sp/keypath x y type)] (make-fn value)
+    (if (= select-amount :single) (:board (deselect-all statemap)) board)))
+
+(defn put-space [{:keys [board y x space]}]
+  (sp/transform [(sp/keypath x y)] (make-fn space) board))
+
+(defn select-space [{:keys [board select-amount]
+                     {:keys [y x type value]} :next-input
+                     :as statemap}])
+
+
+(defn toggle-select [{:keys [select-amount] :as state-map}]
+  (let [new-select (case select-amount
+                     :single :multi
+                     :single)]
+    (-> (if (= new-select :single)
+          (deselect-all state-map)
+          state-map)
+      (assoc :select-amount new-select))))
+
+
 (defn process-input [{:keys [next-input board zoom-level] :as state-map}]
   (println "Doin' " next-input)
   (case (:type next-input)
-    :deselect-all (deselect-all state-map)
+    :toggle-select (toggle-select state-map)
     :zoom-up (assoc state-map :zoom-level (-> zoom-level inc (min 5) (max 1)))
     :zoom-down (assoc state-map :zoom-level (-> zoom-level dec (min 5) (max 1)))
-    (assoc state-map :board (put-thing-at (assoc next-input :board board)))))
+    (assoc state-map :board (put-thing-at state-map))))
 
 (defn advance-cursor [{:keys [cursor-at height] :as app-state}]
   (let [next (inc cursor-at)

@@ -1,6 +1,7 @@
 (ns powergame.gameui
   (:require [rum.core :as rum]
-            [powergame.bizlogic :as gc]))
+            [powergame.bizlogic :as gc]
+            [clojure.string :as str]))
 
 (rum/defc board-area [{:keys [piece power status y x selected input-fn terrain]}]
   [:td.board-area
@@ -12,7 +13,7 @@
                       (str terrain))
              :type "button"
              :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
-    [:span.power-collected (str power)]]]) ;"(" x "," y ")")]])
+    [:span.label (str power)]]]) ;"(" x "," y ")")]])
 
 (rum/defc board-component [{:keys [board input-fn cursor-at]}]
   [:table
@@ -25,31 +26,34 @@
 
 (rum/defc game-frame < rum/reactive
   [app-state-atom]
-  (let [{:keys [board juice money knowhow input-fn zoom-level] :as app-state} (rum/react app-state-atom)]
+  (let [{:keys [board juice money knowhow input-fn zoom-level select-amount] :as app-state} (rum/react app-state-atom)]
     [:#frame
      [:#menubar-top [:ul#infobar
                      [:li.juice [:span.label "Juice"] [:span.value juice]]
                      [:li.juice [:span.label "Money"] [:span.value money]]
                      [:li.juice [:span.label "Know How"] [:span.value knowhow]]]
-                [:ul#buttonbar
-                 [:li [:button {:type "button"
-                                :onClick #(input-fn {:type :deselect-all})}
-                       "Deselect"]]
-                 [:li [:button {:type "button"}
-                       "Info"]]
-                 [:li [:button {:type "button"}
-                       "Guide"]]
-                 [:li [:button {:type "button"
+                [:#buttonbar
+                 [:button {:type "button"
+                                :onClick #(input-fn {:type :toggle-select})}
+                       (str "Select " (str/capitalize  (name select-amount)))]
+                 [:button {:type "button"}
+                       "Info"]
+                 [:button {:type "button"}
+                       "Guide"]
+                 [:button {:type "button"
                                 :onClick #(input-fn {:type :zoom-up})}
-                       "Zoom +"]]
-                 [:li [:button {:type "button"
+                       "Zoom +"]
+                 [:button {:type "button"
                                 :onClick #(input-fn {:type :zoom-down})}
-                       "Zoom -"]]]]
+                       "Zoom -"]]]
      [:#board  {:class (str "dragscroll zoom-level"zoom-level)}
       (board-component app-state)]
      ;[:#state-print (pr-str app-state)]
      [:#menubar-bottom {:class "dragscroll"}
-      [:ul#buttonbar
-       (map (fn [a] [:li [:button {:type :button} (str a)]])
+      [:#buttonbar
+       (map (fn [a] [:button {:type :button}
+                     [:span.sprite {:class "unit fountain contains"}]
+                     [:span.label "Fountain"]
+                     [:span.label "5 Money"]])
             (range 30))]]]))
 

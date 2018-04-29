@@ -87,27 +87,30 @@ html #menubar-top ul#infobar li span.value {
   border-color: grey;
 }
 
-html #menubar-top ul#buttonbar {
+html #menubar-top #buttonbar {
   position: fixed;
+  display: flex;
   top: 7.0vmin;
   right: 0;
   left: 0;
   height: 10.0vmin;
+  overflow-wrap: break-word;
+  overflow: scroll;
 }
 
-html #menubar-top ul#buttonbar button {
+html #menubar-top #buttonbar button {
   width: 17.9vmin;
   font-family: inherit;
   height: 10.0vmin;
   margin-right: 1.0vmin;
   border: none;
-  padding: 3.0vmin, 2.0vmin;
   box-shadow: 0px 0px 3px 1px black;
   margin-left: 1.0vmin;
   background-color: white;
+  display: inline;
 }
 
-html #menubar-top ul#buttonbar button:active {
+html #menubar-top #buttonbar button:active {
   box-shadow: inset 0px 0px 3px 1px black;
 }
 
@@ -124,28 +127,38 @@ html #menubar-bottom {
   border-top-style: double;
 }
 
-html #menubar-bottom ul#buttonbar {
-  height: inherit;
-  max-height: inherit;
-  min-height: inherit;
-  overflow-y: scroll;
+html #menubar-bottom #buttonbar {
+  display: flex;
+  overflow: scroll;
+  height: 20.0vmin;
+  width: 100%;
 }
 
-html #menubar-bottom ul#buttonbar li {
-  height: inherit;
-  max-height: 9.5vmin;
-  min-height: 9.5vmin;
-  max-width: 10.0vmin;
-  min-width: 10.0vmin;
+html #menubar-bottom #buttonbar button {
+  min-width: 18.0vmin;
+  justify-content: flex-end;
+  font-family: inherit;
+  height: 16.0vmin;
+  margin-right: 1.0vmin;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2.0vmin;
+  margin-left: 1.0vmin;
+  display: flex;
 }
 
-html #menubar-bottom ul#buttonbar li button {
-  height: inherit;
-  background-color: white;
-  max-height: inherit;
-  min-height: inherit;
-  max-width: inherit;
-  min-width: inherit;
+html #menubar-bottom #buttonbar button .sprite {
+  display: inline-block;
+  min-width: 6.0vmin;
+  min-height: 6.0vmin;
+  background-image: var(--sprite);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+html #menubar-bottom #buttonbar button .label {
+  font-family: inherit;
 }
 
 html #board {
@@ -212,30 +225,6 @@ html table td.board-area {
   padding: 0;
   border-style: solid;
   border-width: 0px;
-}
-
-html table td.board-area .unit.empty.full {
-  --sprite: url("../");
-}
-
-html table td.board-area .unit.empty.contains {
-  --sprite: url("../");
-}
-
-html table td.board-area .unit.empty.empty {
-  --sprite: url("../");
-}
-
-html table td.board-area .unit.fountain.full {
-  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_blood_fountain.png");
-}
-
-html table td.board-area .unit.fountain.contains {
-  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_sparkling_fountain.png");
-}
-
-html table td.board-area .unit.fountain.empty {
-  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_dry_fountain.png");
 }
 
 html table td.board-area button.floor0 {
@@ -310,9 +299,33 @@ html table td.board-area button.selected {
   --tile: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png);
 }
 
-html table td.board-area button span.power-collected {
+html table td.board-area button span.label {
   --board-zoom-level: inherit;
   position: relative;
   font-size: calc(10px  *  var(--board-zoom-level));
   top: 7.5px;
+}
+
+.unit.empty.full {
+  --sprite: url("../");
+}
+
+.unit.empty.contains {
+  --sprite: url("../");
+}
+
+.unit.empty.empty {
+  --sprite: url("../");
+}
+
+.unit.fountain.full {
+  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_blood_fountain.png");
+}
+
+.unit.fountain.contains {
+  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_sparkling_fountain.png");
+}
+
+.unit.fountain.empty {
+  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_dry_fountain.png");
 }
