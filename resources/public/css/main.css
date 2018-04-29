@@ -214,12 +214,28 @@ html table td.board-area {
   border-width: 0px;
 }
 
-html table td.board-area button.piece.empty {
+html table td.board-area .unit.empty.full {
   --sprite: url("../");
 }
 
-html table td.board-area button.piece.ooze {
-  --sprite: url("../img/crawl-tiles/dc-mon/acid_blob.png");
+html table td.board-area .unit.empty.contains {
+  --sprite: url("../");
+}
+
+html table td.board-area .unit.empty.empty {
+  --sprite: url("../");
+}
+
+html table td.board-area .unit.fountain.full {
+  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_blood_fountain.png");
+}
+
+html table td.board-area .unit.fountain.contains {
+  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_sparkling_fountain.png");
+}
+
+html table td.board-area .unit.fountain.empty {
+  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_dry_fountain.png");
 }
 
 html table td.board-area button.floor0 {

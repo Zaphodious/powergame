@@ -9,7 +9,8 @@
             [clojure.set :as set]
             [garden.stylesheet :as gss :refer [at-media]]
             [garden.types :as gt]
-            [powergame.board-defs :as board-defs]))
+            [powergame.board-defs :as board-defs]
+            [com.rpl.specter :as sp]))
 
 
 (gd/defcssfn url)
@@ -203,15 +204,17 @@
                      :padding 0
                      :border-style :solid
                      :border-width :0px}
-     (map (fn [[k {:keys [name sprite] :as v}]]
-            [(keyword (str "button.piece." name))
-             {:--sprite (url (str \" "../" sprite \"))}])
-          board-defs/units)
-     (map (fn [i]
-            [(keyword (str "button.floor" i))
-             {:--tile (url (str \" "../img/crawl-tiles/dc-dngn/floor/cobble_blood" i
-                                ".png" \"))}])
-          (range 13)
+                    (map (fn [[thingname powerstate img]]
+                           [(keyword (str ".unit." thingname "." (name powerstate)))
+                            {:--sprite (url (pr-str (str "../" img)))}])
+                      (sp/select
+                        [sp/ALL sp/LAST (sp/collect-one :name) :sprites sp/ALL (sp/collect-one sp/FIRST) sp/LAST]
+                        board-defs/units))
+                    (map (fn [i]
+                           [(keyword (str "button.floor" i))
+                            {:--tile (url (str \" "../img/crawl-tiles/dc-dngn/floor/cobble_blood" i
+                                               ".png" \"))}])
+                         (range 13))
       [:button {:--sprite (url "")
                 :--tile (url "")
                 :min-width       :inherit
@@ -230,5 +233,5 @@
        [:span.power-collected {:--board-zoom-level :inherit
                                :position :relative
                                :font-size (calchelper :10px * (-var :--board-zoom-level))
-                               :top (-px (/ board-area-size 4))}]])]]])
+                               :top (-px (/ board-area-size 4))}]]]]])
 

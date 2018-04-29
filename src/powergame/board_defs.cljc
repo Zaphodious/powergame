@@ -1,9 +1,14 @@
-(ns powergame.board-defs)
+(ns powergame.board-defs
+  (:require [com.rpl.specter :as sp]))
 
 (def units
-  {:empty {:name "empty"
-           :type      "empty"
-           :sprite    ""}
-   :ooze  {:name "ooze"
-           :type      "monster"
-           :sprite    "img/crawl-tiles/dc-mon/acid_blob.png"}})
+  {:empty {:name    "empty"
+           :type    "empty"
+           :sprites {:full     ""
+                     :contains ""
+                     :empty    ""}}
+   :ooze  {:name    "fountain"
+           :type    "fixture"
+           :sprites {:full     "img/crawl-tiles/dc-dngn/dngn_blood_fountain.png"
+                     :contains "img/crawl-tiles/dc-dngn/dngn_sparkling_fountain.png"
+                     :empty    "img/crawl-tiles/dc-dngn/dngn_dry_fountain.png"}}})

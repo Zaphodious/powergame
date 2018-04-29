@@ -29,6 +29,7 @@
    :cursor-at 0
    :zoom-level 1
    :max-power 20
+   :select-amount :single ; :multi
    :input-fn input-fn})
 
 (defn- make-fn [thing]
