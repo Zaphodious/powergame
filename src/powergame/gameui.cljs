@@ -25,15 +25,24 @@
                           a)])
          board)]])
 
+(rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]
+  (let [{thing-name :name :as modal-info} (get board-defs/modals modal-showing)]
+    [:#modal {:class (if modal-showing "showing" "hidden")}
+     [:.titlebar [:span.name (if thing-name (str/capitalize thing-name) "")]
+      [:button.close {:type "button"
+                      :onClick #(input-fn {:type :close-modal})}
+       "x"]]
+     "HI"]))
+
 (rum/defc game-frame < rum/reactive
   [app-state-atom]
-  (let [{:keys [board juice money knowhow input-fn zoom-level select-amount] :as app-state} (rum/react app-state-atom)]
+  (let [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state} (rum/react app-state-atom)]
     [:#frame
      [:#menubar-top [:ul#infobar
                      [:li.juice [:span.label "Juice"] [:span.value juice]]
                      [:li.juice [:span.label "Money"] [:span.value money]]
                      [:li.juice [:span.label "Know How"] [:span.value knowhow]]]
-                [:#buttonbar
+                [:#buttonbar {:class (if modal-showing "hidden" "showing")}
                  [:button {:type "button"
                                 :onClick #(input-fn {:type :toggle-select})}
                        (str "Select " (str/capitalize  (name select-amount)))]
@@ -47,22 +56,25 @@
                  [:button {:type "button"
                                 :onClick #(input-fn {:type :zoom-down})}
                        "Zoom -"]]]
+     (modal app-state)
+
      [:#board  {:class (str "dragscroll zoom-level"zoom-level)}
       (board-component app-state)]
      ;[:#state-print (pr-str app-state)]
      (let [selected-ops (gc/get-operations-for-selected app-state)
-           show-class (if (empty? selected-ops)
-                        "empty"
-                        "has-opts")]
+           show-class (if (and (not (empty? selected-ops)) (not modal-showing))
+                        "has-opts"
+                        "empty")]
        [:#menubar-bottom {:class (str "dragscroll " show-class)}
         [:#buttonbar
          (map (fn [a]
                 (let [{thing-name :name img :image desc :description :as option-details} (get board-defs/operations a)]
-                  [:button {:type :button}
+                  [:button {:type :button
+                            :onClick #(input-fn {:type :operation :operation a})}
                    [:span.sprite {:class (str "operation " thing-name)}]
                    [:span.label (str/capitalize thing-name)]
                    [:hr]
                    [:span.label desc]]))
-              selected-ops)]])]))
+              (concat selected-ops selected-ops selected-ops))]])]))
 
 

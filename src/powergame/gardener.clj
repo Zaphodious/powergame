@@ -135,7 +135,10 @@
                    :left 0
                    :height (-vmin (/ menubar-height 2))
                    :overflow-wrap :break-word
-                   :overflow :scroll}
+                   :transition "top 0.5s"}
+      [:&.showing {:top (-vmin (- (/ menubar-height 2) 3))}]
+      [:&.hidden {:top (-vmin (- menubar-height))}]
+                   ;:overflow :scroll}
       [:button {:height  (-vmin (/ menubar-height 2))
                 :width (-vmin 17.9)
                 :margin-right (-vmin 1)
@@ -151,6 +154,8 @@
                        :bottom     0
                        :right      0
                        :left       0
+                       :overflow-y :hidden
+                       :overflow-x :scroll
                        :max-height (-vmin menubar-height)
                        :min-height (-vmin menubar-height)
                        :width      :100%
@@ -160,7 +165,6 @@
                        :transition "bottom 0.5s"}
      [:&.empty {:bottom (-vmin (-  menubar-height))}]
      [:#buttonbar {:display :flex
-                   :overflow :scroll
                    :height (-vmin menubar-height)
                    :width :100%}
       [:button {:display :flex
@@ -174,7 +178,7 @@
                 :margin-left (-vmin (* menubar-height 0.05))
                 :margin-right (-vmin (* menubar-height 0.05))
                 :height (-vmin (* menubar-height 0.8))
-                :min-width (-vmin (* menubar-height 1.0))}
+                :min-width (-vmin (* menubar-height 1.7))}
        [:.sprite {:display :inline-block
                   :min-width (-vmin (* menubar-height 0.3))
                   :min-height (-vmin (* menubar-height 0.3))
@@ -185,7 +189,28 @@
        [:.label {:font-family :inherit}]
        [:hr {:margin (-vmin 0.05)
              :padding (str "0 " (-vmin (/ menubar-height 2)))}]]]]
-
+    [:#modal {:transition "top 0.5s, bottom 0.5s, left 0.5s, right 0.5s"
+              :position :fixed
+              :top (-vmin (* 0.4 menubar-height))
+              :bottom (-vmin (* 0.25 menubar-height))
+              :left (-vmin (* 0.25 menubar-height))
+              :right (-vmin (* 0.25 menubar-height))
+              :background-color :white
+              :z-index 10}
+     [:.titlebar {:background-color :grey
+                  :padding (-vmin 0.5)}
+      [:.name {:margin (-vmin 2)}]
+      [:.close {:float :right
+                :margin 0
+                :margin-right (-vmin 0.5)
+                :border-radius (-vmin 4)
+                :background-color :red
+                :border-color :red}]]
+     [:&.showing {}]
+     [:&.hidden {:top (-% 120)
+                 :bottom (-% (- 10))
+                 :left (-% 45)
+                 :right (-% 45)}]]
     [:#board {:position :fixed
               ;:padding :100px
               :--board-zoom-level 1

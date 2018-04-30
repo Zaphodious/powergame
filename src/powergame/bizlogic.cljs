@@ -31,6 +31,7 @@
    :zoom-level 1
    :max-power 20
    :select-amount :single ; :multi
+   :modal-showing nil;:purchase
    :input-fn input-fn})
 
 (defn- make-fn [thing]
@@ -88,6 +89,10 @@
           state-map)
       (assoc :select-amount new-select))))
 
+(defn handle-operation [{:keys [next-input board zoom-level] :as state-map}]
+  (println "OPERATION! " (:operation next-input))
+  (let [{:keys [on-activate] :as op} (get board-defs/operations (:operation next-input))]
+    (on-activate state-map)))
 
 (defn process-input [{:keys [next-input board zoom-level] :as state-map}]
   (println "Doin' " next-input)
@@ -95,6 +100,8 @@
     :toggle-select (toggle-select state-map)
     :zoom-up (assoc state-map :zoom-level (-> zoom-level inc (min 5) (max 1)))
     :zoom-down (assoc state-map :zoom-level (-> zoom-level dec (min 5) (max 1)))
+    :operation (handle-operation state-map)
+    :close-modal (assoc state-map :modal-showing nil)
     (assoc state-map :board (put-thing-at state-map))))
 
 (defn advance-cursor [{:keys [cursor-at height] :as app-state}]

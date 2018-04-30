@@ -95,7 +95,15 @@ html #menubar-top #buttonbar {
   left: 0;
   height: 10.0vmin;
   overflow-wrap: break-word;
-  overflow: scroll;
+  transition: top 0.5s;
+}
+
+html #menubar-top #buttonbar.showing {
+  top: 7.0vmin;
+}
+
+html #menubar-top #buttonbar.hidden {
+  top: -20.0vmin;
 }
 
 html #menubar-top #buttonbar button {
@@ -119,8 +127,10 @@ html #menubar-bottom {
   right: 0;
   border-width: 0.7vmin;
   border-color: white;
+  overflow-y: hidden;
   position: absolute;
   min-height: 20.0vmin;
+  overflow-x: scroll;
   bottom: 0;
   transition: bottom 0.5s;
   max-height: 20.0vmin;
@@ -134,13 +144,12 @@ html #menubar-bottom.empty {
 
 html #menubar-bottom #buttonbar {
   display: flex;
-  overflow: scroll;
   height: 20.0vmin;
   width: 100%;
 }
 
 html #menubar-bottom #buttonbar button {
-  min-width: 20.0vmin;
+  min-width: 34.0vmin;
   justify-content: flex-end;
   font-family: inherit;
   height: 16.0vmin;
@@ -169,6 +178,46 @@ html #menubar-bottom #buttonbar button .label {
 html #menubar-bottom #buttonbar button hr {
   margin: 0.05vmin;
   padding: 0 10.0vmin;
+}
+
+html #modal {
+  transition: top 0.5s, bottom 0.5s, left 0.5s, right 0.5s;
+  position: fixed;
+  top: 8.0vmin;
+  bottom: 5.0vmin;
+  left: 5.0vmin;
+  right: 5.0vmin;
+  background-color: white;
+  z-index: 10;
+}
+
+html #modal .titlebar {
+  background-color: grey;
+  padding: 0.5vmin;
+}
+
+html #modal .titlebar .name {
+  margin: 2.0vmin;
+}
+
+html #modal .titlebar .close {
+  float: right;
+  margin: 0;
+  margin-right: 0.5vmin;
+  border-radius: 4.0vmin;
+  background-color: red;
+  border-color: red;
+}
+
+html #modal.showing {
+
+}
+
+html #modal.hidden {
+  top: 120.0%;
+  bottom: -10.0%;
+  left: 45.0%;
+  right: 45.0%;
 }
 
 html #board {
