@@ -1,5 +1,6 @@
 (ns powergame.bizlogic
-  (:require [com.rpl.specter :as sp]))
+  (:require [com.rpl.specter :as sp]
+            [powergame.board-defs :as board-defs]))
 
 (defn make-game-board [{:keys [height width]}]
   (->> height
@@ -39,6 +40,19 @@
 (defn get-space [{:keys [board y x]}]
   (sp/select-first [(sp/keypath x y)] board))
 
+(defn get-selected-areas [statemap]
+  (sp/select [:board sp/ALL sp/ALL (sp/pred :selected)] statemap))
+
+(defn get-operations-for-selected [{:keys [board] :as statemap}]
+  (let [the-selected (get-selected-areas statemap)
+        multi-mode (if (get the-selected 1) :multi? :single?)
+        all-opts (->> the-selected
+                      (sp/select [sp/ALL :piece :type])
+                      (sp/transform [sp/ALL] #(% board-defs/units))
+                      (sp/select [sp/ALL :operations sp/ALL])
+                      (filter #(multi-mode (% board-defs/operations)))
+                      (apply sorted-set))]
+    all-opts))
 
 (defn deselect-all [{:keys [board] :as state-map}]
   (sp/setval [:board sp/ALL sp/ALL :selected] false state-map))

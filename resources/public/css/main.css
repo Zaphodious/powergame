@@ -122,9 +122,14 @@ html #menubar-bottom {
   position: absolute;
   min-height: 20.0vmin;
   bottom: 0;
+  transition: bottom 0.5s;
   max-height: 20.0vmin;
   left: 0;
   border-top-style: double;
+}
+
+html #menubar-bottom.empty {
+  bottom: -20.0vmin;
 }
 
 html #menubar-bottom #buttonbar {
@@ -135,7 +140,7 @@ html #menubar-bottom #buttonbar {
 }
 
 html #menubar-bottom #buttonbar button {
-  min-width: 18.0vmin;
+  min-width: 20.0vmin;
   justify-content: flex-end;
   font-family: inherit;
   height: 16.0vmin;
@@ -159,6 +164,11 @@ html #menubar-bottom #buttonbar button .sprite {
 
 html #menubar-bottom #buttonbar button .label {
   font-family: inherit;
+}
+
+html #menubar-bottom #buttonbar button hr {
+  margin: 0.05vmin;
+  padding: 0 10.0vmin;
 }
 
 html #board {
@@ -304,6 +314,30 @@ html table td.board-area button span.label {
   position: relative;
   font-size: calc(10px  *  var(--board-zoom-level));
   top: 7.5px;
+}
+
+.operation.purchase {
+  --sprite: url("../img/crawl-tiles/item/misc/gold_pile.png");
+}
+
+.operation.swap {
+  --sprite: url("../img/crawl-tiles/spells/translocation/blink.png");
+}
+
+.operation.info {
+  --sprite: url("../img/crawl-tiles/item/scroll/blank_paper.png");
+}
+
+.operation.rotate {
+  --sprite: url("../img/crawl-tiles/spells/enchantment/confusing_touch.png");
+}
+
+.operation.upgrade {
+  --sprite: url("../img/crawl-tiles/spells/memorise.png");
+}
+
+.operation.sell {
+  --sprite: url("../img/crawl-tiles/spells/translocation/banishment.png");
 }
 
 .unit.empty.full {

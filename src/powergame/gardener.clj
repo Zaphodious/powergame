@@ -156,7 +156,9 @@
                        :width      :100%
                        :border-top-style :double
                        :border-width (-vmin 0.7)
-                       :border-color :white}
+                       :border-color :white
+                       :transition "bottom 0.5s"}
+     [:&.empty {:bottom (-vmin (-  menubar-height))}]
      [:#buttonbar {:display :flex
                    :overflow :scroll
                    :height (-vmin menubar-height)
@@ -172,7 +174,7 @@
                 :margin-left (-vmin (* menubar-height 0.05))
                 :margin-right (-vmin (* menubar-height 0.05))
                 :height (-vmin (* menubar-height 0.8))
-                :min-width (-vmin (* menubar-height 0.9))}
+                :min-width (-vmin (* menubar-height 1.0))}
        [:.sprite {:display :inline-block
                   :min-width (-vmin (* menubar-height 0.3))
                   :min-height (-vmin (* menubar-height 0.3))
@@ -180,7 +182,9 @@
                   :background-size :cover
                   :background-repeat :no-repeat
                   :background-position "center center"}]
-       [:.label {:font-family :inherit}]]]]
+       [:.label {:font-family :inherit}]
+       [:hr {:margin (-vmin 0.05)
+             :padding (str "0 " (-vmin (/ menubar-height 2)))}]]]]
 
     [:#board {:position :fixed
               ;:padding :100px
@@ -243,6 +247,10 @@
                                 :position :relative
                                 :font-size (calchelper :10px * (-var :--board-zoom-level))
                                 :top (-px (/ board-area-size 4))}]]]]]
+   (map (fn [[thingname img]]
+          [(keyword (str ".operation." thingname))
+           {:--sprite (url (pr-str (str "../" img)))}])
+     (sp/select [sp/ALL sp/LAST (sp/collect-one :name) :image] board-defs/operations))
    (map (fn [[thingname powerstate img]]
           [(keyword (str ".unit." thingname "." (name powerstate)))
            {:--sprite (url (pr-str (str "../" img)))}])

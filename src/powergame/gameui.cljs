@@ -1,7 +1,8 @@
 (ns powergame.gameui
   (:require [rum.core :as rum]
             [powergame.bizlogic :as gc]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [powergame.board-defs :as board-defs]))
 
 (rum/defc board-area [{:keys [piece power status y x selected input-fn terrain]}]
   [:td.board-area
@@ -49,11 +50,19 @@
      [:#board  {:class (str "dragscroll zoom-level"zoom-level)}
       (board-component app-state)]
      ;[:#state-print (pr-str app-state)]
-     [:#menubar-bottom {:class "dragscroll"}
-      [:#buttonbar
-       (map (fn [a] [:button {:type :button}
-                     [:span.sprite {:class "unit fountain contains"}]
-                     [:span.label "Fountain"]
-                     [:span.label "5 Money"]])
-            (range 30))]]]))
+     (let [selected-ops (gc/get-operations-for-selected app-state)
+           show-class (if (empty? selected-ops)
+                        "empty"
+                        "has-opts")]
+       [:#menubar-bottom {:class (str "dragscroll " show-class)}
+        [:#buttonbar
+         (map (fn [a]
+                (let [{thing-name :name img :image desc :description :as option-details} (get board-defs/operations a)]
+                  [:button {:type :button}
+                   [:span.sprite {:class (str "operation " thing-name)}]
+                   [:span.label (str/capitalize thing-name)]
+                   [:hr]
+                   [:span.label desc]]))
+              selected-ops)]])]))
+
 
