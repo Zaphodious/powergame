@@ -30,10 +30,23 @@
   (let [purchasable-keys (gc/get-purchasable-units app-state)]
     [:.purchase-list
      (map (fn [a] (let [{namething :name
-                          :keys [type upgrades operations sprites]
+                         {:keys [juice money knowhow] :as cost} :cost
+                          :keys [type upgrades operations sprites description]
                           :as purchasable-thing} (get board-defs/units a)]
-                     [:.purchasable namething])
-                 purchasable-keys))]))
+                     [:.purchasable
+                      [:.info
+                       [:.name (str/capitalize namething)]
+                       [:img {:src (:empty sprites)}]
+                       [:.description description]]
+                      [:.cost
+                       [:.juice "Magic " juice]
+                       [:.money "Money " money]
+                       [:.knowhow "Minimum Know How " knowhow]]
+                      [:.button-bar
+                       [:button {:type :button
+                                 :disabled true}
+                        "Purchase"]]]))
+          purchasable-keys)]))
 
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]
   (let [{thing-name :name :as modal-info} (get board-defs/modals modal-showing)]

@@ -214,7 +214,30 @@
                   :max-width :90%
                   :min-height :90%
                   :max-height :90%
-                  :padding :5%}]
+                  :padding :5%}
+      [:.purchase-list
+       [:.purchasable {:display :block
+                       :padding-bottom (-vmin 2)
+                       :padding-top (-vmin 2)
+                       :border-style :none
+                       :border-bottom-style :solid
+                       :border-width (-vmin 0.1)}
+        [:.info
+         [:img {:width (-vmin (/ menubar-height 1.5))
+                :height (-vmin (/ menubar-height 1.5))
+                :float :left
+                :margin-right (-vmin 1)}]
+         [:.description {:font-size :0.8em}]]
+        [:.cost {:display :flex
+                 :padding (-vmin 0.3)}
+
+         [:* {:padding (-vmin 1)
+              :border-style :solid
+              :border-width (-vmin 0.3)}]]
+        [:.button-bar
+         [:button {:font-family :inherit
+                   :background-color :white
+                   :width :100%}]]]]]
      [:&.showing {}]
      [:&.hidden {:top (-% 120)
                  :bottom (-% (- 10))

@@ -221,6 +221,43 @@ html #modal .interior {
   padding: 5%;
 }
 
+html #modal .interior .purchase-list .purchasable {
+  display: block;
+  padding-bottom: 2.0vmin;
+  padding-top: 2.0vmin;
+  border-style: none;
+  border-bottom-style: solid;
+  border-width: 0.1vmin;
+}
+
+html #modal .interior .purchase-list .purchasable .info img {
+  width: 13.333333333333334vmin;
+  height: 13.333333333333334vmin;
+  float: left;
+  margin-right: 1.0vmin;
+}
+
+html #modal .interior .purchase-list .purchasable .info .description {
+  font-size: 0.8em;
+}
+
+html #modal .interior .purchase-list .purchasable .cost {
+  display: flex;
+  padding: 0.3vmin;
+}
+
+html #modal .interior .purchase-list .purchasable .cost * {
+  padding: 1.0vmin;
+  border-style: solid;
+  border-width: 0.3vmin;
+}
+
+html #modal .interior .purchase-list .purchasable .button-bar button {
+  font-family: inherit;
+  background-color: white;
+  width: 100%;
+}
+
 html #modal.showing {
 
 }
