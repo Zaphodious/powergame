@@ -173,6 +173,7 @@
                 :justify-content :flex-end
                 :align-items :center
                 :font-family :inherit
+                :background-color :white
 
 
                 :margin-top (-vmin (* menubar-height 0.1))
