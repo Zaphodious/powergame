@@ -3,6 +3,7 @@ html {
   position: fixed;
   font-family: "Courier New", Courier, monospace;
   width: 100%;
+  image-rendering: pixelated;
 }
 
 html body {
@@ -187,7 +188,7 @@ html #modal {
   bottom: 5.0vmin;
   left: 5.0vmin;
   right: 5.0vmin;
-  background-color: white;
+  background-color: black;
   z-index: 10;
 }
 
@@ -207,6 +208,16 @@ html #modal .titlebar .close {
   border-radius: 4.0vmin;
   background-color: red;
   border-color: red;
+}
+
+html #modal .interior {
+  color: white;
+  overflow: scroll;
+  min-width: 90%;
+  max-width: 90%;
+  min-height: 90%;
+  max-height: 90%;
+  padding: 5%;
 }
 
 html #modal.showing {
@@ -399,6 +410,30 @@ html table td.board-area button span.label {
 
 .unit.empty.empty {
   --sprite: url("../");
+}
+
+.unit.elf.full {
+  --sprite: url("../img/crawl-tiles/dc-mon/deep_elf_sorcerer.png");
+}
+
+.unit.elf.contains {
+  --sprite: url("../img/crawl-tiles/dc-mon/deep_elf_annihilator.png");
+}
+
+.unit.elf.empty {
+  --sprite: url("../img/crawl-tiles/dc-mon/deep_elf_conjurer.png");
+}
+
+.unit.devil.full {
+  --sprite: url("../img/crawl-tiles/dc-mon/demons/cacodemon.png");
+}
+
+.unit.devil.contains {
+  --sprite: url("../img/crawl-tiles/dc-mon/demons/blue_death.png");
+}
+
+.unit.devil.empty {
+  --sprite: url("../img/crawl-tiles/dc-mon/demons/blue_devil.png");
 }
 
 .unit.fountain.full {

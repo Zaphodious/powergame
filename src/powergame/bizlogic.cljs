@@ -58,6 +58,12 @@
 (defn deselect-all [{:keys [board] :as state-map}]
   (sp/setval [:board sp/ALL sp/ALL :selected] false state-map))
 
+(defn get-purchasable-units [{:keys [board] :as state-map}]
+  (let [all-purchasable (->> board-defs/units
+                             (filter #(-> % second :purchasable?))
+                             (map first))]
+    all-purchasable))
+
 (defmulti put-thing-at (fn [a] (-> a :next-input :type)))
 (defmethod put-thing-at :default
   [{:keys [board]

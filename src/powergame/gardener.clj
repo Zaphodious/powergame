@@ -69,7 +69,8 @@
    [:html {:background-color :black
            :position :fixed
            :font-family "\"Courier New\", Courier, monospace"
-           :width :100%}
+           :width :100%
+           :image-rendering :pixelated}
     [:body {:width :100%
             :display :inline-block
             :position :fixed
@@ -195,7 +196,7 @@
               :bottom (-vmin (* 0.25 menubar-height))
               :left (-vmin (* 0.25 menubar-height))
               :right (-vmin (* 0.25 menubar-height))
-              :background-color :white
+              :background-color :black
               :z-index 10}
      [:.titlebar {:background-color :grey
                   :padding (-vmin 0.5)}
@@ -206,6 +207,13 @@
                 :border-radius (-vmin 4)
                 :background-color :red
                 :border-color :red}]]
+     [:.interior {:color :white
+                  :overflow :scroll
+                  :min-width :90%
+                  :max-width :90%
+                  :min-height :90%
+                  :max-height :90%
+                  :padding :5%}]
      [:&.showing {}]
      [:&.hidden {:top (-% 120)
                  :bottom (-% (- 10))

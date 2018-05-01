@@ -2,6 +2,7 @@
   (:require [rum.core :as rum]
             [powergame.bizlogic :as gc]
             [clojure.string :as str]
+            [com.rpl.specter :as sp]
             [powergame.board-defs :as board-defs]))
 
 (rum/defc board-area [{:keys [piece power status y x selected input-fn terrain]}]
@@ -25,6 +26,15 @@
                           a)])
          board)]])
 
+(rum/defc purchase-modal [app-state]
+  (let [purchasable-keys (gc/get-purchasable-units app-state)]
+    [:.purchase-list
+     (map (fn [a] (let [{namething :name
+                          :keys [type upgrades operations sprites]
+                          :as purchasable-thing} (get board-defs/units a)]
+                     [:.purchasable namething])
+                 purchasable-keys))]))
+
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]
   (let [{thing-name :name :as modal-info} (get board-defs/modals modal-showing)]
     [:#modal {:class (if modal-showing "showing" "hidden")}
@@ -32,7 +42,8 @@
       [:button.close {:type "button"
                       :onClick #(input-fn {:type :close-modal})}
        "x"]]
-     "HI"]))
+     [:.interior (case modal-showing
+                   :purchase (purchase-modal app-state))]]))
 
 (rum/defc game-frame < rum/reactive
   [app-state-atom]

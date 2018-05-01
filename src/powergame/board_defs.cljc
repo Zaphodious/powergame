@@ -5,12 +5,32 @@
 (def units
   {:empty {:name    "empty"
            :type    "empty"
+           :purchasable? false
            :operations [:info :purchase]
            :sprites {:full     ""
                      :contains ""
                      :empty    ""}}
+   :elf {:name "elf"
+         :type :creature
+         :purchasable? true
+         :cost {:juice 0
+                :money 0}
+         :upgrades [:transmission]
+         :operations unit-ops
+         :sprites {:full "img/crawl-tiles/dc-mon/deep_elf_sorcerer.png"
+                   :contains "img/crawl-tiles/dc-mon/deep_elf_annihilator.png"
+                   :empty "img/crawl-tiles/dc-mon/deep_elf_conjurer.png"}}
+   :devil {:name "devil"
+           :type :creature
+           :purchasable? true
+           :upgrades [:collection]
+           :operations unit-ops
+           :sprites {:full "img/crawl-tiles/dc-mon/demons/cacodemon.png"
+                     :contains "img/crawl-tiles/dc-mon/demons/blue_death.png"
+                     :empty "img/crawl-tiles/dc-mon/demons/blue_devil.png"}}
    :fountain {:name    "fountain"
-              :type    "fixture"
+              :type    :fixture
+              :purchasable? true
               :upgrades [:collection :transmission :aoe]
               :operations unit-ops
               :sprites {:full     "img/crawl-tiles/dc-dngn/dngn_blood_fountain.png"
