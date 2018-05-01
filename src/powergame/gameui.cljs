@@ -31,12 +31,12 @@
     [:.purchase-list
      (map (fn [a] (let [{namething :name
                          {:keys [juice money knowhow] :as cost} :cost
-                          :keys [type upgrades operations sprites description]
+                          :keys [type upgrades operations sprite description]
                           :as purchasable-thing} (get board-defs/units a)]
                      [:.purchasable
                       [:.info
                        [:.name (str/capitalize namething)]
-                       [:img {:src (:empty sprites)}]
+                       [:img {:src sprite}]
                        [:.description description]]
                       [:.cost
                        [:.juice "Magic " juice]

@@ -438,50 +438,18 @@ html table td.board-area button span.label {
   --sprite: url("../img/crawl-tiles/spells/translocation/banishment.png");
 }
 
-.unit.empty.full {
+.unit.empty {
   --sprite: url("../");
 }
 
-.unit.empty.contains {
+.unit.elf {
   --sprite: url("../");
 }
 
-.unit.empty.empty {
+.unit.devil {
   --sprite: url("../");
 }
 
-.unit.elf.full {
-  --sprite: url("../img/crawl-tiles/dc-mon/deep_elf_sorcerer.png");
-}
-
-.unit.elf.contains {
-  --sprite: url("../img/crawl-tiles/dc-mon/deep_elf_annihilator.png");
-}
-
-.unit.elf.empty {
-  --sprite: url("../img/crawl-tiles/dc-mon/deep_elf_conjurer.png");
-}
-
-.unit.devil.full {
-  --sprite: url("../img/crawl-tiles/dc-mon/demons/cacodemon.png");
-}
-
-.unit.devil.contains {
-  --sprite: url("../img/crawl-tiles/dc-mon/demons/blue_death.png");
-}
-
-.unit.devil.empty {
-  --sprite: url("../img/crawl-tiles/dc-mon/demons/blue_devil.png");
-}
-
-.unit.fountain.full {
-  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_blood_fountain.png");
-}
-
-.unit.fountain.contains {
-  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_sparkling_fountain.png");
-}
-
-.unit.fountain.empty {
-  --sprite: url("../img/crawl-tiles/dc-dngn/dngn_dry_fountain.png");
+.unit.fountain {
+  --sprite: url("../");
 }

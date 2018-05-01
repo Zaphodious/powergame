@@ -308,10 +308,10 @@
           [(keyword (str ".operation." thingname))
            {:--sprite (url (pr-str (str "../" img)))}])
      (sp/select [sp/ALL sp/LAST (sp/collect-one :name) :image] board-defs/operations))
-   (map (fn [[thingname powerstate img]]
-          [(keyword (str ".unit." thingname "." (name powerstate)))
+   (map (fn [[thingname img]]
+          [(keyword (str ".unit." thingname))
            {:--sprite (url (pr-str (str "../" img)))}])
         (sp/select
-          [sp/ALL sp/LAST (sp/collect-one :name) :sprites sp/ALL (sp/collect-one sp/FIRST) sp/LAST]
+          [sp/ALL sp/LAST (sp/collect-one :name) :sprite]
           board-defs/units))])
 
