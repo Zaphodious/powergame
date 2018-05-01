@@ -159,6 +159,7 @@ html #menubar-bottom #buttonbar button {
   flex-direction: column;
   margin-top: 2.0vmin;
   margin-left: 1.0vmin;
+  background-color: white;
   display: flex;
 }
 
