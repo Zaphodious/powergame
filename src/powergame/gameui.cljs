@@ -43,7 +43,8 @@
                       :onClick #(input-fn {:type :close-modal})}
        "x"]]
      [:.interior (case modal-showing
-                   :purchase (purchase-modal app-state))]]))
+                   :purchase (purchase-modal app-state)
+                   nil [:.no-modal])]]))
 
 (rum/defc game-frame < rum/reactive
   [app-state-atom]
