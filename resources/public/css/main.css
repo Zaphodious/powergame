@@ -472,7 +472,7 @@ html table td.board-area button span.label {
 }
 
 .unit.high-elf {
-  --sprite: url("../img/crawl-tiles/monster/deep_elf_conjurer.png");
+  --sprite: url("../img/crawl-tiles/monster/deep_elf_sorcerer.png");
 }
 
 .unit.fountain {
@@ -480,7 +480,7 @@ html table td.board-area button span.label {
 }
 
 .unit.empty {
-  --sprite: url("../");
+  --sprite: url("../img/empty.png");
 }
 
 .unit.elf-mage {

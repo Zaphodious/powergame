@@ -63,6 +63,36 @@
                       ;[:div (pr-str (gc/get-selected-areas app-state))]]))
           purchasable-keys)]))
 
+(rum/defc upgrade-modal [{:keys [input-fn] :as app-state}]
+  (let [purchasable-keys (gc/get-immediate-upgrades-for (:key (:piece (first (gc/get-selected-areas app-state)))))]
+    [:.purchase-list
+     (map (fn [a] (let [{namething :name
+                         {:keys [juice money knowhow] :as cost} :cost
+                         {selljuice :juice sellmoney :money sellknowhow :knowhow} :sells-for
+                          :keys [type upgrades operations sprite description]
+                          :as purchasable-thing} (get board-defs/units a)]
+                     [:.purchasable
+                      [:.info
+                       [:.name (str/capitalize namething)]
+                       [:img {:src sprite}]
+                       [:.description description]]
+                      "Costs"
+                      [:.cost
+                       [:.juice "Magic " juice]
+                       [:.money "Money " money]
+                       [:.knowhow "Minimum Know How " knowhow]]
+                      "Sells for"
+                      [:.cost
+                       [:.juice "Magic " selljuice]
+                       [:.money "Money " sellmoney]
+                       [:.knowhow "Recieved Know How " sellknowhow]]
+                      [:.button-bar
+                       [:button {:type :button
+                                 :onClick #(input-fn {:type :unit :value a :pay-cost true})}
+                        "Purchase"]]]))
+                      ;[:div (pr-str (gc/get-selected-areas app-state))]]))
+          purchasable-keys)]))
+
 (rum/defc info-modal [{:keys [input-fn] :as app-state}]
   (let [selected-pieces (apply sorted-set (sp/select [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] app-state))]
     (println "selected pieces " selected-pieces)
@@ -94,6 +124,7 @@
      [:.interior (case modal-showing
                    :purchase (purchase-modal app-state)
                    :info (info-modal app-state)
+                   :upgrade (upgrade-modal app-state)
                    nil [:.no-modal])]]))
 
 (rum/defc game-frame < rum/reactive

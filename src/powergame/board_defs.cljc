@@ -15,29 +15,29 @@
            :sells-for {:juice 0
                        :money 0
                        :knowhow 0}
-           :sprite "img/crawl-tiles/misc/halo.png"}
+           :sprite "img/empty.png"}
    :elf {:name "deep-elf"
          :description "Subjugated, abused, and oppressed by their demonic spider priestesses, these natural magic users have escaped from servitude and certain death in order to earn a wage from you. As they are, put them near to or in the path of magic and they'll pass it forward. Once you've trained them, they'll magnify it, and at their apex they'll no longer need an external source. If you get rid of them before training them, however, their doom is sealed as they'll be snatched up by agents of the spider priestesses."
          :type :creature
          :purchasable? true
          :cost {:juice 0
-                :money 1
+                :money 10
                 :knowhow 1}
          :sells-for {:juice 0
-                     :money 1
+                     :money 6
                      :knowhow 0}
-         :upgrade-paths [:high-elf]
+         :upgrade-paths [:elf-mage]
          :operations unit-ops
          :sprite "img/crawl-tiles/monster/deep_elf_conjurer.png"}
    :elf-mage {:name "elf-mage"
               :description "Uplifted and enlightened, empowered and liberated, these elves have come a long way since they came into your service. They've gained the ability to draw a little bit of power from the world, and use it to amplify power already passing through them. Don't feel bad about dismissing them from your service - when they leave, they'll go into the world a force all their own."
               :type :creature
               :purchasable? false
-              :cost {:juice 3
-                     :money 6
-                     :knowhow 10}
-              :sells-for {:juice 1
-                          :money 4
+              :cost {:juice 50
+                     :money 120
+                     :knowhow 120}
+              :sells-for {:juice 45
+                          :money 60
                           :knowhow 0}
               :upgrade-paths [:high-elf]
               :operations unit-ops
@@ -48,7 +48,13 @@
               :purchasable? false
               :upgrade-paths nil
               :operations unit-ops-no-upgrade
-              :sprite "img/crawl-tiles/monster/deep_elf_conjurer.png"}
+              :cost {:juice 1000
+                     :money 750
+                     :knowhow 3000}
+              :sells-for {:juice 1100
+                          :money 850
+                          :knowhow 0}
+              :sprite "img/crawl-tiles/monster/deep_elf_sorcerer.png"}
    :devil {:name "devil"
            :type :creature
            :description "Untrustworthy. Vexing. Litigious. They're only pliant because their Hellish liege is hungry for your magic. Unfortunately for you, the first ones sent up are weak, barely capable of flying let alone trans-dimensional power transfer. Should their liege receive an impressive enough gift, he'll send a more capable (and more efficient) collector to replace them."

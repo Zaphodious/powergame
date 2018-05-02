@@ -27,7 +27,7 @@
    :travelers []
    :juice 10
    :money 20
-   :knowhow 1
+   :knowhow 1000
    :cursor-at 0
    :zoom-level 1
    :max-power 20
@@ -64,6 +64,9 @@
                              (filter #(-> % second :purchasable?))
                              (map first))]
     all-purchasable))
+
+(defn get-immediate-upgrades-for [entity-key]
+  (-> board-defs/units entity-key :upgrade-paths))
 
 (defmulti put-thing-at (fn [a] (-> a :next-input :type)))
 (defmethod put-thing-at :default
@@ -141,9 +144,18 @@
           state-map)
       (assoc :select-amount new-select))))
 
+(defmulti unit-action #(-> % :action-area :piece :key))
+(defmethod unit-action :default
+  [a] a)
+(defmethod unit-action :elf
+  [{{:keys [x y] {:keys [key direction]} :piece} :action-area :as statemap}]
+  (sp/setval [:travelers sp/END] [{:type :juice :value 1 :x x :y y :direction direction :speed 0.2}] statemap))
+
 (defmulti handle-operation (fn [a] (-> a :next-input :operation)))
 (defmethod handle-operation :purchase
   [a] (assoc a :modal-showing :purchase))
+(defmethod handle-operation :upgrade
+  [a] (assoc a :modal-showing :upgrade))
 (defmethod handle-operation :info
   [a] (assoc a :modal-showing :info))
 (defmethod handle-operation :rotate
@@ -176,7 +188,44 @@
                  :power] #(-> %2 inc (max 1) (min %1))
                 app-state))
 
+(defn make-units-act [{:keys [cursor-at] :as app-state}]
+  (let [areas-at-cursor (sp/select-first [:board (sp/keypath cursor-at)] app-state)]
+    (reduce (fn [a b]
+              (unit-action (assoc a :action-area b)))
+            app-state
+            areas-at-cursor)))
+
+(def travel-by-direction
+  {:up (fn [{:keys [x y speed] :as traveler}]
+         (assoc traveler :x (- x speed)))
+   :down (fn [{:keys [x y speed] :as traveler}]
+           (assoc traveler :x (+ x speed)))
+   :left (fn [{:keys [x y speed] :as traveler}]
+           (assoc traveler :y (- y speed)))
+   :right (fn [{:keys [x y speed] :as traveler}]
+            (assoc traveler :y (+ y speed)))})
+(defn make-travelers-travel [{:keys [travelers] :as app-state}]
+  (sp/transform [:travelers sp/ALL]
+                (fn [{:keys [direction] :as traveler}]
+                  ((get travel-by-direction direction) traveler))
+                app-state))
+
+(defn cull-travelers-out-of-bounds [{:keys [height width] :as app-state}]
+  (sp/transform [:travelers]
+                (fn [travs]
+                  (vec
+                    (filter (fn [{:keys [x y] :as traveler}]
+                              (and (<= 0 x)
+                                   (>= height x)
+                                   (<= 0 y)
+                                   (>= width y)))
+                            travs)))
+                app-state))
+
 (defn make-tick [level-state]
   (-> level-state
       charge-board
-      advance-cursor))
+      advance-cursor
+      make-units-act
+      make-travelers-travel
+      cull-travelers-out-of-bounds))
