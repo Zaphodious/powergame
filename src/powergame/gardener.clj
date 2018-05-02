@@ -257,77 +257,104 @@
      [:&.zoom-level3 {:--board-zoom-level 1.7}]
      [:&.zoom-level4 {:--board-zoom-level 2.1}]
      [:&.zoom-level5 {:--board-zoom-level 2.7}]]
-    [:table {:position :relative
-             :border-collapse :collapse
-             :z-index -10
-             :margin-right :auto ;(-vmin 2)
-             :margin-left :auto ;(-vmin 2)
-             :margin-top (-vmin menubar-height)
-             :margin-bottom (-vmin menubar-height)}
-             ;:background-color :grey
-             ;:margin "0 auto"}
-     [:tr {:background-color (gc/lighten main-color 10)
-           :transition ["background-color .2s"]
-           :border-width :0px
-           :border-style :solid}
-      [:&.cursor-at {:background-color :red}
-       [:td.board-area
-        [:button {:--selected-box (url "../img/crawl-tiles/misc/cursor_green.png")}
-         [:&.selected {:--selected-box (url "../img/crawl-tiles/misc/cursor_red.png")}]]]]]
-     [:td.board-area {:--board-zoom-level :inherit
-                      :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
-                      :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))
-                      :margin 0
-                      :padding 0
-                      :border-style :solid
-                      :border-width :0px}
-                     (map (fn [i]
-                            [(keyword (str "button.floor" i))
-                             {:--tile (url (str \" "../img/crawl-tiles/dungeon/floor/cobble_blood_"i"_new"
-                                                ".png" \"))}])
-                          (range 13))
-       [:button {:--sprite (url "")
-                 :--tile (url "")
-                 :--direction (url "")
-                 :--board-zoom-level :inherit
-                 :--selected-box (url "")
-                 :min-width       :inherit
-                 :height          :inherit
-                 :text-align      :center
-                 :text-shadow     "0px 0px 3px white"
-                 :color           :white
-                 :border-width    :0px
-                 :background-image      [(-var :--selected-box)
-                                         (-var :--sprite)
-                                         (-var :--direction)
-                                         (-var :--tile)]
-                 :background-size [:cover
-                                   (calchelper :26px * (-var :--board-zoom-level))
-                                   (calchelper :10px * (-var :--board-zoom-level))
-                                   :cover]
-                 :background-repeat :no-repeat
-                 :background-position [:center
-                                       "bottom right"
-                                       "top left"
-                                       :center]
-                 :padding         0
-                 :margin          0}
-        [:&.selected
-         {:--selected-box (url "../img/crawl-tiles/misc/cursor.png")}]
-        [:span.label {:--board-zoom-level :inherit
-                                :position :relative
-                                :font-size (calchelper :10px * (-var :--board-zoom-level))
-                                :top (-px (/ board-area-size 4))}]]]]]
-   (map (fn [a] [(keyword (str ".direction." (name a))) {:--direction (url (pr-str (str "../img/" (name a) "_arrow.png")))}])
-        [:up :down :left :right])
+
+    [:.board-container {:display :block
+                        :position :relative
+                        :margin-right :auto ;(-vmin 2)
+                        :margin-left :auto
+                        :width :100px
+                        :margin-top (-vmin menubar-height)
+                        :margin-bottom (-vmin menubar-height)} ;(-vmin 2)}
+
+     [:.traveler {:--board-zoom-level :inherit
+                  :--pos-x :10px
+                  :--pos-y :0px
+                  :--new-pos-x (calchelper (-px board-area-size) * (-var :--pos-x))
+                  :--sprite (url "")
+                  :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
+                  :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))
+                  :position :absolute
+                  :border-radius :10px
+                  :background-image (-var :--sprite)
+                  :background-repeat :no-repeat
+                  :background-position :center
+                  :background-size (calchelper (-px board-area-size) * (-var :--board-zoom-level))
+                  :color :white
+                  :top (calchelper board-area-size * (-var :--pos-x) * (-var :--board-zoom-level)) ;+ (-px (/ board-area-size 2)))
+                  :left (calchelper board-area-size * (-var :--pos-y) * (-var :--board-zoom-level)) ;+ (-px (/ board-area-size 2)))
+                  :transition [(str "top " board-defs/game-step-time-in-seconds"s linear")
+                               (str "left " board-defs/game-step-time-in-seconds"s linear")]
+                  :transition-timing-function :linear}
+      (map (fn [[a {:keys [name sprite] :as traveler}]]
+             [(keyword (str "&." name)) {:--sprite (url (pr-str (str "../" sprite)))}])
+           board-defs/travelers)]
+     [:table {:border-collapse :collapse
+              :z-index -10}
+              ;:background-color :grey
+              ;:margin "0 auto"}
+      [:tr {:background-color (gc/lighten main-color 10)
+            :transition ["background-color .2s"]
+            :border-width :0px
+            :border-style :solid}
+       [:&.cursor-at {:background-color :red}
+        [:td.board-area
+         [:button {:--selected-box (url "../img/crawl-tiles/misc/cursor_green.png")}
+          [:&.selected {:--selected-box (url "../img/crawl-tiles/misc/cursor_red.png")}]]]]]
+      [:td.board-area {:--board-zoom-level :inherit
+                       :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
+                       :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))
+                       :margin 0
+                       :padding 0
+                       :border-style :solid
+                       :border-width :0px}
+                      (map (fn [i]
+                             [(keyword (str "button.floor" i))
+                              {:--tile (url (str \" "../img/crawl-tiles/dungeon/floor/cobble_blood_"i"_new"
+                                                 ".png" \"))}])
+                           (range 13))
+        [:button {:--sprite (url "")
+                  :--tile (url "")
+                  :--direction (url "")
+                  :--board-zoom-level :inherit
+                  :--selected-box (url "")
+                  :min-width       :inherit
+                  :height          :inherit
+                  :text-align      :center
+                  :text-shadow     "0px 0px 3px white"
+                  :color           :white
+                  :border-width    :0px
+                  :background-image      [(-var :--selected-box)
+                                          (-var :--sprite)
+                                          (-var :--direction)
+                                          (-var :--tile)]
+                  :background-size [:cover
+                                    (calchelper :26px * (-var :--board-zoom-level))
+                                    (calchelper :10px * (-var :--board-zoom-level))
+                                    :cover]
+                  :background-repeat :no-repeat
+                  :background-position [:center
+                                        "bottom right"
+                                        "top left"
+                                        :center]
+                  :padding         0
+                  :margin          0}
+         [:&.selected
+          {:--selected-box (url "../img/crawl-tiles/misc/cursor.png")}]
+         [:span.label {:--board-zoom-level :inherit
+                                 :position :relative
+                                 :font-size (calchelper :10px * (-var :--board-zoom-level))
+                                 :top (-px (/ board-area-size 4))}]]]]
+     (map (fn [a] [(keyword (str ".direction." (name a))) {:--direction (url (pr-str (str "../img/" (name a) "_arrow.png")))}])
+          [:up :down :left :right])
+     (map (fn [[thingname img]]
+            [(keyword (str ".unit." thingname))
+             {:--sprite (url (pr-str (str "../" img)))}])
+          (sp/select
+            [sp/ALL sp/LAST (sp/collect-one :name) :sprite]
+            board-defs/units))]]
+
    (map (fn [[thingname img]]
           [(keyword (str ".operation." thingname))
            {:--sprite (url (pr-str (str "../" img)))}])
-     (sp/select [sp/ALL sp/LAST (sp/collect-one :name) :image] board-defs/operations))
-   (map (fn [[thingname img]]
-          [(keyword (str ".unit." thingname))
-           {:--sprite (url (pr-str (str "../" img)))}])
-        (sp/select
-          [sp/ALL sp/LAST (sp/collect-one :name) :sprite]
-          board-defs/units))])
+        (sp/select [sp/ALL sp/LAST (sp/collect-one :name) :image] board-defs/operations))])
 

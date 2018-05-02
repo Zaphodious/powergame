@@ -96,7 +96,7 @@
                 :sprite "img/crawl-tiles/monster/demons/cacodemon.png"}
    :fountain {:name    "fountain"
               :type    :fixture
-              :description "Eons in the past, the ancient wizards of Thraum infused the world with magic. While they only intended to make their own workings easier, their power was immense, and the results of their efforts persist to this day! We are not as powerful, so to use this magic we must build special structures to condense and concentrate it. Special rituals exist which can enhance these fountains, and perhaps through them we'll get to where the ancient wizards left off..."
+              :description "Eons in the past, the ancient wizards of Thraum infused the world with magic. While they only intended to make their own workings easier, their power was immense, and the results of their efforts persist to this day! We are not as powerful, so to use this magic we must build special structures to condense and concentrate it. When the fountain is full, it overflows, spilling magic onto the ground next to it. Special rituals exist which can enhance these fountains, and perhaps through them we'll get to where the ancient wizards left off..."
               :purchasable? true
               :cost {:juice 1
                      :money 1
@@ -133,6 +133,19 @@
                     :upgrade-paths nil
                     :operations unit-ops-no-upgrade
                     :sprite "img/crawl-tiles/dungeon/blood_fountain.png"}})
+
+(def travelers {:dart {:name "dart"
+                       :type :juice
+                       :sprite "img/magic_dart_anim.png"
+                       :energy 10000
+                       :lifetime 10000
+                       :speed 0.2}
+                :splash {:name "splash"
+                         :type :juice
+                         :sprite "img/crawl-tiles/effect/cloud_spectral_0.png"
+                         :lifetime 10
+                         :energy 1
+                         :speed 1}})
 
 (def operations {:purchase {:name "purchase"
                             :description "Add A Thing"
@@ -171,3 +184,5 @@
                      :right :down
                      :down :left
                      :left :up})
+
+(def game-step-time-in-seconds 0.5)

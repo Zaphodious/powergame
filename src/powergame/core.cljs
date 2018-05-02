@@ -3,6 +3,7 @@
             [powergame.bizlogic :as gc]
             [powergame.gameui :as gui]
             [clojure.core.async :as async]
+            [powergame.board-defs :as board-defs]
             [oops.core :refer [oget oset! ocall oapply ocall! oapply!
                                oget+ oset!+ ocall+ oapply+ ocall!+ oapply!+]]))
 
@@ -12,7 +13,7 @@
 
 ;; define your app data so that it doesn't get over-written on reload
 
-(def tick-speed 500)
+(def tick-speed (* 1000 board-defs/game-step-time-in-seconds))
 (defonce
   input-buffer (async/chan 10))
 (defonce logic-done-buffer (async/chan 50))

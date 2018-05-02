@@ -149,7 +149,16 @@
   [a] a)
 (defmethod unit-action :elf
   [{{:keys [x y] {:keys [key direction]} :piece} :action-area :as statemap}]
-  (sp/setval [:travelers sp/END] [{:type :juice :value 1 :x x :y y :direction direction :speed 0.2}] statemap))
+  (println "Elf is acting!")
+  (sp/setval [:travelers sp/END] [(into (:dart board-defs/travelers)
+                                    {:value 1 :x x :y y :id (rand) :direction direction})]
+                                 statemap))
+(defmethod unit-action :fountain
+  [{{:keys [x y] {:keys [key direction]} :piece} :action-area :as statemap}]
+  (println "Fountain is acting!")
+  (sp/setval [:travelers sp/END] [(into (:splash board-defs/travelers)
+                                    {:value 1 :x x :y y :id (rand) :direction direction})]
+                                 statemap))
 
 (defmulti handle-operation (fn [a] (-> a :next-input :operation)))
 (defmethod handle-operation :purchase
@@ -204,21 +213,32 @@
            (assoc traveler :y (- y speed)))
    :right (fn [{:keys [x y speed] :as traveler}]
             (assoc traveler :y (+ y speed)))})
+(defn tick-down-traveler [{:keys [lifetime energy] :as traveler}]
+  (assoc traveler :lifetime (dec lifetime) :energy (dec energy)))
 (defn make-travelers-travel [{:keys [travelers] :as app-state}]
   (sp/transform [:travelers sp/ALL]
-                (fn [{:keys [direction] :as traveler}]
-                  ((get travel-by-direction direction) traveler))
+                (fn [{:keys [direction energy lifetime] :as traveler}]
+                  (tick-down-traveler
+                    (if (< 0 energy)
+                        ((get travel-by-direction direction) traveler)
+                        traveler)))
                 app-state))
 
 (defn cull-travelers-out-of-bounds [{:keys [height width] :as app-state}]
   (sp/transform [:travelers]
                 (fn [travs]
                   (vec
-                    (filter (fn [{:keys [x y] :as traveler}]
-                              (and (<= 0 x)
-                                   (>= height x)
-                                   (<= 0 y)
-                                   (>= width y)))
+                    (filter (fn [{:keys [x y lifetime] :as traveler}]
+                              ;(println "x "x " y "y)
+                              ;(println "h " height " w " width)
+                              (and (< -0.2 x)
+                                   (> (- height 0.3)
+                                      x)
+                                   (< -0.2 y)
+                                   (> (- width 0.3)
+                                      y)
+                                   (> lifetime 0)))
+
                             travs)))
                 app-state))
 
@@ -226,6 +246,6 @@
   (-> level-state
       charge-board
       advance-cursor
-      make-units-act
       make-travelers-travel
+      make-units-act
       cull-travelers-out-of-bounds))

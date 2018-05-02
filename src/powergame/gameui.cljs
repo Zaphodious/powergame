@@ -24,14 +24,31 @@
                :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
       [:span.label (str power)]]])) ;"(" x "," y ")")]])
 
+(defn printpass [a] (println a) a)
+(rum/defc traveler-component
+  [app-state]
+  (sp/transform
+    [sp/ALL]
+    (fn [{:keys [x y id name] :as traveler}]
+      [:.traveler {:id    (str "traveler-" id)
+                   :class name
+                   :key   (str "traveler-" id)
+                   :style #js{:--pos-x (str x "px")
+                              :--pos-y (str y "px")}}
+       ""])
+    (sp/select [:travelers sp/ALL] app-state)))
+
 (rum/defc board-component [{:keys [board input-fn cursor-at] :as app-state}]
-  [:table
-   [:tbody
-    (map-indexed (fn [n a]
-                   [:tr {:class (when (= n cursor-at)"cursor-at")}
-                    (map #(board-area (assoc % :input-fn input-fn))
-                          a)])
-         board)]])
+  [:.board-container
+   (traveler-component app-state)
+   [:table
+    [:tbody
+     (map-indexed (fn [n a]
+                    [:tr {:class (when (= n cursor-at)"cursor-at")}
+                     (map #(board-area (assoc % :input-fn input-fn))
+                           a)])
+          board)]]])
+
 
 (rum/defc purchase-modal [{:keys [input-fn] :as app-state}]
   (let [purchasable-keys (gc/get-purchasable-units app-state)]
