@@ -80,13 +80,49 @@
     (if (= select-amount :single) (deselect-all statemap) statemap)))
 
 (defmethod put-thing-at :unit
-  [{:keys [board]
-    {:keys [value]} :next-input
+  [{:keys [board juice money knowhow]
+    {:keys [value pay-cost]} :next-input
     :as statemap}]
   (let [selected-areas (get-selected-areas statemap)
-        modmap (sp/setval [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] value statemap)]
-    (println "selected is " selected-areas "and modmap is " modmap)
-    modmap))
+        units-to-add (count selected-areas)
+        {{cost-money :money
+          cost-juice :juice
+          cost-knowhow :knowhow} :cost :as thing-to-add} (get board-defs/units value)
+        can-pay? (and (<= (* units-to-add cost-money)
+                          money)
+                      (<= (* units-to-add cost-juice)
+                          juice)
+                      (<= cost-knowhow
+                          knowhow))
+        price-adjusted-map (if (and pay-cost can-pay?)
+                             (->> statemap
+                                  (sp/transform [:money] (fn [a] (- a (* units-to-add cost-money))))
+                                  (sp/transform [:juice] (fn [a] (- a (* units-to-add cost-juice)))))
+                             statemap)
+        modmap
+        (if (or (not pay-cost) can-pay?)
+          (sp/setval [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] value price-adjusted-map)
+          statemap)]
+    (println "money cost is " (* units-to-add cost-money))
+    (println "selected is " selected-areas)
+    (assoc modmap :modal-showing nil)))
+
+(defmethod put-thing-at :sell-unit
+  [{:keys [next-input] :as statemap}]
+  (println "recoupe type is " next-input)
+  (let [selected-units (sp/select [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] statemap)
+        as-costs (sp/transform [sp/ALL]
+                               (fn [a] (get (get board-defs/units a) (:recoupe-type next-input)))
+                               selected-units)
+        recouped (reduce #(merge-with + %1 %2)
+                         {:money 0
+                          :juice 0}
+                         as-costs)
+        units-removed (sp/setval [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] :empty statemap)]
+    (merge-with + units-removed
+                recouped)))
+
+
 
 (defn put-space [{:keys [board y x space]}]
   (sp/transform [(sp/keypath x y)] (make-fn space) board))
@@ -105,10 +141,18 @@
           state-map)
       (assoc :select-amount new-select))))
 
-(defn handle-operation [{:keys [next-input board zoom-level] :as state-map}]
-  (println "OPERATION! " (:operation next-input))
-  (let [{:keys [on-activate] :as op} (get board-defs/operations (:operation next-input))]
-    (on-activate state-map)))
+(defmulti handle-operation (fn [a] (-> a :next-input :operation)))
+(defmethod handle-operation :purchase
+  [a] (assoc a :modal-showing :purchase))
+(defmethod handle-operation :info
+  [a] (assoc a :modal-showing :info))
+(defmethod handle-operation :rotate
+  [a] (sp/transform [:board sp/ALL sp/ALL (sp/pred :selected) :piece :direction] #(% board-defs/rotation-order) a))
+(defmethod handle-operation :sell
+  [a]
+  (println "selling the things! " (get-selected-areas a))
+  (put-thing-at (assoc a :next-input {:type :sell-unit :recoupe-type :sells-for})))
+
 
 (defn process-input [{:keys [next-input board zoom-level] :as state-map}]
   (println "Doin' " next-input)
