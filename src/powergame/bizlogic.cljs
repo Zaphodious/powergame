@@ -154,11 +154,14 @@
                                     {:value 1 :x x :y y :id (rand) :direction direction})]
                                  statemap))
 (defmethod unit-action :fountain
-  [{{:keys [x y] {:keys [key direction]} :piece} :action-area :as statemap}]
+  [{{:keys [x y power] {:keys [key direction]} :piece} :action-area :as statemap}]
   (println "Fountain is acting!")
-  (sp/setval [:travelers sp/END] [(into (:splash board-defs/travelers)
-                                    {:value 1 :x x :y y :id (rand) :direction direction})]
-                                 statemap))
+  (if (>= power 10)
+    (->> statemap
+         (sp/setval [(sp/keypath :board x y :power)] (- power 10))
+         (sp/setval [:travelers sp/END] [(into (:splash board-defs/travelers)
+                                           {:value 1 :x x :y y :id (rand) :direction direction})]))
+    statemap))
 
 (defmulti handle-operation (fn [a] (-> a :next-input :operation)))
 (defmethod handle-operation :purchase
