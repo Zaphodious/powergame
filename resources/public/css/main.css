@@ -175,6 +175,7 @@ html #menubar-bottom #buttonbar button .sprite {
 
 html #menubar-bottom #buttonbar button .label {
   font-family: inherit;
+  font-size: 0.8em;
 }
 
 html #menubar-bottom #buttonbar button hr {
@@ -318,11 +319,11 @@ html table tr.cursor-at {
 }
 
 html table tr.cursor-at td.board-area button {
-  --tile: url(../img/crawl-tiles/dc-dngn/floor/lava0.png);
+  --tile: url(../img/crawl-tiles/dungeon/floor/lava_0.png);
 }
 
 html table tr.cursor-at td.board-area button.selected {
-  --tile: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad_hot.png);
+  --tile: url(../img/crawl-tiles/dungeon/floor/sigil_circle.png);
 }
 
 html table td.board-area {
@@ -336,75 +337,78 @@ html table td.board-area {
 }
 
 html table td.board-area button.floor0 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood0.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_0_new.png");
 }
 
 html table td.board-area button.floor1 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood1.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_1_new.png");
 }
 
 html table td.board-area button.floor2 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood2.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_2_new.png");
 }
 
 html table td.board-area button.floor3 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood3.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_3_new.png");
 }
 
 html table td.board-area button.floor4 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood4.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_4_new.png");
 }
 
 html table td.board-area button.floor5 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood5.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_5_new.png");
 }
 
 html table td.board-area button.floor6 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood6.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_6_new.png");
 }
 
 html table td.board-area button.floor7 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood7.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_7_new.png");
 }
 
 html table td.board-area button.floor8 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood8.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_8_new.png");
 }
 
 html table td.board-area button.floor9 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood9.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_9_new.png");
 }
 
 html table td.board-area button.floor10 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood10.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_10_new.png");
 }
 
 html table td.board-area button.floor11 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood11.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_11_new.png");
 }
 
 html table td.board-area button.floor12 {
-  --tile: url("../img/crawl-tiles/dc-dngn/floor/cobble_blood12.png");
+  --tile: url("../img/crawl-tiles/dungeon/floor/cobble_blood_12_new.png");
 }
 
 html table td.board-area button {
   min-width: inherit;
+  background-position: bottom right, top left, center;
   border-width: 0px;
+  background-repeat: no-repeat;
   height: inherit;
   margin: 0;
   padding: 0;
   text-align: center;
-  --background-thing: var(--tile), var(--sprite);
   --tile: url();
-  background-size: cover, cover;
+  --direction: url();
+  background-size: calc(26px  *  var(--board-zoom-level)), calc(10px  *  var(--board-zoom-level)), cover;
   --sprite: url();
-  background-image: var(--sprite), var(--tile);
+  background-image: var(--sprite), var(--direction), var(--tile);
   text-shadow: 0px 0px 3px white;
   color: white;
+  --board-zoom-level: inherit;
 }
 
 html table td.board-area button.selected {
-  --tile: url(../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png);
+  --tile: url(../img/crawl-tiles/dungeon/floor/tutorial_pad.png);
 }
 
 html table td.board-area button span.label {
@@ -414,12 +418,28 @@ html table td.board-area button span.label {
   top: 7.5px;
 }
 
+.direction.up {
+  --direction: url("../img/up_arrow.png");
+}
+
+.direction.down {
+  --direction: url("../img/down_arrow.png");
+}
+
+.direction.left {
+  --direction: url("../img/left_arrow.png");
+}
+
+.direction.right {
+  --direction: url("../img/right_arrow.png");
+}
+
 .operation.purchase {
-  --sprite: url("../img/crawl-tiles/item/misc/gold_pile.png");
+  --sprite: url("../img/crawl-tiles/item/gold/gold_pile.png");
 }
 
 .operation.swap {
-  --sprite: url("../img/crawl-tiles/spells/translocation/blink.png");
+  --sprite: url("../img/crawl-tiles/gui/spells/translocation/blink.png");
 }
 
 .operation.info {
@@ -427,29 +447,53 @@ html table td.board-area button span.label {
 }
 
 .operation.rotate {
-  --sprite: url("../img/crawl-tiles/spells/enchantment/confusing_touch.png");
+  --sprite: url("../img/crawl-tiles/gui/spells/enchantment/confusing_touch_old.png");
 }
 
 .operation.upgrade {
-  --sprite: url("../img/crawl-tiles/spells/memorise.png");
+  --sprite: url("../img/crawl-tiles/gui/spells/memorise.png");
 }
 
 .operation.sell {
-  --sprite: url("../img/crawl-tiles/spells/translocation/banishment.png");
+  --sprite: url("../img/crawl-tiles/gui/spells/translocation/banishment.png");
+}
+
+.unit.gold-devil {
+  --sprite: url("../img/crawl-tiles/monster/demons/cacodemon.png");
+}
+
+.unit.deep-elf {
+  --sprite: url("../img/crawl-tiles/monster/deep_elf_conjurer.png");
+}
+
+.unit.crystal-fountain {
+  --sprite: url("../img/crawl-tiles/dungeon/sparkling_fountain.png");
+}
+
+.unit.high-elf {
+  --sprite: url("../img/crawl-tiles/monster/deep_elf_conjurer.png");
+}
+
+.unit.fountain {
+  --sprite: url("../img/crawl-tiles/dungeon/dry_fountain.png");
 }
 
 .unit.empty {
   --sprite: url("../");
 }
 
-.unit.elf {
-  --sprite: url("../");
+.unit.elf-mage {
+  --sprite: url("../img/crawl-tiles/monster/deep_elf_annihilator.png");
+}
+
+.unit.blood-fountain {
+  --sprite: url("../img/crawl-tiles/dungeon/blood_fountain.png");
+}
+
+.unit.corpulent-devil {
+  --sprite: url("../img/crawl-tiles/monster/demons/blue_death.png");
 }
 
 .unit.devil {
-  --sprite: url("../");
-}
-
-.unit.fountain {
-  --sprite: url("../");
+  --sprite: url("../img/crawl-tiles/monster/demons/blue_devil_new.png");
 }

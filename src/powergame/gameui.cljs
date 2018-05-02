@@ -5,19 +5,26 @@
             [com.rpl.specter :as sp]
             [powergame.board-defs :as board-defs]))
 
-(rum/defc board-area [{:keys [piece power status y x selected input-fn terrain]}]
-  [:td.board-area
-   [:button {:class (str
-                      (if selected "selected" "quiet")
-                      " "
-                      (name status)
-                      " "
-                      (str terrain))
-             :type "button"
-             :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
-    [:span.label (str power)]]]) ;"(" x "," y ")")]])
+(rum/defc board-area [{{:keys [key direction] :as piece} :piece
+                       :keys [power status y x selected input-fn terrain]}]
+  (let [{unitname :name :as unit-info} (get board-defs/units key)]
+    [:td.board-area
+     [:button {:class (str
+                        (if selected "selected" "quiet")
+                        " "
+                        (name status)
+                        " "
+                        (str terrain)
+                        " "
+                        (str "unit " unitname)
+                        " "
+                        (when (not (= :empty key))
+                          (str "direction " (name direction))))
+               :type "button"
+               :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
+      [:span.label (str power)]]])) ;"(" x "," y ")")]])
 
-(rum/defc board-component [{:keys [board input-fn cursor-at]}]
+(rum/defc board-component [{:keys [board input-fn cursor-at] :as app-state}]
   [:table
    [:tbody
     (map-indexed (fn [n a]
@@ -26,7 +33,7 @@
                           a)])
          board)]])
 
-(rum/defc purchase-modal [app-state]
+(rum/defc purchase-modal [{:keys [input-fn] :as app-state}]
   (let [purchasable-keys (gc/get-purchasable-units app-state)]
     [:.purchase-list
      (map (fn [a] (let [{namething :name
@@ -44,8 +51,9 @@
                        [:.knowhow "Minimum Know How " knowhow]]
                       [:.button-bar
                        [:button {:type :button
-                                 :disabled true}
-                        "Purchase"]]]))
+                                 :onClick #(input-fn {:type :unit :value a})}
+                        "Purchase"]]
+                      [:div (pr-str (gc/get-selected-areas app-state))]]))
           purchasable-keys)]))
 
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]

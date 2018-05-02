@@ -188,7 +188,8 @@
                   :background-size :cover
                   :background-repeat :no-repeat
                   :background-position "center center"}]
-       [:.label {:font-family :inherit}]
+       [:.label {:font-family :inherit
+                 :font-size :0.8em}]
        [:hr {:margin (-vmin 0.05)
              :padding (str "0 " (-vmin (/ menubar-height 2)))}]]]]
     [:#modal {:transition "top 0.5s, bottom 0.5s, left 0.5s, right 0.5s"
@@ -271,8 +272,8 @@
            :border-style :solid}
       [:&.cursor-at {:background-color :red}
        [:td.board-area
-        [:button {:--tile (url "../img/crawl-tiles/dc-dngn/floor/lava0.png")}
-         [:&.selected {:--tile (url "../img/crawl-tiles/dc-dngn/floor/tutorial_pad_hot.png")}]]]]]
+        [:button {:--tile (url "../img/crawl-tiles/dungeon/floor/lava_0.png")}
+         [:&.selected {:--tile (url "../img/crawl-tiles/dungeon/floor/sigil_circle.png")}]]]]]
      [:td.board-area {:--board-zoom-level :inherit
                       :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
                       :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))
@@ -282,28 +283,39 @@
                       :border-width :0px}
                      (map (fn [i]
                             [(keyword (str "button.floor" i))
-                             {:--tile (url (str \" "../img/crawl-tiles/dc-dngn/floor/cobble_blood" i
+                             {:--tile (url (str \" "../img/crawl-tiles/dungeon/floor/cobble_blood_"i"_new"
                                                 ".png" \"))}])
                           (range 13))
        [:button {:--sprite (url "")
                  :--tile (url "")
+                 :--direction (url "")
+                 :--board-zoom-level :inherit
                  :min-width       :inherit
                  :height          :inherit
                  :text-align      :center
                  :text-shadow     "0px 0px 3px white"
                  :color           :white
                  :border-width    :0px
-                 :--background-thing [ (-var :--tile)(-var :--sprite)]
-                 :background-image      [(-var :--sprite)(-var :--tile)]
-                 :background-size [:cover :cover]
+                 :background-image      [(-var :--sprite)
+                                         (-var :--direction)
+                                         (-var :--tile)]
+                 :background-size [(calchelper :26px * (-var :--board-zoom-level))
+                                   (calchelper :10px * (-var :--board-zoom-level))
+                                   :cover]
+                 :background-repeat :no-repeat
+                 :background-position ["bottom right"
+                                       "top left"
+                                       :center]
                  :padding         0
                  :margin          0}
         [:&.selected
-         {:--tile (url "../img/crawl-tiles/dc-dngn/floor/tutorial_pad.png")}]
+         {:--tile (url "../img/crawl-tiles/dungeon/floor/tutorial_pad.png")}]
         [:span.label {:--board-zoom-level :inherit
                                 :position :relative
                                 :font-size (calchelper :10px * (-var :--board-zoom-level))
                                 :top (-px (/ board-area-size 4))}]]]]]
+   (map (fn [a] [(keyword (str ".direction." (name a))) {:--direction (url (pr-str (str "../img/" (name a) "_arrow.png")))}])
+        [:up :down :left :right])
    (map (fn [[thingname img]]
           [(keyword (str ".operation." thingname))
            {:--sprite (url (pr-str (str "../" img)))}])

@@ -9,7 +9,8 @@
          (fn [x a] (->> width
                         range
                         (map-indexed
-                          (fn [y b] {:piece    {:type :empty}
+                          (fn [y b] {:piece    {:key :empty
+                                                :direction :up}
                                      :power    10
                                      :y        y
                                      :x        x
@@ -48,7 +49,7 @@
   (let [the-selected (get-selected-areas statemap)
         multi-mode (if (get the-selected 1) :multi? :single?)
         all-opts (->> the-selected
-                      (sp/select [sp/ALL :piece :type])
+                      (sp/select [sp/ALL :piece :key])
                       (sp/transform [sp/ALL] #(% board-defs/units))
                       (sp/select [sp/ALL :operations sp/ALL])
                       (filter #(multi-mode (% board-defs/operations)))
@@ -77,6 +78,15 @@
     :as statemap}]
   (sp/transform [(sp/keypath x y type)] (make-fn value)
     (if (= select-amount :single) (:board (deselect-all statemap)) board)))
+
+(defmethod put-thing-at :unit
+  [{:keys [board]
+    {:keys [value]} :next-input
+    :as statemap}]
+  (let [selected-areas (get-selected-areas statemap)
+        modmap (sp/setval [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] value statemap)]
+    (println "selected is " selected-areas "and modmap is " modmap)
+    (:board modmap)))
 
 (defn put-space [{:keys [board y x space]}]
   (sp/transform [(sp/keypath x y)] (make-fn space) board))
