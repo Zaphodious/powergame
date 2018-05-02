@@ -70,14 +70,14 @@
   [{:keys [board]
     {:keys [y x type value]} :next-input
     :as statemap}]
-  (sp/transform [(sp/keypath x y type)] (make-fn value) board))
+  (sp/transform [(sp/keypath :board x y type)] (make-fn value) statemap))
 
 (defmethod put-thing-at :selected
   [{:keys [board select-amount]
     {:keys [y x type value]} :next-input
     :as statemap}]
-  (sp/transform [(sp/keypath x y type)] (make-fn value)
-    (if (= select-amount :single) (:board (deselect-all statemap)) board)))
+  (sp/transform [(sp/keypath :board x y type)] (make-fn value)
+    (if (= select-amount :single) (deselect-all statemap) statemap)))
 
 (defmethod put-thing-at :unit
   [{:keys [board]
@@ -86,7 +86,7 @@
   (let [selected-areas (get-selected-areas statemap)
         modmap (sp/setval [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] value statemap)]
     (println "selected is " selected-areas "and modmap is " modmap)
-    (:board modmap)))
+    modmap))
 
 (defn put-space [{:keys [board y x space]}]
   (sp/transform [(sp/keypath x y)] (make-fn space) board))
@@ -118,7 +118,7 @@
     :zoom-down (assoc state-map :zoom-level (-> zoom-level dec (min 5) (max 1)))
     :operation (handle-operation state-map)
     :close-modal (assoc state-map :modal-showing nil)
-    (assoc state-map :board (put-thing-at state-map))))
+    (put-thing-at state-map)))
 
 (defn advance-cursor [{:keys [cursor-at height] :as app-state}]
   (let [next (inc cursor-at)

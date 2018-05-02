@@ -272,8 +272,8 @@
            :border-style :solid}
       [:&.cursor-at {:background-color :red}
        [:td.board-area
-        [:button {:--tile (url "../img/crawl-tiles/dungeon/floor/lava_0.png")}
-         [:&.selected {:--tile (url "../img/crawl-tiles/dungeon/floor/sigil_circle.png")}]]]]]
+        [:button {:--selected-box (url "../img/crawl-tiles/misc/cursor_green.png")}
+         [:&.selected {:--selected-box (url "../img/crawl-tiles/misc/cursor_red.png")}]]]]]
      [:td.board-area {:--board-zoom-level :inherit
                       :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
                       :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))
@@ -290,26 +290,30 @@
                  :--tile (url "")
                  :--direction (url "")
                  :--board-zoom-level :inherit
+                 :--selected-box (url "")
                  :min-width       :inherit
                  :height          :inherit
                  :text-align      :center
                  :text-shadow     "0px 0px 3px white"
                  :color           :white
                  :border-width    :0px
-                 :background-image      [(-var :--sprite)
+                 :background-image      [(-var :--selected-box)
+                                         (-var :--sprite)
                                          (-var :--direction)
                                          (-var :--tile)]
-                 :background-size [(calchelper :26px * (-var :--board-zoom-level))
+                 :background-size [:cover
+                                   (calchelper :26px * (-var :--board-zoom-level))
                                    (calchelper :10px * (-var :--board-zoom-level))
                                    :cover]
                  :background-repeat :no-repeat
-                 :background-position ["bottom right"
+                 :background-position [:center
+                                       "bottom right"
                                        "top left"
                                        :center]
                  :padding         0
                  :margin          0}
         [:&.selected
-         {:--tile (url "../img/crawl-tiles/dungeon/floor/tutorial_pad.png")}]
+         {:--selected-box (url "../img/crawl-tiles/misc/cursor.png")}]
         [:span.label {:--board-zoom-level :inherit
                                 :position :relative
                                 :font-size (calchelper :10px * (-var :--board-zoom-level))

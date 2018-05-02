@@ -319,11 +319,11 @@ html table tr.cursor-at {
 }
 
 html table tr.cursor-at td.board-area button {
-  --tile: url(../img/crawl-tiles/dungeon/floor/lava_0.png);
+  --selected-box: url(../img/crawl-tiles/misc/cursor_green.png);
 }
 
 html table tr.cursor-at td.board-area button.selected {
-  --tile: url(../img/crawl-tiles/dungeon/floor/sigil_circle.png);
+  --selected-box: url(../img/crawl-tiles/misc/cursor_red.png);
 }
 
 html table td.board-area {
@@ -390,7 +390,7 @@ html table td.board-area button.floor12 {
 
 html table td.board-area button {
   min-width: inherit;
-  background-position: bottom right, top left, center;
+  background-position: center, bottom right, top left, center;
   border-width: 0px;
   background-repeat: no-repeat;
   height: inherit;
@@ -399,16 +399,17 @@ html table td.board-area button {
   text-align: center;
   --tile: url();
   --direction: url();
-  background-size: calc(26px  *  var(--board-zoom-level)), calc(10px  *  var(--board-zoom-level)), cover;
+  background-size: cover, calc(26px  *  var(--board-zoom-level)), calc(10px  *  var(--board-zoom-level)), cover;
   --sprite: url();
-  background-image: var(--sprite), var(--direction), var(--tile);
+  --selected-box: url();
+  background-image: var(--selected-box), var(--sprite), var(--direction), var(--tile);
   text-shadow: 0px 0px 3px white;
   color: white;
   --board-zoom-level: inherit;
 }
 
 html table td.board-area button.selected {
-  --tile: url(../img/crawl-tiles/dungeon/floor/tutorial_pad.png);
+  --selected-box: url(../img/crawl-tiles/misc/cursor.png);
 }
 
 html table td.board-area button span.label {
