@@ -25,8 +25,8 @@
    :width     width
    :board     (make-game-board init-args)
    :travelers []
-   :juice 10
-   :money 20
+   :juice 200
+   :money 200
    :knowhow 1000
    :cursor-at 0
    :zoom-level 1
@@ -104,7 +104,9 @@
                              statemap)
         modmap
         (if (or (not pay-cost) can-pay?)
-          (sp/setval [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] value price-adjusted-map)
+          (sp/transform [:board sp/ALL sp/ALL (sp/pred :selected) :piece] (fn [a] (assoc a :key value
+                                                                                           :id (rand)))
+                        price-adjusted-map)
           statemap)]
     (println "money cost is " (* units-to-add cost-money))
     (println "selected is " selected-areas)
@@ -145,23 +147,7 @@
       (assoc :select-amount new-select))))
 
 (defmulti unit-action #(-> % :action-area :piece :key))
-(defmethod unit-action :default
-  [a] a)
-(defmethod unit-action :elf
-  [{{:keys [x y] {:keys [key direction]} :piece} :action-area :as statemap}]
-  (println "Elf is acting!")
-  (sp/setval [:travelers sp/END] [(into (:dart board-defs/travelers)
-                                    {:value 1 :x x :y y :id (rand) :direction direction})]
-                                 statemap))
-(defmethod unit-action :fountain
-  [{{:keys [x y power] {:keys [key direction]} :piece} :action-area :as statemap}]
-  (println "Fountain is acting!")
-  (if (>= power 10)
-    (->> statemap
-         (sp/setval [(sp/keypath :board x y :power)] (- power 10))
-         (sp/setval [:travelers sp/END] [(into (:splash board-defs/travelers)
-                                           {:value 1 :x x :y y :id (rand) :direction direction})]))
-    statemap))
+(defmulti traveler-unit-intercept #(-> % :action-area :piece :key))
 
 (defmulti handle-operation (fn [a] (-> a :next-input :operation)))
 (defmethod handle-operation :purchase
@@ -218,6 +204,7 @@
             (assoc traveler :y (+ y speed)))})
 (defn tick-down-traveler [{:keys [lifetime energy] :as traveler}]
   (assoc traveler :lifetime (dec lifetime) :energy (dec energy)))
+
 (defn make-travelers-travel [{:keys [travelers] :as app-state}]
   (sp/transform [:travelers sp/ALL]
                 (fn [{:keys [direction energy lifetime] :as traveler}]
@@ -226,6 +213,16 @@
                         ((get travel-by-direction direction) traveler)
                         traveler)))
                 app-state))
+
+(defn make-travelers-trigger-units [{:keys [travelers] :as app-state}]
+  (reduce-kv (fn [a ind {:as b :keys [x y]}]
+               (let [x-int (int (+ x 0.5))
+                     y-int (int (+ y 0.5))
+                     area-below (sp/select-first [(sp/keypath :board x-int y-int)] a)]
+                 (traveler-unit-intercept (assoc a :action-area area-below
+                                                   :traveler-index ind))))
+             app-state
+             travelers))
 
 (defn cull-travelers-out-of-bounds [{:keys [height width] :as app-state}]
   (sp/transform [:travelers]
@@ -250,5 +247,6 @@
       charge-board
       advance-cursor
       make-travelers-travel
+      make-travelers-trigger-units
       make-units-act
       cull-travelers-out-of-bounds))

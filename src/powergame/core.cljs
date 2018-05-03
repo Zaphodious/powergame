@@ -4,6 +4,7 @@
             [powergame.gameui :as gui]
             [clojure.core.async :as async]
             [powergame.board-defs :as board-defs]
+            [powergame.unit-actions :as unit-actions]
             [oops.core :refer [oget oset! ocall oapply ocall! oapply!
                                oget+ oset!+ ocall+ oapply+ ocall!+ oapply!+]]))
 

@@ -144,7 +144,7 @@
                          :type :juice
                          :sprite "img/crawl-tiles/effect/cloud_spectral_0.png"
                          :lifetime 10
-                         :energy 1
+                         :energy 0
                          :speed 1}})
 
 (def operations {:purchase {:name "purchase"
