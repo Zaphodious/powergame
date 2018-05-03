@@ -100,7 +100,7 @@
                     :height       (-vmin menubar-height)}
      [:ul#infobar {:font-size (-vmin 4)
                    :position :relative
-                   :display :block
+                   :display :flex
                    :top 0
                    :right 0
                    :left (-vmin 0.5)
@@ -119,16 +119,20 @@
             ;:border-style               :solid
             :width                      (-vmin 30.0)
             :text-align                 :center
-            :display :inline-block}
-       [:span.label {:width :100%
-                     :text-align :right}]
+            :display :flex}
+       [:span.label {};:width :100%
+        [:img {:width (-vmin 7)
+               :float :left}]]
        [:span.value {:float :right
+                     :height :100%
+                     :width :100%
                      :padding-right (-vmin 1)
                      :padding-left (-vmin 1)
                      :border-width 0
-                     :border-left-width (-vmin 0.3)
+                     ;:border-left-width (-vmin 0.3)
                      :border-style :solid
-                     :border-color :grey}]]]
+                     :border-color :grey
+                     :flex :flex-grow}]]]
      [:#buttonbar {:position :fixed
                    :display :flex
                    :top (-vmin (- (/ menubar-height 2) 3))
@@ -258,14 +262,18 @@
      [:&.zoom-level4 {:--board-zoom-level 2.1}]
      [:&.zoom-level5 {:--board-zoom-level 2.7}]]
 
-    [:.board-container {:display :block
+    [:.board-container {:--board-width 1
+                        :display :block
                         :position :relative
-                        :margin-right :auto ;(-vmin 2)
-                        :margin-left (calchelper :auto / 2)
-                        :width :100px
+                        :margin-right :auto
+                        :margin-left :auto
+                        :width (calchelper (-px board-area-size) * (-var :--board-width) * (-var :--board-zoom-level))
                         :margin-top (-vmin menubar-height)
                         :margin-bottom (-vmin menubar-height)} ;(-vmin 2)}
-
+     (vec
+       (map (fn [i] [(keyword (str "&.board-width-" (str i)))
+                     {:--board-width (str i)}])
+            (range 0 30)))
      [:.traveler {:--board-zoom-level :inherit
                   :--pos-x :10px
                   :--pos-y :0px

@@ -50,7 +50,7 @@ html #menubar-top {
 html #menubar-top ul#infobar {
   font-size: 4.0vmin;
   position: relative;
-  display: block;
+  display: flex;
   top: 0;
   right: 0;
   left: 0.5vmin;
@@ -68,24 +68,30 @@ html #menubar-top ul#infobar li {
   margin-left: 0.5vmin;
   background-color: white;
   padding-right: 1.0vmin;
-  display: inline-block;
+  display: flex;
   padding-left: 1.0vmin;
   padding-top: 0px;
 }
 
 html #menubar-top ul#infobar li span.label {
-  width: 100%;
-  text-align: right;
+
+}
+
+html #menubar-top ul#infobar li span.label img {
+  width: 7.0vmin;
+  float: left;
 }
 
 html #menubar-top ul#infobar li span.value {
   float: right;
-  padding-right: 1.0vmin;
-  padding-left: 1.0vmin;
+  width: 100%;
   border-width: 0;
-  border-left-width: 0.3vmin;
-  border-style: solid;
   border-color: grey;
+  height: 100%;
+  border-style: solid;
+  padding-right: 1.0vmin;
+  flex: flex-grow;
+  padding-left: 1.0vmin;
 }
 
 html #menubar-top #buttonbar {
@@ -298,13 +304,134 @@ html #board.zoom-level5 {
 }
 
 html .board-container {
+  --board-width: 1;
   display: block;
   position: relative;
   margin-right: auto;
-  margin-left: calc(auto  /  2);
-  width: 100px;
+  margin-left: auto;
+  width: calc(30.0px  *  var(--board-width)  *  var(--board-zoom-level));
   margin-top: 20.0vmin;
   margin-bottom: 20.0vmin;
+}
+
+html .board-container.board-width-0 {
+  --board-width: 0;
+}
+
+html .board-container.board-width-1 {
+  --board-width: 1;
+}
+
+html .board-container.board-width-2 {
+  --board-width: 2;
+}
+
+html .board-container.board-width-3 {
+  --board-width: 3;
+}
+
+html .board-container.board-width-4 {
+  --board-width: 4;
+}
+
+html .board-container.board-width-5 {
+  --board-width: 5;
+}
+
+html .board-container.board-width-6 {
+  --board-width: 6;
+}
+
+html .board-container.board-width-7 {
+  --board-width: 7;
+}
+
+html .board-container.board-width-8 {
+  --board-width: 8;
+}
+
+html .board-container.board-width-9 {
+  --board-width: 9;
+}
+
+html .board-container.board-width-10 {
+  --board-width: 10;
+}
+
+html .board-container.board-width-11 {
+  --board-width: 11;
+}
+
+html .board-container.board-width-12 {
+  --board-width: 12;
+}
+
+html .board-container.board-width-13 {
+  --board-width: 13;
+}
+
+html .board-container.board-width-14 {
+  --board-width: 14;
+}
+
+html .board-container.board-width-15 {
+  --board-width: 15;
+}
+
+html .board-container.board-width-16 {
+  --board-width: 16;
+}
+
+html .board-container.board-width-17 {
+  --board-width: 17;
+}
+
+html .board-container.board-width-18 {
+  --board-width: 18;
+}
+
+html .board-container.board-width-19 {
+  --board-width: 19;
+}
+
+html .board-container.board-width-20 {
+  --board-width: 20;
+}
+
+html .board-container.board-width-21 {
+  --board-width: 21;
+}
+
+html .board-container.board-width-22 {
+  --board-width: 22;
+}
+
+html .board-container.board-width-23 {
+  --board-width: 23;
+}
+
+html .board-container.board-width-24 {
+  --board-width: 24;
+}
+
+html .board-container.board-width-25 {
+  --board-width: 25;
+}
+
+html .board-container.board-width-26 {
+  --board-width: 26;
+}
+
+html .board-container.board-width-27 {
+  --board-width: 27;
+}
+
+html .board-container.board-width-28 {
+  --board-width: 28;
+}
+
+html .board-container.board-width-29 {
+  --board-width: 29;
 }
 
 html .board-container .traveler {

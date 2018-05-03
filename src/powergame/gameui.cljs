@@ -39,8 +39,8 @@
        ""])
     (sp/select [:travelers sp/ALL] app-state)))
 
-(rum/defc board-component [{:keys [board input-fn cursor-at] :as app-state}]
-  [:.board-container
+(rum/defc board-component [{:keys [board input-fn cursor-at width height] :as app-state}]
+  [:.board-container {:class (str "board-width-"width)}
    (traveler-component app-state)
    [:table
     [:tbody
@@ -147,12 +147,17 @@
 
 (rum/defc game-frame < rum/reactive
   [app-state-atom]
-  (let [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state} (rum/react app-state-atom)]
-    [:#frame
+  (let [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing width] :as app-state} (rum/react app-state-atom)]
+    [:div {:id "frame"
+           :key "frame"
+           :class "frame"}
      [:#menubar-top [:ul#infobar
-                     [:li.juice [:span.label "Juice"] [:span.value juice]]
-                     [:li.juice [:span.label "Money"] [:span.value money]]
-                     [:li.juice [:span.label "Know How"] [:span.value knowhow]]]
+                     [:li.juice [:span.label [:img {:src "img/crawl-tiles/monster/abyss/wretched_star.png"}]]
+                      [:span.value juice]]
+                     [:li.juice [:span.label [:img {:src "img/crawl-tiles/item/gold/gold_pile_7.png"}]]
+                      [:span.value money]]
+                     [:li.juice [:span.label [:img {:src "img/crawl-tiles/item/book/artefact/bookmark_new.png"}]]
+                      [:span.value knowhow]]]
                 [:#buttonbar {:class (if modal-showing "hidden" "showing")}
                  [:button {:type "button"
                                 :onClick #(input-fn {:type :toggle-select})}
