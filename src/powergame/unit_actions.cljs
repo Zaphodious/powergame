@@ -31,42 +31,70 @@
 (defmethod traveler-unit-intercept :default
   [a] a)
 
-(defmethod traveler-unit-intercept :devil
-  [{:as statemap
-    :keys [traveler-index
-           action-area]}]
+(defn trade-for [{:keys [what-for accepts new-traveler-key power-required]}
+                 {:as statemap
+                  :keys [traveler-index]
+                  {:keys [power x y] :as action-area} :action-area}]
+  ;(println "trading juice for " what-for)
   (let [{:as traveler :keys [last-touched type value]}
         (sp/select-first [(sp/keypath :travelers traveler-index)] statemap)]
+    ;(println "action area is " action-area)
     (if (and (not (= (:id (:piece action-area))
                      last-touched))
-             (= type :juice))
+             (= type accepts)
+             (>= power power-required))
       (->> statemap
+           (sp/setval (sp/keypath :board x y :power) (- power power-required))
            (sp/transform [:money] (partial + (* value 1)))
            (sp/transform [(sp/keypath :travelers traveler-index)]
                          (fn [a]
                            (merge a
-                                  (:devilball board-defs/travelers)
+                                  (new-traveler-key board-defs/travelers)
                                   {:last-touched (:id (:piece action-area))
                                    :x (:x action-area)
                                    :y (:y action-area)}))))
       statemap)))
 
+(defmethod traveler-unit-intercept :devil
+  [a] (trade-for {:what-for :money
+                  :accepts :juice
+                  :new-traveler-key :devilball
+                  :power-required 10}
+                 a))
+
+(defmethod traveler-unit-intercept :altar
+  [a] (trade-for {:what-for :juice
+                  :accepts :juice
+                  :new-traveler-key :altar-cloud
+                  :power-required 10}
+                 a))
+
+(defmethod traveler-unit-intercept :portal
+  [a] (trade-for {:what-for :knowhow
+                  :accepts :juice
+                  :new-traveler-key :altar-cloud
+                  :power-required 10}
+                 a))
+
 
 (defmethod traveler-unit-intercept :elf
   [{:as statemap
-    :keys [traveler-index
-           action-area]}]
+    :keys [traveler-index]
+    {:keys [power x y] :as action-area} :action-area}]
   ;(println "action area is " action-area)
-  (sp/transform [(sp/keypath :travelers traveler-index)]
-                (fn [a]
-                  (if (and (not (= (:id (:piece action-area))
-                                   (:last-touched a)))
-                           (= (:type a) :juice))
-                    (assoc (into a (:dart board-defs/travelers))
-                           :direction (:direction (:piece action-area))
-                           :x (:x action-area)
-                           :y (:y action-area)
-                           :last-touched (:id (:piece action-area)))
-                    a))
-                statemap))
+  (if (> power 5)
+    (->> statemap
+         (sp/setval [(sp/keypath :board x y :power)] (- power 5))
+         (sp/transform [(sp/keypath :travelers traveler-index)]
+                       (fn [a]
+                         (if (and (not (= (:id (:piece action-area))
+                                          (:last-touched a)))
+                                  (= (:type a) :juice))
+                           (assoc (into a (:dart board-defs/travelers))
+                                  :direction (:direction (:piece action-area))
+                                  :x (:x action-area)
+                                  :y (:y action-area)
+                                  :last-touched (:id (:piece action-area)))
+                           a))))
+    statemap))
 

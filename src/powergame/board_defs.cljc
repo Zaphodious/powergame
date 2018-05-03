@@ -17,7 +17,7 @@
                        :knowhow 0}
            :sprite "img/empty.png"}
    :elf {:name "deep-elf"
-         :description "Subjugated, abused, and oppressed by their demonic spider priestesses, these natural magic users have escaped from servitude and certain death in order to earn a wage from you. As they are, put them near to or in the path of magic and they'll pass it forward. Once you've trained them, they'll magnify it, and at their apex they'll no longer need an external source. If you get rid of them before training them, however, their doom is sealed as they'll be snatched up by agents of the spider priestesses."
+         :description "Subjugated, abused, and oppressed by their demonic spider priestesses, these natural magic users have escaped from servitude and certain death in order to earn a wage from you. As they are, put them in the path of magic and they'll pass it forward... provided that the land below them grants them enough strength to do so. Once you've trained them, they'll magnify it, and at their apex they'll no longer need an external source. If you get rid of them before training them, however, their doom is sealed as they'll be snatched up by agents of the spider priestesses."
          :type :creature
          :purchasable? true
          :cost {:juice 0
@@ -132,7 +132,33 @@
                                 :knowhow 0}
                     :upgrade-paths nil
                     :operations unit-ops-no-upgrade
-                    :sprite "img/crawl-tiles/dungeon/blood_fountain.png"}})
+                    :sprite "img/crawl-tiles/dungeon/blood_fountain.png"}
+   :altar {:name "old-altar"
+           :type :fixture
+           :description "Strange forces govern the world, compelling and coercing it as their whims dictate. Stranger still is their relationship with us mortals. Structures of stone and precious metals, shaped as they decree, allow us to bargain with them for reasons we cannot fathom. Take this one, for example- blasting it with the world's magic imbues you with a small amount of eldrich power directly! You might never know the name of the being giving you this power... but you're thankful all the same, no?"
+           :purchasable? true
+           :cost {:juice 10
+                  :money 100
+                  :knowhow 0}
+           :sells-for {:juice 1
+                       :money 75
+                       :knowhow 0}
+           :upgrade-paths nil
+           :operations unit-ops
+           :sprite "img/crawl-tiles/dungeon/altars/altar_old.png"}
+   :portal {:name "basic-portal"
+            :type :fixture
+            :description "Our world is tired and worn. Where there was once knowledge, there is now ignorance and fear. Where learned men once gathered to share secrets, there are now only bones. However! Ours is not the only world. Through weird portals lie worlds where knowledge never died. The denizens of such planes will surely share some of their wealth with you, should you share some of your power. This portal is barely capable of communicating. Just barely. After improvements are made, perhaps it can be opened ever wider."
+            :purchasable? true
+            :cost {:juice 300
+                   :money 300
+                   :knowhow 10}
+            :sells-for {:juice 0
+                        :money 10
+                        :knowhow 5}
+            :upgrade-paths nil
+            :operations unit-ops
+            :sprite "img/crawl-tiles/dungeon/gateways/wizlab_gone.png"}})
 
 
 (def travelers {:dart {:name "dart"
@@ -147,10 +173,16 @@
                          :lifetime 10
                          :energy 0
                          :speed 1}
+                :altar-cloud {:name "altarcloud"
+                              :type :juice
+                              :sprite "img/cloud_magic_anim.png"
+                              :lifetime 1
+                              :energy 0
+                              :speed 0}
                 :devilball {:name "devilball"
                             :type :juice
-                            :sprite "img/crawl-tiles/effect/flame_0.png"
-                            :lifetime 3
+                            :sprite "img/cloud_fire_anim.png"
+                            :lifetime 1
                             :energy 0
                             :speed 0}})
 

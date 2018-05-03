@@ -25,8 +25,8 @@
    :width     width
    :board     (make-game-board init-args)
    :travelers []
-   :juice 200
-   :money 200
+   :juice 400
+   :money 400
    :knowhow 1000
    :cursor-at 0
    :zoom-level 1
