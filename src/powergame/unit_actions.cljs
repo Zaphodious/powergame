@@ -45,7 +45,7 @@
              (>= power power-required))
       (->> statemap
            (sp/setval (sp/keypath :board x y :power) (- power power-required))
-           (sp/transform [:money] (partial + (* value 1)))
+           (sp/transform [what-for] (partial + (* value 1)))
            (sp/transform [(sp/keypath :travelers traveler-index)]
                          (fn [a]
                            (merge a
