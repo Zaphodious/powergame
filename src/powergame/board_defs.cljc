@@ -158,7 +158,20 @@
                         :knowhow 5}
             :upgrade-paths nil
             :operations unit-ops
-            :sprite "img/crawl-tiles/dungeon/gateways/wizlab_gone.png"}})
+            :sprite "img/crawl-tiles/dungeon/gateways/wizlab_gone.png"}
+   :human {:name "human"
+           :type :creature
+           :description "The ancient gods who created reality made many beings to inhabit the world, and to give it meaning. All were narrow in focus, supposedly confined to their own niche and designed to work together to administer the world for the gods. Unfortunately, the gods were naive and short-sighted; The Dark Lord corrupted the hearts and minds of the fair races, and they looked upon each other with scorn and envy. For untold ages, continuous war raged. The Shining One, he who had created the bedrock of reality on which all else was placed, decided that a world of bloodshed did not please him. Thus, he created many lesser gods to manage the world, powerful enough that the Dark Lord could not corrupt them but weak enough that they could not themselves become corrupters. To serve these gods he created humanity. An individual human, unaided, has little strength or power. They are, however, inset with a small spark of divinity, and should a human choose a god they can be transformed into something incredible. These transformations can be subtle, like being given divine martial prowess. They can also be fantastical. Angels, centaurs, murfolk, and many more fantastic man-like creatures were once individual humans who gave themselves completely to the power that then changed them."
+           :purchasable? true
+           :cost {:juice 1
+                  :money 1
+                  :knowhow 0}
+           :sells-for {:juice 0
+                       :money 1
+                       :knowhow 0}
+           :upgrade-paths nil
+           :operations unit-ops
+           :sprite "img/crawl-tiles/monster/human_new.png"}})
 
 
 (def travelers {:dart {:name "dart"
