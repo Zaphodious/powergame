@@ -261,7 +261,7 @@
     [:.board-container {:display :block
                         :position :relative
                         :margin-right :auto ;(-vmin 2)
-                        :margin-left :auto
+                        :margin-left (calchelper :auto / 2)
                         :width :100px
                         :margin-top (-vmin menubar-height)
                         :margin-bottom (-vmin menubar-height)} ;(-vmin 2)}
@@ -298,8 +298,8 @@
             :border-style :solid}
        [:&.cursor-at {:background-color :red}
         [:td.board-area
-         [:button {:--selected-box (url "../img/crawl-tiles/misc/cursor_green.png")}
-          [:&.selected {:--selected-box (url "../img/crawl-tiles/misc/cursor_red.png")}]]]]]
+         [:button {:--selected-box (url "../img/highlight_box.png")}
+          [:&.selected {:--selected-box (url "../img/highlight_box_select.png")}]]]]]
       [:td.board-area {:--board-zoom-level :inherit
                        :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
                        :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))
@@ -339,10 +339,11 @@
                   :padding         0
                   :margin          0}
          [:&.selected
-          {:--selected-box (url "../img/crawl-tiles/misc/cursor.png")}]
+          {:--selected-box (url "../img/box_select.png")}]
+
          [:span.label {:--board-zoom-level :inherit
                                  :position :relative
-                                 :font-size (calchelper :10px * (-var :--board-zoom-level))
+                                 :font-size (calchelper :7px * (-var :--board-zoom-level))
                                  :top (-px (/ board-area-size 4))}]]]]
      (map (fn [a] [(keyword (str ".direction." (name a))) {:--direction (url (pr-str (str "../img/" (name a) "_arrow.png")))}])
           [:up :down :left :right])

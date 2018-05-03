@@ -21,7 +21,7 @@
 (defn input-this! [{:keys [type y x value] :as input-event}]
   (async/put! input-buffer input-event))
 (defonce
-  last-render (atom (gc/init-game-state {:height 4 :width 4 :input-fn input-this!})))
+  last-render (atom (gc/init-game-state {:height 10 :width 10 :input-fn input-this!})))
 
 (def background-level (atom (gc/init-game-state {:height 100 :width 100 :input-fn input-this!})))
 

@@ -134,18 +134,25 @@
                     :operations unit-ops-no-upgrade
                     :sprite "img/crawl-tiles/dungeon/blood_fountain.png"}})
 
+
 (def travelers {:dart {:name "dart"
                        :type :juice
                        :sprite "img/magic_dart_anim.png"
                        :energy 10000
                        :lifetime 10000
-                       :speed 0.2}
+                       :speed 0.6}
                 :splash {:name "splash"
                          :type :juice
                          :sprite "img/crawl-tiles/effect/cloud_spectral_0.png"
                          :lifetime 10
                          :energy 0
-                         :speed 1}})
+                         :speed 1}
+                :devilball {:name "devilball"
+                            :type :juice
+                            :sprite "img/crawl-tiles/effect/flame_0.png"
+                            :lifetime 3
+                            :energy 0
+                            :speed 0}})
 
 (def operations {:purchase {:name "purchase"
                             :description "Add A Thing"
@@ -185,4 +192,4 @@
                      :down :left
                      :left :up})
 
-(def game-step-time-in-seconds 0.5)
+(def game-step-time-in-seconds 1)

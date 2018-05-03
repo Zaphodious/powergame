@@ -301,7 +301,7 @@ html .board-container {
   display: block;
   position: relative;
   margin-right: auto;
-  margin-left: auto;
+  margin-left: calc(auto  /  2);
   width: 100px;
   margin-top: 20.0vmin;
   margin-bottom: 20.0vmin;
@@ -320,7 +320,7 @@ html .board-container .traveler {
   border-radius: 10px;
   --sprite: url();
   background-image: var(--sprite);
-  transition: top 0.5s linear, left 0.5s linear;
+  transition: top 1s linear, left 1s linear;
   color: white;
   --board-zoom-level: inherit;
   left: calc(30  *  var(--pos-y)  *  var(--board-zoom-level));
@@ -334,6 +334,10 @@ html .board-container .traveler.dart {
 
 html .board-container .traveler.splash {
   --sprite: url("../img/crawl-tiles/effect/cloud_spectral_0.png");
+}
+
+html .board-container .traveler.devilball {
+  --sprite: url("../img/crawl-tiles/effect/flame_0.png");
 }
 
 html .board-container table {
@@ -353,11 +357,11 @@ html .board-container table tr.cursor-at {
 }
 
 html .board-container table tr.cursor-at td.board-area button {
-  --selected-box: url(../img/crawl-tiles/misc/cursor_green.png);
+  --selected-box: url(../img/highlight_box.png);
 }
 
 html .board-container table tr.cursor-at td.board-area button.selected {
-  --selected-box: url(../img/crawl-tiles/misc/cursor_red.png);
+  --selected-box: url(../img/highlight_box_select.png);
 }
 
 html .board-container table td.board-area {
@@ -443,13 +447,13 @@ html .board-container table td.board-area button {
 }
 
 html .board-container table td.board-area button.selected {
-  --selected-box: url(../img/crawl-tiles/misc/cursor.png);
+  --selected-box: url(../img/box_select.png);
 }
 
 html .board-container table td.board-area button span.label {
   --board-zoom-level: inherit;
   position: relative;
-  font-size: calc(10px  *  var(--board-zoom-level));
+  font-size: calc(7px  *  var(--board-zoom-level));
   top: 7.5px;
 }
 

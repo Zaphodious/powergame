@@ -24,7 +24,8 @@
                :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
       [:span.label (str power)]]])) ;"(" x "," y ")")]])
 
-(defn printpass [a] (println a) a)
+(defn printpass [a] ;(println a)
+ a)
 (rum/defc traveler-component
   [app-state]
   (sp/transform
@@ -112,7 +113,7 @@
 
 (rum/defc info-modal [{:keys [input-fn] :as app-state}]
   (let [selected-pieces (apply sorted-set (sp/select [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] app-state))]
-    (println "selected pieces " selected-pieces)
+    ;(println "selected pieces " selected-pieces)
     [:.purchase-list
      (map (fn [a] (let [{namething :name
                          {:keys [juice money knowhow] :as sells-for} :sells-for

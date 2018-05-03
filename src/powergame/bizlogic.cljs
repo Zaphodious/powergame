@@ -108,13 +108,13 @@
                                                                                            :id (rand)))
                         price-adjusted-map)
           statemap)]
-    (println "money cost is " (* units-to-add cost-money))
-    (println "selected is " selected-areas)
+    ;(println "money cost is " (* units-to-add cost-money))
+   ; (println "selected is " selected-areas)
     (assoc modmap :modal-showing nil)))
 
 (defmethod put-thing-at :sell-unit
   [{:keys [next-input] :as statemap}]
-  (println "recoupe type is " next-input)
+  ;(println "recoupe type is " next-input)
   (let [selected-units (sp/select [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] statemap)
         as-costs (sp/transform [sp/ALL]
                                (fn [a] (get (get board-defs/units a) (:recoupe-type next-input)))
@@ -160,12 +160,12 @@
   [a] (sp/transform [:board sp/ALL sp/ALL (sp/pred :selected) :piece :direction] #(% board-defs/rotation-order) a))
 (defmethod handle-operation :sell
   [a]
-  (println "selling the things! " (get-selected-areas a))
+  ;(println "selling the things! " (get-selected-areas a))
   (put-thing-at (assoc a :next-input {:type :sell-unit :recoupe-type :sells-for})))
 
 
 (defn process-input [{:keys [next-input board zoom-level] :as state-map}]
-  (println "Doin' " next-input)
+  ;(println "Doin' " next-input)
   (case (:type next-input)
     :toggle-select (toggle-select state-map)
     :zoom-up (assoc state-map :zoom-level (-> zoom-level inc (min 5) (max 1)))

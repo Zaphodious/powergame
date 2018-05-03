@@ -11,7 +11,7 @@
   [{{:keys [x y travelers]
      {:keys [key direction]} :piece} :action-area
     :as statemap}]
-  (println "Elf is acting!")
+  ;(println "Elf is acting!")
   statemap
   #_(sp/setval [:travelers sp/END] [(into (:dart board-defs/travelers)
                                         {:value 1 :x x :y y :id (rand) :direction direction})]
@@ -19,7 +19,7 @@
 
 (defmethod unit-action :fountain
   [{{:keys [x y power] {:keys [key direction]} :piece} :action-area :as statemap}]
-  (println "Fountain is acting!")
+  ;(println "Fountain is acting!")
   (if (>= power 10)
     (->> statemap
          (sp/setval [(sp/keypath :board x y :power)] (- power 10))
@@ -31,15 +31,37 @@
 (defmethod traveler-unit-intercept :default
   [a] a)
 
+(defmethod traveler-unit-intercept :devil
+  [{:as statemap
+    :keys [traveler-index
+           action-area]}]
+  (let [{:as traveler :keys [last-touched type value]}
+        (sp/select-first [(sp/keypath :travelers traveler-index)] statemap)]
+    (if (and (not (= (:id (:piece action-area))
+                     last-touched))
+             (= type :juice))
+      (->> statemap
+           (sp/transform [:money] (partial + (* value 1)))
+           (sp/transform [(sp/keypath :travelers traveler-index)]
+                         (fn [a]
+                           (merge a
+                                  (:devilball board-defs/travelers)
+                                  {:last-touched (:id (:piece action-area))
+                                   :x (:x action-area)
+                                   :y (:y action-area)}))))
+      statemap)))
+
+
 (defmethod traveler-unit-intercept :elf
   [{:as statemap
     :keys [traveler-index
            action-area]}]
-  (println "action area is " action-area)
+  ;(println "action area is " action-area)
   (sp/transform [(sp/keypath :travelers traveler-index)]
                 (fn [a]
-                  (if (not (= (:id (:piece action-area))
-                              (:last-touched a)))
+                  (if (and (not (= (:id (:piece action-area))
+                                   (:last-touched a)))
+                           (= (:type a) :juice))
                     (assoc (into a (:dart board-defs/travelers))
                            :direction (:direction (:piece action-area))
                            :x (:x action-area)
