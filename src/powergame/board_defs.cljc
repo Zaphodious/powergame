@@ -1,7 +1,7 @@
 (ns powergame.board-defs
   (:require [com.rpl.specter :as sp]))
 
-(def unit-ops-no-upgrade [:info :rotate :upgrade :sell])
+(def unit-ops-no-upgrade [:info :rotate :upgrade :sell :move])
 (def unit-ops (conj unit-ops-no-upgrade :upgrade))
 (def units
   {:empty {:name    "empty"
@@ -209,11 +209,16 @@
                         :multi? true
                         :single? false
                         :image "img/crawl-tiles/gui/spells/translocation/blink.png"}
+                 :move {:name "move"
+                        :description "Move In Direction"
+                        :multi? false
+                        :single? true
+                        :image "img/crawl-tiles/gui/startup/dungeon_sprint.png"}
                  :info {:name "info"
                         :multi? true
                         :single? true
                         :description "What is it?"
-                        :image "img/crawl-tiles/item/scroll/blank_paper.png"}
+                        :image "img/crawl-tiles/gui/startup/instructions.png"}
                  :rotate {:name "rotate"
                           :multi? true
                           :single? true
