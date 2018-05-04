@@ -151,18 +151,6 @@
 (defmulti traveler-unit-intercept #(-> % :action-area :piece :key))
 
 (defmulti handle-operation (fn [a] (-> a :next-input :operation)))
-(defmethod handle-operation :purchase
-  [a] (assoc a :modal-showing :purchase))
-(defmethod handle-operation :upgrade
-  [a] (assoc a :modal-showing :upgrade))
-(defmethod handle-operation :info
-  [a] (assoc a :modal-showing :info))
-(defmethod handle-operation :rotate
-  [a] (sp/transform [:board sp/ALL sp/ALL (sp/pred :selected) :piece :direction] #(% board-defs/rotation-order) a))
-(defmethod handle-operation :sell
-  [a]
-  ;(println "selling the things! " (get-selected-areas a))
-  (put-thing-at (assoc a :next-input {:type :sell-unit :recoupe-type :sells-for})))
 
 
 (defn process-input [{:keys [next-input board zoom-level] :as state-map}]
@@ -207,6 +195,10 @@
            (assoc traveler :y (- y speed)))
    :right (fn [{:keys [x y speed] :as traveler}]
             (assoc traveler :y (+ y speed)))})
+
+(defn offset-one [{:keys [x y direction]}]
+  ((get travel-by-direction direction) {:x x :y y :speed 1}))
+
 (defn tick-down-traveler [{:keys [lifetime energy] :as traveler}]
   (assoc traveler :lifetime (dec lifetime) :energy (dec energy)))
 
