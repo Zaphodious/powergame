@@ -163,7 +163,7 @@
                       :sprite        "img/crawl-tiles/dungeon/gateways/wizlab_gone.png"}
    :human            {:name          "human"
                       :type          :creature
-                      :description   "The ancient gods who created reality made many beings to inhabit the world, and to give it meaning. All were narrow in focus, supposedly confined to their own niche and designed to work together to administer the world for the gods. Unfortunately, the gods were naive and short-sighted; The Dark Lord corrupted the hearts and minds of the fair races, and they looked upon each other with scorn and envy. For untold ages, continuous war raged. The Shining One, he who had created the bedrock of reality on which all else was placed, decided that a world of bloodshed did not please him. Thus, he created many lesser gods to manage the world, powerful enough that the Dark Lord could not corrupt them but weak enough that they could not themselves become corrupters. To serve these gods he created humanity. An individual human, unaided, has little strength or power. They are, however, inset with a small spark of divinity, and should a human choose a god they can be transformed into something incredible. These transformations can be subtle, like being given divine martial prowess. They can also be fantastical. Angels, centaurs, murfolk, and many more fantastic man-like creatures were once individual humans who gave themselves completely to the power that then changed them."
+                      :description   "Weak, short-lived, pathetic. The fair races have little use for humans. They ignore them at their own detriment, however, for these beings have the capability to change the world! None are so driven, none are so curious. Put them next to knowledge, and they'll attack it. Pay them for their work, and they'll give you all they learn."
                       :purchasable?  true
                       :cost          {:juice   1
                                       :money   1
@@ -171,10 +171,20 @@
                       :sells-for     {:juice   0
                                       :money   1
                                       :knowhow 0}
-                      :upgrade-paths nil
+                      :upgrade-paths []
                       :operations    (conj unit-ops :move)
-                      :sprite        "img/crawl-tiles/monster/human_new.png"}})
+                      :sprite        "img/crawl-tiles/monster/human_new.png"}
+   :human-monk {:name "human-monk"
+                :description "This human has devoted himself fully to his studies, expanding his mind beyond what even the most skilled elf can comprehend. Perhaps some god has looked favorably upon him? Whatever the case, this man is on the doorstep of vast potential, and need only learn the right things to fully ascend."
+                :type :creature
+                :purchasable? false
+                :sells-for {:juice 0
+                            :money 0
+                            :knowhow 10}
+                :upgrade-paths []
+                :operations (conj unit-ops :move)}})
 
+(def history ["The ancient gods who created reality made many beings to inhabit the world, and to give it meaning. All were narrow in focus, supposedly confined to their own niche and designed to work together to administer the world for the gods. Unfortunately, the gods were naive and short-sighted; The Dark Lord corrupted the hearts and minds of the fair races, and they looked upon each other with scorn and envy. For untold ages, continuous war raged. The Shining One, he who had created the bedrock of reality on which all else was placed, decided that a world of bloodshed did not please him. Thus, he created many lesser gods to manage the world, powerful enough that the Dark Lord could not corrupt them but weak enough that they could not themselves become corrupters. To serve these gods he created humanity. An individual human, unaided, has little strength or power. They are, however, inset with a small spark of divinity, and should a human choose a god they can be transformed into something incredible. These transformations can be subtle, like being given divine martial prowess. They can also be fantastical. Angels, centaurs, murfolk, and many more fantastic man-like creatures were once individual humans who gave themselves completely to the power that then changed them."])
 
 (def travelers {:dart {:name "dart"
                        :type :juice
