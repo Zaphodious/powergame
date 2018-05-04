@@ -31,7 +31,7 @@
                statemap)
         {:as next-unit :keys [traversable conserve-on-traverse]} (when next-area
                                                                    ((:key next-piece) board-defs/units))]
-    (println "should move? " traversable ", and to " moved-coords)
+    ;(println "should move? " traversable ", and to " moved-coords)
     (if (and traversable next-area)
       (->> statemap
            (sp/setval [(sp/keypath :board x y :piece)] (or former-piece {:key :empty :direction :up}))

@@ -206,11 +206,6 @@
                             :multi? true
                             :single? true
                             :image "img/crawl-tiles/item/gold/gold_pile.png"}
-                 :swap {:name "swap"
-                        :description "Move Things"
-                        :multi? true
-                        :single? false
-                        :image "img/crawl-tiles/gui/spells/translocation/blink.png"}
                  :move {:name "move"
                         :description "Move In Direction"
                         :multi? false
