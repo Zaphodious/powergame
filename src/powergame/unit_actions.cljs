@@ -28,6 +28,27 @@
                                                  {:value 1 :x x :y y :id (rand) :direction direction}))]))
     statemap))
 
+(defn study [{kind :what-kind?}
+             statemap])
+
+(defmethod unit-action :human
+  [{:as statemap {:as action-area :keys [x y power] {:keys [key direction]} :piece} :action-area}]
+  (let [{:as facing-coords facing-x :x facing-y :y}
+        (gc/offset-one {:x x :y y :direction direction})
+        {:as facing-area {facing-key :key} :piece}
+        (sp/select-first [(sp/keypath :board facing-x facing-y)] statemap)
+        {:as facing-unit :keys [type knowledge]}
+        (get board-defs/units facing-key)]
+    (println "knowledge is " knowledge " and type is " type)
+    (if (and type knowledge (>= power 5))
+      (->> statemap
+           (sp/transform [(sp/keypath :board x y :power)] (partial + -5))
+           (sp/transform [(sp/keypath :board x y :piece :knowledge)]
+                         (fn [a] (update-in a [:knowledge] (partial + 1))))
+           (sp/transform [:knowhow] inc))
+      statemap)))
+
+
 (defmethod traveler-unit-intercept :default
   [a] a)
 
@@ -76,6 +97,7 @@
                   :new-traveler-key :altar-cloud
                   :power-required 10}
                  a))
+
 
 
 (defmethod traveler-unit-intercept :elf

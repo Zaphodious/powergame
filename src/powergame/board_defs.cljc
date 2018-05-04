@@ -6,6 +6,7 @@
 (def units
   {:empty            {:name         "empty"
                       :type         :empty
+                      :knowledge nil
                       :description  "Empty space in your dungeon, full of possibility and waiting to be used."
                       :purchasable? false
                       :operations   [:info :purchase]
@@ -21,6 +22,7 @@
    :elf              {:name          "deep-elf"
                       :description   "Subjugated, abused, and oppressed by their demonic spider priestesses, these natural magic users have escaped from servitude and certain death in order to earn a wage from you. As they are, put them in the path of magic and they'll pass it forward... provided that the land below them grants them enough strength to do so. Once you've trained them, they'll magnify it, and at their apex they'll no longer need an external source. If you get rid of them before training them, however, their doom is sealed as they'll be snatched up by agents of the spider priestesses."
                       :type          :creature
+                      :knowledge :elven
                       :purchasable?  true
                       :cost          {:juice   0
                                       :money   10
@@ -34,6 +36,7 @@
    :elf-mage         {:name          "elf-mage"
                       :description   "Uplifted and enlightened, empowered and liberated, these elves have come a long way since they came into your service. They've gained the ability to draw a little bit of power from the world, and use it to amplify power already passing through them. Don't feel bad about dismissing them from your service - when they leave, they'll go into the world a force all their own."
                       :type          :creature
+                      :knowledge :elven
                       :purchasable?  false
                       :cost          {:juice   50
                                       :money   120
@@ -47,6 +50,7 @@
    :high-elf         {:name          "high-elf"
                       :description   "An elf at the apex of his power. These masters of magic can fully utilize the power below their feet, passing it forward with or without a bolt to add to. They are no longer your servants, master. They are your allies, won through your service to them. As such, they'll teach you what more they learn."
                       :type          :creature
+                      :knowledge :elven
                       :purchasable?  false
                       :upgrade-paths nil
                       :operations    (conj unit-ops-no-upgrade :move)
@@ -59,6 +63,7 @@
                       :sprite        "img/crawl-tiles/monster/deep_elf_sorcerer.png"}
    :devil            {:name          "devil"
                       :type          :creature
+                      :knowledge :infernal
                       :description   "Untrustworthy. Vexing. Litigious. They're only pliant because their Hellish liege is hungry for your magic. Unfortunately for you, the first ones sent up are weak, barely capable of flying let alone trans-dimensional power transfer. Should their liege receive an impressive enough gift, he'll send a more capable (and more efficient) collector to replace them."
                       :purchasable?  true
                       :cost          {:juice   1
@@ -72,6 +77,7 @@
                       :sprite        "img/crawl-tiles/monster/demons/blue_devil_new.png"}
    :corpulent-devil  {:name          "corpulent-devil"
                       :type          :creature
+                      :knowledge :infernal
                       :description   "A devil grown slovenly and fat. Decidedly older then the usual devil, and therefore smarter- which is usually a very dangerous thing. Not for you, not now. Your contract with their liege still holds. These fiends are far more capable then their younger brothers, and can transmit more power back home and get a much better price per point of energy sent."
                       :purchasable?  false
                       :cost          {:juice   50
@@ -85,6 +91,7 @@
                       :sprite        "img/crawl-tiles/monster/demons/blue_death.png"}
    :gold-devil       {:name          "gold-devil"
                       :type          :creature
+                      :knowledge :infernal
                       :description   "The devil lord's most senior collectors. These evil minions have handled so much gold that their essence is now partially made of the stuff. They are ancient, wise, and might grant you hellish secrets if they stay in your dungeon for long enough."
                       :purchasable?  false
                       :cost          {:juice   1000
@@ -98,6 +105,7 @@
                       :sprite        "img/crawl-tiles/monster/demons/cacodemon.png"}
    :fountain         {:name          "fountain"
                       :type          :fixture
+                      :knowledge :arcane
                       :description   "Eons in the past, the ancient wizards of Thraum infused the world with magic. While they only intended to make their own workings easier, their power was immense, and the results of their efforts persist to this day! We are not as powerful, so to use this magic we must build special structures to condense and concentrate it. When the fountain is full, it overflows, spilling magic onto the ground next to it. Special rituals exist which can enhance these fountains, and perhaps through them we'll get to where the ancient wizards left off..."
                       :purchasable?  true
                       :cost          {:juice   1
@@ -111,6 +119,7 @@
                       :sprite        "img/crawl-tiles/dungeon/dry_fountain.png"}
    :crystal-fountain {:name          "crystal-fountain"
                       :type          :fixture
+                      :knowledge :arcane
                       :description   "A fountain deconstructed and remade with bricks bathed in the blood of magic salamanders. The benefit? It allows the fountain to pull in magic from the world around it, instead of just the ground it sits upon."
                       :purchasable?  false
                       :cost          {:juice   500
@@ -124,6 +133,7 @@
                       :sprite        "img/crawl-tiles/dungeon/sparkling_fountain.png"}
    :blood-fountain   {:name          "blood-fountain"
                       :type          :fixture
+                      :knowledge :orcish
                       :description   "You know not how this fountain is constructed- only the orcs have access to this knowledge. What you do know is that this doesn't use the magic given to the world by the ancient wizards. Rather, it pulls life essence from the world, defiling it and rendering it forever incapable of hosting magic (or most living creatures). This fountain will *never* run dry, for the blood of the world is infinite."
                       :purchasable?  false
                       :cost          {:juice   1000
@@ -136,7 +146,8 @@
                       :operations    unit-ops-no-upgrade
                       :sprite        "img/crawl-tiles/dungeon/blood_fountain.png"}
    :altar            {:name          "old-altar"
-                      :type          :fixture
+                      :type          :altar
+                      :knowledge :divine
                       :description   "Strange forces govern the world, compelling and coercing it as their whims dictate. Stranger still is their relationship with us mortals. Structures of stone and precious metals, shaped as they decree, allow us to bargain with them for reasons we cannot fathom. Take this one, for example- blasting it with the world's magic imbues you with a small amount of eldrich power directly! You might never know the name of the being giving you this power... but you're thankful all the same, no?"
                       :purchasable?  true
                       :cost          {:juice   10
@@ -150,6 +161,7 @@
                       :sprite        "img/crawl-tiles/dungeon/altars/altar_old.png"}
    :portal           {:name          "basic-portal"
                       :type          :fixture
+                      :knowledge :arcane
                       :description   "Our world is tired and worn. Where there was once knowledge, there is now ignorance and fear. Where learned men once gathered to share secrets, there are now only bones. However! Ours is not the only world. Through weird portals lie worlds where knowledge never died. The denizens of such planes will surely share some of their wealth with you, should you share some of your power. This portal is barely capable of communicating. Just barely. After improvements are made, perhaps it can be opened ever wider."
                       :purchasable?  true
                       :cost          {:juice   300
@@ -163,6 +175,7 @@
                       :sprite        "img/crawl-tiles/dungeon/gateways/wizlab_gone.png"}
    :human            {:name          "human"
                       :type          :creature
+                      :knowledge nil
                       :description   "Weak, short-lived, pathetic. The fair races have little use for humans. They ignore them at their own detriment, however, for these beings have the capability to change the world! None are so driven, none are so curious. Put them next to knowledge, and they'll attack it. Pay them for their work, and they'll give you all they learn."
                       :purchasable?  true
                       :cost          {:juice   1
@@ -177,6 +190,7 @@
    :human-monk {:name "human-monk"
                 :description "This human has devoted himself fully to his studies, expanding his mind beyond what even the most skilled elf can comprehend. Perhaps some god has looked favorably upon him? Whatever the case, this man is on the doorstep of vast potential, and need only learn the right things to fully ascend."
                 :type :creature
+                :knowledge nil
                 :purchasable? false
                 :sells-for {:juice 0
                             :money 0
