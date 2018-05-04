@@ -68,7 +68,7 @@
   [
    [:html {:background-color :black
            :position :fixed
-           :font-family "\"Courier New\", Courier, monospace"
+           :font-family :apple;"\"apple\" \"Courier New\", Courier, monospace"
            :width :100%
            :image-rendering :pixelated}
     [:body {:width :100%
@@ -98,7 +98,7 @@
                     :width :100%
                     :display :block
                     :height       (-vmin menubar-height)}
-     [:ul#infobar {:font-size (-vmin 4)
+     [:ul#infobar {:font-size (-vmin 2.5)
                    :position :relative
                    :display :flex
                    :top 0
@@ -110,24 +110,30 @@
             :padding-right              (-vmin 1)
             :padding-bottom             :0px
             :padding-top                :0px
-            :background-color           :white
+            :background-color           :black
+            :color                      :white
+            :border-color               :white
+            :border-width               (-vmin 0.5)
+            :border-top-width           0
+            :border-style               :solid
             :margin-right               (-vmin 0.5)
             :margin-left               (-vmin 0.5)
             :border-bottom-right-radius (-vmin 3)
             :border-bottom-left-radius  (-vmin 3)
             ;:border-width               (-vmin 0.3)
             ;:border-style               :solid
-            :width                      (-vmin 30.0)
+            :width                      (-% 33);(-vmin 30.0)
             :text-align                 :center
             :display :flex}
        [:span.label {};:width :100%
         [:img {:width (-vmin 7)
                :float :left}]]
-       [:span.value {:float :right
+       [:span.value {:text-align :right
                      :height :100%
                      :width :100%
                      :padding-right (-vmin 1)
                      :padding-left (-vmin 1)
+                     :padding-top (-vmin 1)
                      :border-width 0
                      ;:border-left-width (-vmin 0.3)
                      :border-style :solid
@@ -145,7 +151,10 @@
       [:&.hidden {:top (-vmin (- menubar-height))}]
                    ;:overflow :scroll}
       [:button {:height  (-vmin (/ menubar-height 2))
-                :width (-vmin 17.9)
+                :font-size (-vmin 2.3)
+                :flex-grow 1
+                :width :17%
+                ;:width (-vmin 17.9)
                 :margin-right (-vmin 1)
                 :margin-left (-vmin 1)
                 ;:padding [(-vmin 3) (-vmin 2)]
@@ -174,17 +183,16 @@
                    :width :100%}
       [:button {:display :flex
                 :flex-direction :column
-                :justify-content :flex-end
+                :justify-content :space-around
                 :align-items :center
                 :font-family :inherit
                 :background-color :white
-
-
+                :border :none
                 :margin-top (-vmin (* menubar-height 0.1))
                 :margin-left (-vmin (* menubar-height 0.05))
                 :margin-right (-vmin (* menubar-height 0.05))
                 :height (-vmin (* menubar-height 0.8))
-                :min-width (-vmin (* menubar-height 1.7))}
+                :min-width (-vmin (* menubar-height 1.3))}
        [:.sprite {:display :inline-block
                   :min-width (-vmin (* menubar-height 0.3))
                   :min-height (-vmin (* menubar-height 0.3))
@@ -193,8 +201,10 @@
                   :background-repeat :no-repeat
                   :background-position "center center"}]
        [:.label {:font-family :inherit
-                 :font-size :0.8em}]
+                 :font-size (-vmin 2.75)}]
        [:hr {:margin (-vmin 0.05)
+             :height (-vmin 0.05)
+             :width :05%
              :padding (str "0 " (-vmin (/ menubar-height 2)))}]]]]
     [:#modal {:transition "top 0.5s, bottom 0.5s, left 0.5s, right 0.5s"
               :position :fixed
@@ -212,6 +222,8 @@
                 :margin-right (-vmin 0.5)
                 :border-radius (-vmin 4)
                 :background-color :red
+                :border-style :none
+                :border-width (-vmin 1)
                 :border-color :red}]]
      [:.interior {:color :white
                   :overflow :scroll
@@ -224,15 +236,28 @@
        [:.purchasable {:display :block
                        :padding-bottom (-vmin 2)
                        :padding-top (-vmin 2)
-                       :border-style :none
-                       :border-bottom-style :solid
-                       :border-width (-vmin 0.1)}
-        [:.info
+                       :border-width 0
+                       :border-bottom-width (-vmin 1)
+                       :border-style :double
+                       ;:border-bottom-style :double
+                       ;:border-width (-vmin 0.1)
+                       :font-size (-vmin 3.3)}
+        [:.info {:border-width 0
+                 :border-bottom-width (-vmin 0.5)
+                 :border-color :white
+                 :border-style :dashed
+                 :margin-bottom (-vmin 1)
+                 :padding-bottom (-vmin 1)}
+         [:.name {:font-size (-vmin 5)
+                  :border-width :0px
+                  :border-bottom-width :1px
+                  :border-style :solid
+                  :margin-bottom (-vmin 1.5)}]
          [:img {:width (-vmin (/ menubar-height 1.5))
                 :height (-vmin (/ menubar-height 1.5))
                 :float :left
                 :margin-right (-vmin 1)}]
-         [:.description {:font-size :0.8em}]]
+         [:.description {}]]
         [:.cost {:display :flex
                  :padding (-vmin 0.3)}
 
@@ -242,7 +267,10 @@
         [:.button-bar
          [:button {:font-family :inherit
                    :background-color :white
-                   :width :100%}]]]]]
+                   :width :100%
+                   :border :none
+                   :font-size (-vmin 4)
+                   :height (-vmin 7)}]]]]]
      [:&.showing {}]
      [:&.hidden {:top (-% 120)
                  :bottom (-% (- 10))
@@ -293,6 +321,10 @@
                   :transition [(str "top " board-defs/game-step-time-in-seconds"s linear")
                                (str "left " board-defs/game-step-time-in-seconds"s linear")]
                   :transition-timing-function :linear}
+      [:.label {:position :absolute
+                :bottom 0
+                :right (calchelper (-var :--board-zoom-level) * (str (* 0.4 board-area-size) "px"))
+                :font-size (calchelper (-var :--board-zoom-level) * :7px)}]
       (map (fn [[a {:keys [name sprite] :as traveler}]]
              [(keyword (str "&." name)) {:--sprite (url (pr-str (str "../" sprite)))}])
            board-defs/travelers)]
@@ -325,6 +357,7 @@
                   :--direction (url "")
                   :--board-zoom-level :inherit
                   :--selected-box (url "")
+                  :font-family :inherit
                   :min-width       :inherit
                   :height          :inherit
                   :text-align      :center
@@ -350,9 +383,11 @@
           {:--selected-box (url "../img/box_select.png")}]
 
          [:span.label {:--board-zoom-level :inherit
-                                 :position :relative
-                                 :font-size (calchelper :7px * (-var :--board-zoom-level))
-                                 :top (-px (/ board-area-size 4))}]]]]
+                       :position :relative
+                       :font-family :inherit
+                       :right (calchelper :10px * (-var :--board-zoom-level))
+                       :font-size (calchelper :5px * (-var :--board-zoom-level))
+                       :top (calchelper (-px (/ board-area-size 20)) * (-var :--board-zoom-level))}]]]]
      (map (fn [a] [(keyword (str ".direction." (name a))) {:--direction (url (pr-str (str "../img/" (name a) "_arrow.png")))}])
           [:up :down :left :right])
      (map (fn [[thingname img]]

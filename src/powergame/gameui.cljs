@@ -30,13 +30,13 @@
   [app-state]
   (sp/transform
     [sp/ALL]
-    (fn [{:keys [x y id name] :as traveler}]
+    (fn [{:keys [x y id name value] :as traveler}]
       [:.traveler {:id    (str "traveler-" id)
                    :class name
                    :key   (str "traveler-" id)
                    :style #js{:--pos-x (str x "px")
                               :--pos-y (str y "px")}}
-       ""])
+       [:.label value]])
     (sp/select [:travelers sp/ALL] app-state)))
 
 (rum/defc board-component [{:keys [board input-fn cursor-at width height] :as app-state}]
@@ -191,6 +191,6 @@
                    [:span.label (str/capitalize thing-name)]
                    [:hr]
                    [:span.label desc]]))
-              (concat selected-ops selected-ops selected-ops))]])]))
+              selected-ops)]])]))
 
 

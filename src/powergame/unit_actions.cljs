@@ -51,6 +51,7 @@
                            (merge a
                                   (new-traveler-key board-defs/travelers)
                                   {:last-touched (:id (:piece action-area))
+                                   :value 0
                                    :x (:x action-area)
                                    :y (:y action-area)}))))
       statemap)))

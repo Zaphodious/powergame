@@ -1,7 +1,7 @@
 html {
   background-color: black;
   position: fixed;
-  font-family: "Courier New", Courier, monospace;
+  font-family: apple;
   width: 100%;
   image-rendering: pixelated;
 }
@@ -48,7 +48,7 @@ html #menubar-top {
 }
 
 html #menubar-top ul#infobar {
-  font-size: 4.0vmin;
+  font-size: 2.5vmin;
   position: relative;
   display: flex;
   top: 0;
@@ -59,16 +59,21 @@ html #menubar-top ul#infobar {
 }
 
 html #menubar-top ul#infobar li {
-  width: 30.0vmin;
+  width: 33.0%;
+  border-width: 0.5vmin;
   padding-bottom: 0px;
+  border-color: white;
   margin-right: 0.5vmin;
   text-align: center;
+  border-top-width: 0;
+  border-style: solid;
   border-bottom-right-radius: 3.0vmin;
   border-bottom-left-radius: 3.0vmin;
   margin-left: 0.5vmin;
-  background-color: white;
+  background-color: black;
   padding-right: 1.0vmin;
   display: flex;
+  color: white;
   padding-left: 1.0vmin;
   padding-top: 0px;
 }
@@ -83,15 +88,16 @@ html #menubar-top ul#infobar li span.label img {
 }
 
 html #menubar-top ul#infobar li span.value {
-  float: right;
   width: 100%;
   border-width: 0;
   border-color: grey;
   height: 100%;
+  text-align: right;
   border-style: solid;
   padding-right: 1.0vmin;
   flex: flex-grow;
   padding-left: 1.0vmin;
+  padding-top: 1.0vmin;
 }
 
 html #menubar-top #buttonbar {
@@ -114,13 +120,15 @@ html #menubar-top #buttonbar.hidden {
 }
 
 html #menubar-top #buttonbar button {
-  width: 17.9vmin;
+  width: 17%;
   font-family: inherit;
   height: 10.0vmin;
   margin-right: 1.0vmin;
   border: none;
+  flex-grow: 1;
   box-shadow: 0px 0px 3px 1px black;
   margin-left: 1.0vmin;
+  font-size: 2.3vmin;
   background-color: white;
   display: inline;
 }
@@ -156,11 +164,12 @@ html #menubar-bottom #buttonbar {
 }
 
 html #menubar-bottom #buttonbar button {
-  min-width: 34.0vmin;
-  justify-content: flex-end;
+  min-width: 26.0vmin;
+  justify-content: space-around;
   font-family: inherit;
   height: 16.0vmin;
   margin-right: 1.0vmin;
+  border: none;
   align-items: center;
   flex-direction: column;
   margin-top: 2.0vmin;
@@ -181,11 +190,13 @@ html #menubar-bottom #buttonbar button .sprite {
 
 html #menubar-bottom #buttonbar button .label {
   font-family: inherit;
-  font-size: 0.8em;
+  font-size: 2.75vmin;
 }
 
 html #menubar-bottom #buttonbar button hr {
   margin: 0.05vmin;
+  height: 0.05vmin;
+  width: 05%;
   padding: 0 10.0vmin;
 }
 
@@ -215,6 +226,8 @@ html #modal .titlebar .close {
   margin-right: 0.5vmin;
   border-radius: 4.0vmin;
   background-color: red;
+  border-style: none;
+  border-width: 1.0vmin;
   border-color: red;
 }
 
@@ -232,9 +245,27 @@ html #modal .interior .purchase-list .purchasable {
   display: block;
   padding-bottom: 2.0vmin;
   padding-top: 2.0vmin;
-  border-style: none;
-  border-bottom-style: solid;
-  border-width: 0.1vmin;
+  border-width: 0;
+  border-bottom-width: 1.0vmin;
+  border-style: double;
+  font-size: 3.3vmin;
+}
+
+html #modal .interior .purchase-list .purchasable .info {
+  border-width: 0;
+  border-bottom-width: 0.5vmin;
+  border-color: white;
+  border-style: dashed;
+  margin-bottom: 1.0vmin;
+  padding-bottom: 1.0vmin;
+}
+
+html #modal .interior .purchase-list .purchasable .info .name {
+  font-size: 5.0vmin;
+  border-width: 0px;
+  border-bottom-width: 1px;
+  border-style: solid;
+  margin-bottom: 1.5vmin;
 }
 
 html #modal .interior .purchase-list .purchasable .info img {
@@ -245,7 +276,7 @@ html #modal .interior .purchase-list .purchasable .info img {
 }
 
 html #modal .interior .purchase-list .purchasable .info .description {
-  font-size: 0.8em;
+
 }
 
 html #modal .interior .purchase-list .purchasable .cost {
@@ -263,6 +294,9 @@ html #modal .interior .purchase-list .purchasable .button-bar button {
   font-family: inherit;
   background-color: white;
   width: 100%;
+  border: none;
+  font-size: 4.0vmin;
+  height: 7.0vmin;
 }
 
 html #modal.showing {
@@ -455,6 +489,13 @@ html .board-container .traveler {
   --new-pos-x: calc(30.0px  *  var(--pos-x));
 }
 
+html .board-container .traveler .label {
+  position: absolute;
+  bottom: 0;
+  right: calc(var(--board-zoom-level)  *  12.0px);
+  font-size: calc(var(--board-zoom-level)  *  7px);
+}
+
 html .board-container .traveler.dart {
   --sprite: url("../img/magic_dart_anim.png");
 }
@@ -562,6 +603,7 @@ html .board-container table td.board-area button {
   background-position: center, bottom right, top left, center;
   border-width: 0px;
   background-repeat: no-repeat;
+  font-family: inherit;
   height: inherit;
   margin: 0;
   padding: 0;
@@ -584,8 +626,10 @@ html .board-container table td.board-area button.selected {
 html .board-container table td.board-area button span.label {
   --board-zoom-level: inherit;
   position: relative;
-  font-size: calc(7px  *  var(--board-zoom-level));
-  top: 7.5px;
+  font-family: inherit;
+  right: calc(10px  *  var(--board-zoom-level));
+  font-size: calc(5px  *  var(--board-zoom-level));
+  top: calc(1.5px  *  var(--board-zoom-level));
 }
 
 html .board-container .direction.up {
