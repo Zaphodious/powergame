@@ -303,6 +303,7 @@
                      {:--board-width (str i)}])
             (range 0 30)))
      [:.traveler {:--board-zoom-level :inherit
+                  :pointer-events :none
                   :--pos-x :10px
                   :--pos-y :0px
                   :--new-pos-x (calchelper (-px board-area-size) * (-var :--pos-x))

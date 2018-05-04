@@ -480,6 +480,7 @@ html .board-container .traveler {
   background-size: calc(30.0px  *  var(--board-zoom-level));
   border-radius: 10px;
   --sprite: url();
+  pointer-events: none;
   background-image: var(--sprite);
   transition: top 1s linear, left 1s linear;
   color: white;
@@ -668,6 +669,10 @@ html .board-container .unit.basic-portal {
   --sprite: url("../img/crawl-tiles/dungeon/gateways/wizlab_gone.png");
 }
 
+html .board-container .unit.human {
+  --sprite: url("../img/crawl-tiles/monster/human_new.png");
+}
+
 html .board-container .unit.fountain {
   --sprite: url("../img/crawl-tiles/dungeon/dry_fountain.png");
 }
@@ -704,8 +709,12 @@ html .board-container .unit.old-altar {
   --sprite: url("../img/crawl-tiles/gui/spells/translocation/blink.png");
 }
 
+.operation.move {
+  --sprite: url("../img/crawl-tiles/gui/startup/dungeon_sprint.png");
+}
+
 .operation.info {
-  --sprite: url("../img/crawl-tiles/item/scroll/blank_paper.png");
+  --sprite: url("../img/crawl-tiles/gui/startup/instructions.png");
 }
 
 .operation.rotate {

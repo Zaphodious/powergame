@@ -29,6 +29,7 @@
    :money 400
    :knowhow 1000
    :cursor-at 0
+   :daily-charge 10
    :zoom-level 1
    :max-power 20
    :select-amount :single ; :multi
@@ -180,11 +181,15 @@
         actual (if (= adjusted height) 0 adjusted)]
     (assoc app-state :cursor-at actual)))
 
-(defn charge-board [app-state]
-  (sp/transform [(sp/collect-one :max-power)
-                 :board sp/ALL sp/ALL
-                 :power] #(-> %2 inc (max 1) (min %1))
-                app-state))
+(defn charge-board [{:as app-state
+                     :keys [cursor-at daily-charge]}]
+  (if (zero? cursor-at)
+    (sp/transform [(sp/collect-one :max-power)
+                   :board sp/ALL sp/ALL
+                   :power] #(-> %2 (+ daily-charge)
+                                (max 1) (min %1))
+                  app-state)
+    app-state))
 
 (defn make-units-act [{:keys [cursor-at] :as app-state}]
   (let [areas-at-cursor (sp/select-first [:board (sp/keypath cursor-at)] app-state)]
@@ -244,8 +249,8 @@
 
 (defn make-tick [level-state]
   (-> level-state
-      charge-board
       advance-cursor
+      charge-board
       make-travelers-travel
       make-travelers-trigger-units
       make-units-act

@@ -37,7 +37,7 @@
                    :style #js{:--pos-x (str x "px")
                               :--pos-y (str y "px")}}
        [:.label value]])
-    (sp/select [:travelers sp/ALL] app-state)))
+    (:travelers app-state)))
 
 (rum/defc board-component [{:keys [board input-fn cursor-at width height] :as app-state}]
   [:.board-container {:class (str "board-width-"width)}

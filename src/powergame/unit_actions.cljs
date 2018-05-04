@@ -83,7 +83,7 @@
     :keys [traveler-index]
     {:keys [power x y] :as action-area} :action-area}]
   ;(println "action area is " action-area)
-  (if (> power 5)
+  (if (>= power 5)
     (->> statemap
          (sp/setval [(sp/keypath :board x y :power)] (- power 5))
          (sp/transform [(sp/keypath :travelers traveler-index)]

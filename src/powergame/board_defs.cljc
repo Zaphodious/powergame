@@ -1,7 +1,7 @@
 (ns powergame.board-defs
   (:require [com.rpl.specter :as sp]))
 
-(def unit-ops-no-upgrade [:info :rotate :upgrade :sell :move])
+(def unit-ops-no-upgrade [:info :rotate :upgrade :sell])
 (def unit-ops (conj unit-ops-no-upgrade :upgrade))
 (def units
   {:empty {:name    "empty"
@@ -27,7 +27,7 @@
                      :money 6
                      :knowhow 0}
          :upgrade-paths [:elf-mage]
-         :operations unit-ops
+         :operations (conj unit-ops :move)
          :sprite "img/crawl-tiles/monster/deep_elf_conjurer.png"}
    :elf-mage {:name "elf-mage"
               :description "Uplifted and enlightened, empowered and liberated, these elves have come a long way since they came into your service. They've gained the ability to draw a little bit of power from the world, and use it to amplify power already passing through them. Don't feel bad about dismissing them from your service - when they leave, they'll go into the world a force all their own."
@@ -40,14 +40,14 @@
                           :money 60
                           :knowhow 0}
               :upgrade-paths [:high-elf]
-              :operations unit-ops
+              :operations (conj unit-ops :move)
               :sprite "img/crawl-tiles/monster/deep_elf_annihilator.png"}
    :high-elf {:name "high-elf"
               :description "An elf at the apex of his power. These masters of magic can fully utilize the power below their feet, passing it forward with or without a bolt to add to. They are no longer your servants, master. They are your allies, won through your service to them. As such, they'll teach you what more they learn."
               :type :creature
               :purchasable? false
               :upgrade-paths nil
-              :operations unit-ops-no-upgrade
+              :operations (conj unit-ops-no-upgrade :move)
               :cost {:juice 1000
                      :money 750
                      :knowhow 3000}
@@ -66,7 +66,7 @@
                        :money 0
                        :knowhow 0}
            :upgrade-paths [:corpulent-devil]
-           :operations unit-ops
+           :operations (conj unit-ops :move)
            :sprite "img/crawl-tiles/monster/demons/blue_devil_new.png"}
    :corpulent-devil {:name "corpulent-devil"
                      :type :creature
@@ -79,7 +79,7 @@
                                  :money 0
                                  :knowhow 0}
                      :upgrade-paths [:gold-devil]
-                     :operations unit-ops
+                     :operations (conj unit-ops :move)
                      :sprite "img/crawl-tiles/monster/demons/blue_death.png"}
    :gold-devil {:name "gold-devil"
                 :type :creature
@@ -92,7 +92,7 @@
                             :money 0
                             :knowhow 0}
                 :upgrade-paths nil
-                :operations unit-ops-no-upgrade
+                :operations (conj unit-ops-no-upgrade :move)
                 :sprite "img/crawl-tiles/monster/demons/cacodemon.png"}
    :fountain {:name    "fountain"
               :type    :fixture
@@ -170,7 +170,7 @@
                        :money 1
                        :knowhow 0}
            :upgrade-paths nil
-           :operations unit-ops
+           :operations (conj unit-ops :move)
            :sprite "img/crawl-tiles/monster/human_new.png"}})
 
 
