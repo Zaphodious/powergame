@@ -1,5 +1,6 @@
 (ns powergame.core
   (:require [rum.core :as rum]
+            [powergame.knowledge :as pk]
             [powergame.bizlogic :as gc]
             [powergame.gameui :as gui]
             [clojure.core.async :as async]
