@@ -20,3 +20,5 @@ pom.xml
 /mong.bat
 .saved-commands
 resources/public/css/main.css
+*.py
+/shoop/
