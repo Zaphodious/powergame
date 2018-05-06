@@ -1,6 +1,7 @@
 (ns powergame.bizlogic
   (:require [com.rpl.specter :as sp]
-            [powergame.board-defs :as board-defs]))
+            [powergame.board-defs :as board-defs]
+            [powergame.knowledge :as pk]))
 
 (defn make-game-board [{:keys [height width]}]
   (->> height
@@ -27,13 +28,14 @@
    :travelers []
    :juice 400
    :money 400
-   :knowhow 1000
    :cursor-at 0
    :daily-charge 10
    :zoom-level 1
    :max-power 20
    :select-amount :single ; :multi
    :modal-showing nil;:purchase
+   :knowledge (pk/make-knowledge-track-map #::pk{:vengeance 10
+                                                 :power 3})
    :input-fn input-fn})
 
 (defn- make-fn [thing]
@@ -90,14 +92,11 @@
   (let [selected-areas (get-selected-areas statemap)
         units-to-add (count selected-areas)
         {{cost-money :money
-          cost-juice :juice
-          cost-knowhow :knowhow} :cost :as thing-to-add} (get board-defs/units value)
+          cost-juice :juice} :cost :as thing-to-add} (get board-defs/units value)
         can-pay? (and (<= (* units-to-add cost-money)
                           money)
                       (<= (* units-to-add cost-juice)
-                          juice)
-                      (<= cost-knowhow
-                          knowhow))
+                          juice))
         price-adjusted-map (if (and pay-cost can-pay?)
                              (->> statemap
                                   (sp/transform [:money] (fn [a] (- a (* units-to-add cost-money))))
@@ -160,6 +159,7 @@
     :zoom-up (assoc state-map :zoom-level (-> zoom-level inc (min 5) (max 1)))
     :zoom-down (assoc state-map :zoom-level (-> zoom-level dec (min 5) (max 1)))
     :operation (handle-operation state-map)
+    :show-dungeon-state (assoc state-map :modal-showing :dungeon-state)
     :close-modal (assoc state-map :modal-showing nil)
     (put-thing-at state-map)))
 

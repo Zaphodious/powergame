@@ -1,6 +1,7 @@
 (ns powergame.unit-actions
   (:require [powergame.board-defs :as board-defs]
             [powergame.bizlogic :as gc :refer [unit-action traveler-unit-intercept]]
+            [powergame.knowledge :as pk]
             [com.rpl.specter :as sp]))
 
 
@@ -45,7 +46,7 @@
            (sp/transform [(sp/keypath :board x y :power)] (partial + -5))
            (sp/transform [(sp/keypath :board x y :piece :knowledge)]
                          (fn [a] (update-in a [:knowledge] (partial + 1))))
-           (sp/transform [:knowhow] inc))
+           (sp/transform [:knowledge ::pk/knowledge] inc))
       statemap)))
 
 

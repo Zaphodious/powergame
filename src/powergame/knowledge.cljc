@@ -5,19 +5,28 @@
   [::knowledge
    [::planar
     [::elemental
-        ::raw
-        ::constructive
-        ::disasterous]
+     [::raw]
+     [::constructive]
+     [::disastrous]]
     [::celestial
-        ::light
-        ::vengeance]
+     [::light]
+     [::vengeance]]
     [::demonic
-        ::power]]
+     [::greed]
+     [::power]]]
    [::terrestrial
+    [::arcane]
     [::arborial]
     [::maritime]]
    [::elder]])
 
+(defn make-knowledge-track-map
+  ([] (make-knowledge-track-map {}))
+  ([m] (->> knowledge-tree
+         (sp/select [(sp/walker keyword?)])
+         (map (fn [a] [a 0]))
+         (reduce #(apply (partial assoc %1) %2) {})
+         ((fn [a] (merge a m))))))
 
 (declare recpath) ;otherwise the system freaks out. Used as a symbol in a macro call, so it shouldn't, but whatever.
 
@@ -33,6 +42,19 @@
               (if (= (count a) (count (set a)))
                 a
                 (vec (drop-last a)))))))
+
+(defn make-knowledge-path-map []
+  (->> knowledge-tree
+       flatten-tree
+       (map (fn [a] [(last a) a]))
+       (reduce
+         #(apply (partial assoc %1) %2)
+         {})))
+
+(defn sort-knowledge-track-map [track-map]
+  (->> knowledge-tree
+       (sp/select [(sp/walker keyword?)])
+       (map (fn [a] [a (get track-map a)]))))
 
 (defn dual-split-path [thing]
   (reduce
@@ -50,4 +72,19 @@
        (map reverse)
        (map (partial apply derive))))
 
-(derive-tree knowledge-tree)
+(into []
+  (derive-tree knowledge-tree))
+
+(defn get-derived-knowledge [m]
+  (let [am (make-knowledge-track-map m)]
+    (->> am
+      (map (fn [[k a]]
+             [k
+              (filter (fn [[k2 a2]]
+                        (isa? k2 k))
+                      am)]))
+      (map (fn [[k a]]
+             [k (sp/select [sp/ALL sp/LAST] a)]))
+      (map (fn [[k a]]
+             [k (reduce + a)]))
+      (reduce (fn [rm [k a]] (assoc rm k a)) {}))))

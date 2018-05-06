@@ -3,7 +3,8 @@
             [powergame.bizlogic :as gc]
             [clojure.string :as str]
             [com.rpl.specter :as sp]
-            [powergame.board-defs :as board-defs]))
+            [powergame.board-defs :as board-defs]
+            [powergame.knowledge :as pk]))
 
 (rum/defc board-area [{{:keys [key direction] :as piece} :piece
                        :keys [power status y x selected input-fn terrain]}]
@@ -67,13 +68,13 @@
                       "Costs"
                       [:.cost
                        [:.juice "Magic " juice]
-                       [:.money "Money " money]
-                       [:.knowhow "Minimum Know How " knowhow]]
+                       [:.money "Money " money]]
+                       ;[:.knowhow "Minimum Know How " knowhow]]
                       "Sells for"
                       [:.cost
                        [:.juice "Magic " selljuice]
-                       [:.money "Money " sellmoney]
-                       [:.knowhow "Recieved Know How " sellknowhow]]
+                       [:.money "Money " sellmoney]]
+                       ;[:.knowhow "Recieved Know How " sellknowhow]]
                       [:.button-bar
                        [:button {:type :button
                                  :onClick #(input-fn {:type :unit :value a :pay-cost true})}
@@ -97,13 +98,13 @@
                       "Costs"
                       [:.cost
                        [:.juice "Magic " juice]
-                       [:.money "Money " money]
-                       [:.knowhow "Minimum Know How " knowhow]]
+                       [:.money "Money " money]]
+                       ;[:.knowhow "Minimum Know How " knowhow]]
                       "Sells for"
                       [:.cost
                        [:.juice "Magic " selljuice]
-                       [:.money "Money " sellmoney]
-                       [:.knowhow "Recieved Know How " sellknowhow]]
+                       [:.money "Money " sellmoney]]
+                       ;[:.knowhow "Recieved Know How " sellknowhow]]
                       [:.button-bar
                        [:button {:type :button
                                  :onClick #(input-fn {:type :unit :value a :pay-cost true})}
@@ -127,10 +128,25 @@
                       "Sells for"
                       [:.cost
                        [:.juice "Magic " juice]
-                       [:.money "Money " money]
-                       [:.knowhow "Minimum Know How " knowhow]]]))
+                       [:.money "Money " money]]]))
+                       ;[:.knowhow "Minimum Know How " knowhow]]]))
                       ;[:div (pr-str (gc/get-selected-areas app-state))]]))
           selected-pieces)]))
+
+(rum/defc dungeon-state-modal [{:as app-state :keys []}]
+  [:.dungeon-state
+   [:.state-section
+    [:.label "Knowledge"]
+    [:table
+     [:tbody
+      (let [path-map (pk/make-knowledge-track-map)])
+      (map
+        (fn [[k v]]
+          (when (not (zero? v))
+                [:tr
+                 [:td (name k)]
+                 [:td v]]))
+        (pk/get-derived-knowledge  (:knowledge app-state)))]]]])
 
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]
   (let [{thing-name :name :as modal-info} (get board-defs/modals modal-showing)]
@@ -143,6 +159,7 @@
                    :purchase (purchase-modal app-state)
                    :info (info-modal app-state)
                    :upgrade (upgrade-modal app-state)
+                   :dungeon-state (dungeon-state-modal app-state)
                    nil [:.no-modal])]]))
 
 (rum/defc game-frame < rum/reactive
@@ -155,15 +172,15 @@
                      [:li.juice [:span.label [:img {:src "img/crawl-tiles/monster/abyss/wretched_star.png"}]]
                       [:span.value juice]]
                      [:li.juice [:span.label [:img {:src "img/crawl-tiles/item/gold/gold_pile_7.png"}]]
-                      [:span.value money]]
-                     [:li.juice [:span.label [:img {:src "img/crawl-tiles/item/book/artefact/bookmark_new.png"}]]
-                      [:span.value knowhow]]]
+                      [:span.value money]]]
+                     ;[:li.juice [:span.label [:img {:src "img/crawl-tiles/item/book/artefact/bookmark_new.png"}]] [:span.value knowhow]]]
                 [:#buttonbar {:class (if modal-showing "hidden" "showing")}
                  [:button {:type "button"
                                 :onClick #(input-fn {:type :toggle-select})}
                        (str "Select " (str/capitalize  (name select-amount)))]
-                 [:button {:type "button"}
-                       "Info"]
+                 [:button {:type "button"
+                           :onClick #(input-fn {:type :show-dungeon-state})}
+                  "Over view"]
                  [:button {:type "button"}
                        "Guide"]
                  [:button {:type "button"
