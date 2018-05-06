@@ -2,13 +2,22 @@
   (:require [com.rpl.specter :as sp]))
 
 (def knowledge-tree
-  [::general
-   [::creative
-    [::celestial ::divination]
-    [::natural
-     [::alchemy]
-     [::forestry ::elven]]]
-   [::destruction ::resurrection ::combination]])
+  [::knowledge
+   [::planar
+    [::elemental
+        ::raw
+        ::constructive
+        ::disasterous]
+    [::celestial
+        ::light
+        ::vengeance]
+    [::demonic
+        ::power]]
+   [::terrestrial
+    [::arborial]
+    [::maritime]]
+   [::elder]])
+
 
 (declare recpath) ;otherwise the system freaks out. Used as a symbol in a macro call, so it shouldn't, but whatever.
 
