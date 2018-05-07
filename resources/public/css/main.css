@@ -505,12 +505,8 @@ html .board-container .traveler.splash {
   --sprite: url("../img/crawl-tiles/effect/cloud_spectral_0.png");
 }
 
-html .board-container .traveler.altarcloud {
-  --sprite: url("../img/cloud_magic_anim.png");
-}
-
 html .board-container .traveler.devilball {
-  --sprite: url("../img/cloud_fire_anim.png");
+  --sprite: url("../img/crawl-tiles/effect/flame_0.png");
 }
 
 html .board-container table {
@@ -665,14 +661,6 @@ html .board-container .unit.high-elf {
   --sprite: url("../img/crawl-tiles/monster/deep_elf_sorcerer.png");
 }
 
-html .board-container .unit.human-monk {
-  --sprite: url("../");
-}
-
-html .board-container .unit.human {
-  --sprite: url("../img/crawl-tiles/monster/human_new.png");
-}
-
 html .board-container .unit.fountain {
   --sprite: url("../img/crawl-tiles/dungeon/dry_fountain.png");
 }
@@ -697,20 +685,16 @@ html .board-container .unit.devil {
   --sprite: url("../img/crawl-tiles/monster/demons/blue_devil_new.png");
 }
 
-html .board-container .unit.old-altar {
-  --sprite: url("../img/crawl-tiles/dungeon/altars/altar_old.png");
-}
-
 .operation.purchase {
   --sprite: url("../img/crawl-tiles/item/gold/gold_pile.png");
 }
 
-.operation.move {
-  --sprite: url("../img/crawl-tiles/gui/startup/dungeon_sprint.png");
+.operation.swap {
+  --sprite: url("../img/crawl-tiles/gui/spells/translocation/blink.png");
 }
 
 .operation.info {
-  --sprite: url("../img/crawl-tiles/gui/startup/instructions.png");
+  --sprite: url("../img/crawl-tiles/item/scroll/blank_paper.png");
 }
 
 .operation.rotate {
@@ -725,42 +709,22 @@ html .board-container .unit.old-altar {
   --sprite: url("../img/crawl-tiles/gui/spells/translocation/banishment.png");
 }
 
-.knowledge.level-0 {
-  color: #ffd500;
+.level-0 {
+  color: #ff0000;
 }
 
-.knowledge.level-1 {
-  color: #ffd500;
+.level-1 {
+  color: #55ff00;
 }
 
-.knowledge.level-2 {
-  color: #ffd500;
+.level-2 {
+  color: #00aaff;
 }
 
-.knowledge.level-3 {
-  color: #ffd500;
+.level-3 {
+  color: #ff00ff;
 }
 
-.knowledge.level-4 {
-  color: #ffd500;
-}
-
-.knowledge.level-5 {
-  color: #ffd500;
-}
-
-.knowledge.level-6 {
-  color: #ffd500;
-}
-
-.knowledge.level-7 {
-  color: #ffd500;
-}
-
-.knowledge.level-8 {
-  color: #ffd500;
-}
-
-.knowledge.level-9 {
-  color: #ffd500;
+.level-4 {
+  color: #ffaa00;
 }

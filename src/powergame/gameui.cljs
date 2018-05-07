@@ -148,13 +148,13 @@
               (let [parent-count (-> path-map k count)]
                   [:tr
                    [:td.knowledge {:class (str "level-" parent-count)}
-                    [:span.level-0
-                     "<"]
+                    ;[:span.level-0 "<"]
                     (->> (-> parent-count
                              dec
                              (take (repeat ":")))
                          (map-indexed (fn [i a]
-                                        [:span {:class (str "level-" i)} a])))
+                                        [:span {:class (str "level-" (inc i))}
+                                         a])))
                                             ;(repeat "\t "))))) ;"ù"))))
                     [:span {:class (str "level-" parent-count)}
                      ">" (str/capitalize (name k))]]
