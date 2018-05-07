@@ -724,3 +724,43 @@ html .board-container .unit.old-altar {
 .operation.sell {
   --sprite: url("../img/crawl-tiles/gui/spells/translocation/banishment.png");
 }
+
+.knowledge.level-0 {
+  color: blue;
+}
+
+.knowledge.level-1 {
+  color: blue;
+}
+
+.knowledge.level-2 {
+  color: blue;
+}
+
+.knowledge.level-3 {
+  color: blue;
+}
+
+.knowledge.level-4 {
+  color: blue;
+}
+
+.knowledge.level-5 {
+  color: blue;
+}
+
+.knowledge.level-6 {
+  color: blue;
+}
+
+.knowledge.level-7 {
+  color: blue;
+}
+
+.knowledge.level-8 {
+  color: blue;
+}
+
+.knowledge.level-9 {
+  color: blue;
+}

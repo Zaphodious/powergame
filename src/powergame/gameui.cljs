@@ -139,14 +139,27 @@
     [:.label "Knowledge"]
     [:table
      [:tbody
-      (let [path-map (pk/make-knowledge-track-map)])
-      (map
-        (fn [[k v]]
-          (when (not (zero? v))
-                [:tr
-                 [:td (name k)]
-                 [:td v]]))
-        (pk/get-derived-knowledge  (:knowledge app-state)))]]]])
+      (let [path-map (pk/make-knowledge-path-map)
+            derived (pk/get-derived-knowledge (:knowledge app-state))
+            sorted-derived (pk/sort-knowledge-track-map derived)]
+        (map
+          (fn [[k v]]
+            (when (not (zero? v))
+              (let [parent-count (-> path-map k count)]
+                  [:tr
+                   [:td.knowledge {:class (str "level-" parent-count)}
+                    [:span.level-0
+                     "<"]
+                    (->> (-> parent-count
+                             dec
+                             (take (repeat ":")))
+                         (map-indexed (fn [i a]
+                                        [:span {:class (str "level-" i)} a])))
+                                            ;(repeat "\t "))))) ;"ù"))))
+                    [:span {:class (str "level-" parent-count)}
+                     ">" (str/capitalize (name k))]]
+                   [:td v]])))
+          sorted-derived))]]]])
 
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]
   (let [{thing-name :name :as modal-info} (get board-defs/modals modal-showing)]

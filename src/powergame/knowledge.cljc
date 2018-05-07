@@ -2,11 +2,11 @@
   (:require [com.rpl.specter :as sp]))
 
 (def knowledge-tree
-  [::knowledge
+  [::totality
    [::planar
     [::elemental
      [::raw]
-     [::constructive]
+     [::constructor]
      [::disastrous]]
     [::celestial
      [::light]
@@ -47,9 +47,7 @@
   (->> knowledge-tree
        flatten-tree
        (map (fn [a] [(last a) a]))
-       (reduce
-         #(apply (partial assoc %1) %2)
-         {})))
+       (into {})))
 
 (defn sort-knowledge-track-map [track-map]
   (->> knowledge-tree

@@ -401,5 +401,9 @@
    (map (fn [[thingname img]]
           [(keyword (str ".operation." thingname))
            {:--sprite (url (pr-str (str "../" img)))}])
-        (sp/select [sp/ALL sp/LAST (sp/collect-one :name) :image] board-defs/operations))])
+        (sp/select [sp/ALL sp/LAST (sp/collect-one :name) :image] board-defs/operations))
+   (map (fn [i]
+          [(keyword  (str ".knowledge.level-" i))
+           {:color :blue}])
+        (range 10))])
 

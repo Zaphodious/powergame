@@ -46,7 +46,7 @@
            (sp/transform [(sp/keypath :board x y :power)] (partial + -5))
            (sp/transform [(sp/keypath :board x y :piece :knowledge)]
                          (fn [a] (update-in a [:knowledge] (partial + 1))))
-           (sp/transform [:knowledge ::pk/knowledge] inc))
+           (sp/transform [:knowledge ::pk/totality] inc))
       statemap)))
 
 
