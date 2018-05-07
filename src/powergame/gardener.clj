@@ -404,6 +404,6 @@
         (sp/select [sp/ALL sp/LAST (sp/collect-one :name) :image] board-defs/operations))
    (map (fn [i]
           [(keyword  (str ".knowledge.level-" i))
-           {:color :blue}])
+           {:color (gc/hsl [50 100 50])}])
         (range 10))])
 
