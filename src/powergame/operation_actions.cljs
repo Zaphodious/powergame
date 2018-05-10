@@ -17,7 +17,7 @@
   ;(println "selling the things! " (get-selected-areas a))
   (gc/put-thing-at (assoc a :next-input {:type :sell-unit :recoupe-type :sells-for})))
 
-(defmethod handle-operation :move
+(defmethod handle-operation :move-old
   [statemap]
   (let [{:as selected-area :keys [x y piece former-piece]}
         (sp/select-first [:board sp/ALL sp/ALL (sp/pred :selected)] statemap)
@@ -41,3 +41,7 @@
            (sp/setval [(sp/keypath :board x y :selected)] false)
            (sp/setval [(sp/keypath :board next-x next-y :selected)] true))
       statemap)))
+
+(defmethod handle-operation :move
+  [a]
+  (assoc a :modal-showing :move-modal))

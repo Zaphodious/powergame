@@ -161,9 +161,18 @@
                    [:td v]])))
           sorted-derived))]]]])
 
+(rum/defc move-modal [app-state]
+  [:.move-buttons
+   [:button.up "up"]
+   [:button.down "down"]
+   [:button.left "left"]
+   [:button.right "right"]])
+
+
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]
   (let [{thing-name :name :as modal-info} (get board-defs/modals modal-showing)]
-    [:#modal {:class (if modal-showing "showing" "hidden")}
+    [:#modal {:class (if modal-showing (str "showing " (name modal-showing))
+                                       "hidden")}
      [:.titlebar [:span.name (if thing-name (str/capitalize thing-name) "")]
       [:button.close {:type "button"
                       :onClick #(input-fn {:type :close-modal})}
@@ -173,6 +182,7 @@
                    :info (info-modal app-state)
                    :upgrade (upgrade-modal app-state)
                    :dungeon-state (dungeon-state-modal app-state)
+                   :move-modal (move-modal app-state)
                    nil [:.no-modal])]]))
 
 (rum/defc game-frame < rum/reactive

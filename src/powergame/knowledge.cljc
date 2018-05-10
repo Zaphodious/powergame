@@ -24,7 +24,7 @@
   ([] (make-knowledge-track-map {}))
   ([m] (->> knowledge-tree
          (sp/select [(sp/walker keyword?)])
-         (map (fn [a] [a 0]))
+         (map (fn [a] [a 1]))
          (reduce #(apply (partial assoc %1) %2) {})
          ((fn [a] (merge a m))))))
 

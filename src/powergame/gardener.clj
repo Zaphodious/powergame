@@ -65,7 +65,9 @@
 (def menubar-height 20)
 
 (gd/defstyles main
-  [
+  [[:button {:background :white
+             :border :none
+             :font-family :inherit}]
    [:html {:background-color :black
            :position :fixed
            :font-family :apple;"\"apple\" \"Courier New\", Courier, monospace"
@@ -122,7 +124,7 @@
             :border-bottom-left-radius  (-vmin 3)
             ;:border-width               (-vmin 0.3)
             ;:border-style               :solid
-            :width                      (-% 33);(-vmin 30.0)
+            :width                      (-% 50);(-vmin 30.0)
             :text-align                 :center
             :display :flex}
        [:span.label {};:width :100%
@@ -275,7 +277,33 @@
      [:&.hidden {:top (-% 120)
                  :bottom (-% (- 10))
                  :left (-% 45)
-                 :right (-% 45)}]]
+                 :right (-% 45)}]
+     [:&.move-modal {:top :initial
+                     :padding 0
+                     :bottom (-vmin (* 0.2 menubar-height))
+                     :max-height (-vmin (* 1.6 menubar-height)) ;(-vmin (* 5 menubar-height))}]]
+                     :min-height (-vmin (* 1.6 menubar-height))} ;(-vmin (* 5 menubar-height))}]]
+      [:.interior {:padding 0
+                   :min-width :100%
+                   :min-height :100%
+                   :margin :initial}]
+      [:.move-buttons {:width :100%
+                       :min-height (-vmin (* 1.5 menubar-height))
+                       :margin "0 auto"
+                       :display :grid
+                       :grid-template-columns "1fr 1fr 1fr"
+                       :grid-template-areas
+                       (grid-area-strings
+                         "..... up    ....."
+                         "left  down right")}
+       [:.up {:grid-area "up"}]
+       [:.down {:grid-area "down"}]
+       [:.left {:grid-area "left"}]
+       [:.right {:grid-area "right"}]
+       [:button {:margin (-vmin 0.5)}]]]]
+                 ;:min-height (-vmin (* 0.75 menubar-height))}]]]]
+                 ;:min-width (-vmin (* 0.75 menubar-height))}]]]]
+
     [:#board {:position :fixed
               ;:padding :100px
               :--board-zoom-level 1
@@ -297,7 +325,7 @@
                         :margin-left :auto
                         :width (calchelper (-px board-area-size) * (-var :--board-width) * (-var :--board-zoom-level))
                         :margin-top (-vmin menubar-height)
-                        :margin-bottom (-vmin menubar-height)} ;(-vmin 2)}
+                        :margin-bottom (-vmin (* 1.8 menubar-height))} ;(-vmin 2)}
      (vec
        (map (fn [i] [(keyword (str "&.board-width-" (str i)))
                      {:--board-width (str i)}])
