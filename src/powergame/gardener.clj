@@ -330,7 +330,8 @@
        (map (fn [i] [(keyword (str "&.board-width-" (str i)))
                      {:--board-width (str i)}])
             (range 0 30)))
-     [:.traveler {:--board-zoom-level :inherit
+     [:.traveler :.cursor-at
+      {:--board-zoom-level :inherit
                   :pointer-events :none
                   :--pos-x :10px
                   :--pos-y :0px
@@ -357,6 +358,8 @@
       (map (fn [[a {:keys [name sprite] :as traveler}]]
              [(keyword (str "&." name)) {:--sprite (url (pr-str (str "../" sprite)))}])
            board-defs/travelers)]
+     [:.cursor-at {:--sprite (url "../img/highlight_box.png")
+                   :transition "top 0.3s"}]
      [:table {:border-collapse :collapse
               :z-index -10}
               ;:background-color :grey
@@ -364,11 +367,7 @@
       [:tr {:background-color (gc/lighten main-color 10)
             :transition ["background-color .2s"]
             :border-width :0px
-            :border-style :solid}
-       [:&.cursor-at {:background-color :red}
-        [:td.board-area
-         [:button {:--selected-box (url "../img/highlight_box.png")}
-          [:&.selected {:--selected-box (url "../img/highlight_box_select.png")}]]]]]
+            :border-style :solid}]
       [:td.board-area {:--board-zoom-level :inherit
                        :min-width (calchelper (-px board-area-size) * (-var :--board-zoom-level))
                        :height (calchelper (-px board-area-size) * (-var :--board-zoom-level))

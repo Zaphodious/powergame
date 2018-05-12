@@ -6,8 +6,14 @@
             [powergame.board-defs :as board-defs]
             [powergame.knowledge :as pk]))
 
+(rum/defc cursor-at-component [{:keys [board input-fn cursor-at width height] :as app-state}]
+  (map (fn [n]
+          [:.cursor-at {:style #js{:--pos-x (str cursor-at "px")
+                                   :--pos-y (str n "px")}}])
+       (range width)))
+
 (rum/defc board-area [{{:keys [key direction] :as piece} :piece
-                       :keys [power status y x selected input-fn terrain]}]
+                       :keys [power status y x selected input-fn terrain cursor-at]}]
   (let [{unitname :name :as unit-info} (get board-defs/units key)]
     [:td.board-area
      [:button {:class (str
@@ -23,7 +29,11 @@
                           (str "direction " (name direction))))
                :type "button"
                :onClick #(input-fn {:type :selected :y y :x x :value (not selected)})}
-      [:span.label (str power)]]])) ;"(" x "," y ")")]])
+      [:span.label (str power)]
+      #_(when (= x cursor-at) [:span.cursor-at
+                               {:id (str "cursor-at-" y)
+                                :key (str "cursor-at-" y)}
+                               ""])]])) ;"(" x "," y ")")]])
 
 (defn printpass [a] ;(println a)
  a)
@@ -43,11 +53,12 @@
 (rum/defc board-component [{:keys [board input-fn cursor-at width height] :as app-state}]
   [:.board-container {:class (str "board-width-"width)}
    (traveler-component app-state)
+   (cursor-at-component app-state)
    [:table
     [:tbody
      (map-indexed (fn [n a]
-                    [:tr {:class (when (= n cursor-at)"cursor-at")}
-                     (map #(board-area (assoc % :input-fn input-fn))
+                    [:tr ;{:class (when (= n cursor-at)"cursor-at")}
+                     (map #(board-area (assoc % :input-fn input-fn :cursor-at cursor-at))
                            a)])
           board)]]])
 
