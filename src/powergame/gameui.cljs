@@ -172,12 +172,12 @@
                    [:td v]])))
           sorted-derived))]]]])
 
-(rum/defc move-modal [app-state]
+(rum/defc move-modal [{:as app-state :keys [input-fn]}]
   [:.move-buttons
-   [:button.up "up"]
-   [:button.down "down"]
-   [:button.left "left"]
-   [:button.right "right"]])
+   [:button.up {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "up"]
+   [:button.down {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "down"]
+   [:button.left {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "left"]
+   [:button.right {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "right"]])
 
 
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]

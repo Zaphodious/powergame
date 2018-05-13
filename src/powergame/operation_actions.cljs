@@ -45,3 +45,7 @@
 (defmethod handle-operation :move
   [a]
   (assoc a :modal-showing :move-modal))
+
+(defmethod handle-operation :move-unit
+  [a]
+  a)
