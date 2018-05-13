@@ -317,6 +317,7 @@ html #modal.hidden {
 }
 
 html #modal.move-modal {
+  transition: none;
   top: initial;
   padding: 0;
   bottom: 4.0vmin;

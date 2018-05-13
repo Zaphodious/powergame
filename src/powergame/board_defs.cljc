@@ -2,7 +2,7 @@
   (:require [com.rpl.specter :as sp]
             [powergame.knowledge :as pk]))
 
-(def unit-ops-no-upgrade [:info :rotate :upgrade :sell])
+(def unit-ops-no-upgrade [:info :upgrade :sell])
 (def unit-ops (conj unit-ops-no-upgrade :upgrade))
 (def units
   {:empty            {:name                 "empty"

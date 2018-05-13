@@ -175,9 +175,9 @@
 (rum/defc move-modal [{:as app-state :keys [input-fn]}]
   [:.move-buttons
    [:button.up {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "up"]
-   [:button.down {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "down"]
-   [:button.left {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "left"]
-   [:button.right {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :up})} "right"]])
+   [:button.down {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :down})} "down"]
+   [:button.left {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :left})} "left"]
+   [:button.right {:type :button :onClick #(input-fn {:type :operation :operation :move-unit :direction :right})} "right"]])
 
 
 (rum/defc modal [{:keys [board juice money knowhow input-fn zoom-level select-amount modal-showing] :as app-state}]

@@ -278,7 +278,8 @@
                  :bottom (-% (- 10))
                  :left (-% 45)
                  :right (-% 45)}]
-     [:&.move-modal {:top :initial
+     [:&.move-modal {:transition "none" ;"top 0.05s, bottom 0.05s, left 0.05, right 0.05s"
+                     :top :initial
                      :padding 0
                      :bottom (-vmin (* 0.2 menubar-height))
                      :max-height (-vmin (* 1.6 menubar-height)) ;(-vmin (* 5 menubar-height))}]]

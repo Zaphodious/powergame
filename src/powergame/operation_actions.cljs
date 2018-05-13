@@ -17,11 +17,11 @@
   ;(println "selling the things! " (get-selected-areas a))
   (gc/put-thing-at (assoc a :next-input {:type :sell-unit :recoupe-type :sells-for})))
 
-(defmethod handle-operation :move-old
-  [statemap]
+(defmethod handle-operation :move-unit
+  [{:as statemap :keys [next-input]}]
   (let [{:as selected-area :keys [x y piece former-piece]}
         (sp/select-first [:board sp/ALL sp/ALL (sp/pred :selected)] statemap)
-        moved-coords (gc/offset-one {:x x :y y :direction (:direction piece)})
+        moved-coords (gc/offset-one {:x x :y y :direction (:direction next-input)})
         {:as next-area next-x :x next-y :y
          {:as next-piece}
          :piece}
@@ -30,22 +30,20 @@
                             (:y moved-coords))]
                statemap)
         {:as next-unit :keys [traversable conserve-on-traverse]} (when next-area
-                                                                   ((:key next-piece) board-defs/units))]
+                                                                   ((:key next-piece) board-defs/units))
+        move-this-piece? (= (:direction next-input) (:direction piece))]
     ;(println "should move? " traversable ", and to " moved-coords)
-    (if (and traversable next-area)
+    (if (and traversable next-area move-this-piece?)
       (->> statemap
            (sp/setval [(sp/keypath :board x y :piece)] (or former-piece {:key :empty :direction :up}))
            (sp/setval [(sp/keypath :board x y :former-piece)] nil)
            (sp/setval [(sp/keypath :board next-x next-y :former-piece)] (when conserve-on-traverse next-piece))
-           (sp/setval [(sp/keypath :board next-x next-y :piece)] piece)
+           (sp/setval [(sp/keypath :board next-x next-y :piece)] (assoc piece :direction (:direction next-input)))
            (sp/setval [(sp/keypath :board x y :selected)] false)
            (sp/setval [(sp/keypath :board next-x next-y :selected)] true))
-      statemap)))
+      (->> statemap
+           (sp/setval [(sp/keypath :board x y :piece :direction)] (:direction next-input))))))
 
 (defmethod handle-operation :move
   [a]
   (assoc a :modal-showing :move-modal))
-
-(defmethod handle-operation :move-unit
-  [a]
-  a)
