@@ -398,13 +398,15 @@
                                           (-var :--tile)]
                   :background-size [:cover
                                     (calchelper :26px * (-var :--board-zoom-level))
-                                    (calchelper :10px * (-var :--board-zoom-level))
+                                    (calchelper :24px * (-var :--board-zoom-level))
+
+                                    ;(calchelper :10px * (-var :--board-zoom-level))
                                     :cover]
                   :background-repeat :no-repeat
                   :background-position [:center
-                                        "bottom right"
+                                        :center
                                         "top left"
-                                        :center]
+                                        "bottom right"]
                   :padding         0
                   :margin          0}
          [:&.selected
