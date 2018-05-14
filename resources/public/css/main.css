@@ -562,6 +562,10 @@ html .board-container .traveler.altarcloud, html .board-container .cursor-at.alt
   --sprite: url("../img/cloud_magic_anim.png");
 }
 
+html .board-container .traveler.learning, html .board-container .cursor-at.learning {
+  --sprite: url("../img/learning.png");
+}
+
 html .board-container .traveler.devilball, html .board-container .cursor-at.devilball {
   --sprite: url("../img/cloud_fire_anim.png");
 }

@@ -180,6 +180,12 @@
                               :lifetime 1
                               :energy 0
                               :speed 0}
+                :learning {:name "learning"
+                           :type :empty
+                           :sprite "img/learning.png"
+                           :lifetime 1
+                           :energy 0
+                           :speed 0}
                 :devilball {:name "devilball"
                             :type :juice
                             :sprite "img/cloud_fire_anim.png"
