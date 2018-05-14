@@ -47,7 +47,7 @@
                    :key   (str "traveler-" id)
                    :style #js{:--pos-x (str x "px")
                               :--pos-y (str y "px")}}
-       [:.label value]])
+       (if-not (zero? value) [:.label value])])
     (:travelers app-state)))
 
 (rum/defc board-component [{:keys [board input-fn cursor-at width height] :as app-state}]

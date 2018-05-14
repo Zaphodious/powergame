@@ -4,6 +4,11 @@
             [powergame.knowledge :as pk]
             [com.rpl.specter :as sp]))
 
+(defn add-traveler [traveler-class traveler-data statemap]
+  (sp/setval [:travelers sp/END] [(into (traveler-class board-defs/travelers)
+                                       (into traveler-data {:id (rand)}))]
+             statemap))
+
 
 (defmethod unit-action :default
   [a] a)
@@ -24,9 +29,7 @@
   (if (>= power 10)
     (->> statemap
          (sp/setval [(sp/keypath :board x y :power)] (- power 10))
-         (sp/setval [:travelers sp/END] [( (direction gc/travel-by-direction)
-                                           (into (:splash board-defs/travelers)
-                                                 {:value 1 :x x :y y :id (rand) :direction direction}))]))
+         (add-traveler :splash {:value 1 :x x :y y :direction direction}))
     statemap))
 
 (defn study [{kind :what-kind?}
@@ -46,7 +49,8 @@
            (sp/transform [(sp/keypath :board x y :power)] (partial + -5))
            (sp/transform [(sp/keypath :board x y :piece :knowledge)]
                          (fn [a] (update-in a [:knowledge] (partial + 1))))
-           (sp/transform [:knowledge ::pk/totality] inc))
+           (sp/transform [:knowledge ::pk/totality] inc)
+           (add-traveler :learning {:value 0 :x x :y y :direction direction}))
       statemap)))
 
 

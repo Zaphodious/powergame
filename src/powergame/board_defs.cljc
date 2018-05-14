@@ -100,7 +100,7 @@
                       :sells-for     {:juice 1
                                       :money 0}
                       :upgrade-paths [:crystal-fountain]
-                      :operations    unit-ops
+                      :operations    (conj unit-ops :rotate)
                       :sprite        "img/crawl-tiles/dungeon/dry_fountain.png"}
    :crystal-fountain {:name          "crystal-fountain"
                       :type          :fixture
@@ -112,7 +112,7 @@
                       :sells-for     {:juice 500
                                       :money 0}
                       :upgrade-paths [:blood-fountain]
-                      :operations    unit-ops
+                      :operations    (conj unit-ops :rotate)
                       :sprite        "img/crawl-tiles/dungeon/sparkling_fountain.png"}
    :blood-fountain   {:name          "blood-fountain"
                       :type          :fixture
@@ -124,7 +124,7 @@
                       :sells-for     {:juice 1000
                                       :money 0}
                       :upgrade-paths nil
-                      :operations    unit-ops-no-upgrade
+                      :operations    (conj unit-ops-no-upgrade :rotate)
                       :sprite        "img/crawl-tiles/dungeon/blood_fountain.png"}
    :altar            {:name          "old-altar"
                       :type          :altar
@@ -136,7 +136,7 @@
                       :sells-for     {:juice 1
                                       :money 75}
                       :upgrade-paths nil
-                      :operations    unit-ops
+                      :operations    (conj unit-ops :rotate)
                       :sprite        "img/crawl-tiles/dungeon/altars/altar_old.png"}
    :human            {:name          "human"
                       :type          :creature
@@ -172,7 +172,7 @@
                          :type :juice
                          :sprite "img/crawl-tiles/effect/cloud_spectral_0.png"
                          :lifetime 10
-                         :energy 0
+                         :energy 1
                          :speed 1}
                 :altar-cloud {:name "altarcloud"
                               :type :juice
