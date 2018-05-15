@@ -204,9 +204,9 @@
 
 (defn make-travelers-travel [{:keys [travelers] :as app-state}]
   (sp/transform [:travelers sp/ALL]
-                (fn [{:keys [direction energy lifetime] :as traveler}]
+                (fn [{:keys [direction energy lifetime type] :as traveler}]
                   (tick-down-traveler
-                    (if (< 0 energy)
+                    (if (and (< 0 energy) (not (= :empty type)))
                         ((get travel-by-direction direction) traveler)
                         traveler)))
                 app-state))

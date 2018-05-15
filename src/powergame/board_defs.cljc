@@ -141,7 +141,7 @@
    :human            {:name          "human"
                       :type          :creature
                       :knowledge     ::pk/totality
-                      :description   "Weak, short-lived, pathetic. The fair races have little use for humans. They ignore them at their own detriment, however, for these beings have the capability to change the world! None are so driven, none are so curious. Put them next to knowledge, and they'll attack it. Pay them for their work, and they'll give you all they learn."
+                      :description   "Weak, short-lived, pathetic. Humanity is little more then a blight upon the world... according to the fair races. Yet you know differently. Humanity was created with an endless hunger for knowledge and power that only the gods themselves can fulfill. Let them near secrets hidden by the ancients, and they'll be secrets no longer. Pay them in power, and they'll tell you all they know."
                       :purchasable?  true
                       :cost          {:juice 1
                                       :money 1}

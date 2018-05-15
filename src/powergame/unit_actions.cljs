@@ -44,15 +44,15 @@
         {:as facing-unit :keys [type knowledge]}
         (get board-defs/units facing-key)
         can-learn (and (isa? (:knowledge (key board-defs/units))
-                             knowledge)
-                       (:ready-to-learn unit))]
+                             knowledge))]
+                       ;(:ready-to-learn unit))]
     (println "knowledge is " knowledge " and type is " type)
     (if (and type knowledge (>= power 5) can-learn)
       (->> statemap
            (sp/transform [(sp/keypath :board x y :power)] (partial + -5))
            (sp/transform [(sp/keypath :board x y :piece :knowledge-held)]
                          (fn [a] (update-in a [knowledge] (partial + 1))))
-           (sp/transform [:knowledge ::pk/totality] inc)
+           ;(sp/transform [:knowledge ::pk/totality] inc)
            (sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] false)
            (add-traveler :learning {:value 0 :x x :y y :direction direction}))
       statemap)))
@@ -139,9 +139,13 @@
            (not (= :empty (sp/select-first [(sp/keypath :travelers traveler-index :type)] statemap))))
     (->> statemap
          (sp/setval [(sp/keypath :board x y :power)] (- power 5))
-         (sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] true)
+         ;(sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] true)
+         (sp/transform [(sp/keypath :knowledge)] (fn [a] (merge-with + (:knowledge-held piece) a)))
+         (sp/setval [(sp/keypath :board x y :piece :knowledge-held)] {})
          (sp/transform [(sp/keypath :travelers traveler-index)]
-                       (fn [a] (into a (:ready-to-learn board-defs/travelers))))
+                       (fn [a] (assoc (into a (:ready-to-learn board-defs/travelers))
+                                 :x x
+                                 :y y)))
          (sp/setval [(sp/keypath :travelers traveler-index :last-touched)] (:id piece)))
 
     (->> statemap
