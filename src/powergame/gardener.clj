@@ -65,7 +65,8 @@
 (def menubar-height 20)
 
 (gd/defstyles main
-  [[:button {:background :white
+  [[:.comment {:display :none}]
+   [:button {:background :white
              :border :none
              :font-family :inherit}]
    [:html {:background-color :black

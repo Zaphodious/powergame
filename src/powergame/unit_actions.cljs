@@ -36,20 +36,24 @@
              statemap])
 
 (defmethod unit-action :human
-  [{:as statemap {:as action-area :keys [x y power] {:keys [key direction]} :piece} :action-area}]
+  [{:as statemap {:as action-area :keys [x y power unit] {:keys [key direction]} :piece} :action-area}]
   (let [{:as facing-coords facing-x :x facing-y :y}
         (gc/offset-one {:x x :y y :direction direction})
         {:as facing-area {facing-key :key} :piece}
         (sp/select-first [(sp/keypath :board facing-x facing-y)] statemap)
         {:as facing-unit :keys [type knowledge]}
-        (get board-defs/units facing-key)]
+        (get board-defs/units facing-key)
+        can-learn (and (isa? (:knowledge (key board-defs/units))
+                             knowledge)
+                       (:ready-to-learn unit))]
     (println "knowledge is " knowledge " and type is " type)
-    (if (and type knowledge (>= power 5))
+    (if (and type knowledge (>= power 5) can-learn)
       (->> statemap
            (sp/transform [(sp/keypath :board x y :power)] (partial + -5))
-           (sp/transform [(sp/keypath :board x y :piece :knowledge)]
-                         (fn [a] (update-in a [:knowledge] (partial + 1))))
+           (sp/transform [(sp/keypath :board x y :piece :knowledge-held)]
+                         (fn [a] (update-in a [knowledge] (partial + 1))))
            (sp/transform [:knowledge ::pk/totality] inc)
+           (sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] false)
            (add-traveler :learning {:value 0 :x x :y y :direction direction}))
       statemap)))
 
@@ -126,3 +130,20 @@
                            a))))
     statemap))
 
+(defmethod traveler-unit-intercept :human
+  [{:as statemap
+    :keys [traveler-index]
+    {:keys [power x y piece] :as action-area} :action-area}]
+  (if (and (>= power 5)
+           (not (:ready-to-learn piece))
+           (not (= :empty (sp/select-first [(sp/keypath :travelers traveler-index :type)] statemap))))
+    (->> statemap
+         (sp/setval [(sp/keypath :board x y :power)] (- power 5))
+         (sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] true)
+         (sp/transform [(sp/keypath :travelers traveler-index)]
+                       (fn [a] (into a (:ready-to-learn board-defs/travelers))))
+         (sp/setval [(sp/keypath :travelers traveler-index :last-touched)] (:id piece)))
+
+    (->> statemap
+         (sp/setval [(sp/keypath :travelers traveler-index :last-touched)] (:id piece)))))
+  ;(println "action area is " action-area)

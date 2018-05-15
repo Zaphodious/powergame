@@ -13,9 +13,10 @@
        (range width)))
 
 (rum/defc board-area [{{:keys [key direction] :as piece} :piece
-                       :keys [power status y x selected input-fn terrain cursor-at]}]
+                       :keys [power status y x selected input-fn terrain cursor-at] :as area}]
   (let [{unitname :name :as unit-info} (get board-defs/units key)]
     [:td.board-area
+     [:.comment (pr-str area)]
      [:button {:class (str
                         (if selected "selected" "quiet")
                         " "

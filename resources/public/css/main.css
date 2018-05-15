@@ -1,3 +1,7 @@
+.comment {
+  display: none;
+}
+
 button {
   background: white;
   border: none;
@@ -560,6 +564,10 @@ html .board-container .traveler.splash, html .board-container .cursor-at.splash 
 
 html .board-container .traveler.altarcloud, html .board-container .cursor-at.altarcloud {
   --sprite: url("../img/cloud_magic_anim.png");
+}
+
+html .board-container .traveler.ready-to-learn, html .board-container .cursor-at.ready-to-learn {
+  --sprite: url("../img/learn-ready.png");
 }
 
 html .board-container .traveler.learning, html .board-container .cursor-at.learning {

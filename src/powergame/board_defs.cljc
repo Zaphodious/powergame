@@ -180,6 +180,13 @@
                               :lifetime 1
                               :energy 0
                               :speed 0}
+                :ready-to-learn {:name "ready-to-learn"
+                                 :type :empty
+                                 :sprite "img/learn-ready.png"
+                                 :value 0
+                                 :lifetime 1
+                                 :energy 0
+                                 :speed 0}
                 :learning {:name "learning"
                            :type :empty
                            :sprite "img/learning.png"
