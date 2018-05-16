@@ -730,10 +730,6 @@ html .board-container .unit.high-elf {
   --sprite: url("../img/crawl-tiles/monster/deep_elf_sorcerer.png");
 }
 
-html .board-container .unit.human-monk {
-  --sprite: url("../");
-}
-
 html .board-container .unit.human {
   --sprite: url("../img/crawl-tiles/monster/human_new.png");
 }
@@ -744,6 +740,10 @@ html .board-container .unit.fountain {
 
 html .board-container .unit.empty {
   --sprite: url("../img/empty.png");
+}
+
+html .board-container .unit.human-potential {
+  --sprite: url("../img/crawl-tiles/monster/human_monk_ghost.png");
 }
 
 html .board-container .unit.elf-mage {

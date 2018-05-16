@@ -137,16 +137,20 @@
   (if (and (>= power 5)
            (not (:ready-to-learn piece))
            (not (= :empty (sp/select-first [(sp/keypath :travelers traveler-index :type)] statemap))))
-    (->> statemap
-         (sp/setval [(sp/keypath :board x y :power)] (- power 5))
-         ;(sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] true)
-         (sp/transform [(sp/keypath :knowledge)] (fn [a] (merge-with + (:knowledge-held piece) a)))
-         (sp/setval [(sp/keypath :board x y :piece :knowledge-held)] {})
-         (sp/transform [(sp/keypath :travelers traveler-index)]
-                       (fn [a] (assoc (into a (:ready-to-learn board-defs/travelers))
-                                 :x x
-                                 :y y)))
-         (sp/setval [(sp/keypath :travelers traveler-index :last-touched)] (:id piece)))
+    (let [total-knowledge (reduce + (sp/select [sp/ALL sp/LAST] (:knowledge-held piece)))]
+      (->> statemap
+           (sp/setval [(sp/keypath :board x y :piece :key)] (if (<= 5 total-knowledge)
+                                                              :human-potential
+                                                              (:key piece)))
+           (sp/setval [(sp/keypath :board x y :power)] (- power 5))
+           ;(sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] true)
+           (sp/transform [(sp/keypath :knowledge)] (fn [a] (merge-with + (:knowledge-held piece) a)))
+           (sp/setval [(sp/keypath :board x y :piece :knowledge-held)] {})
+           (sp/transform [(sp/keypath :travelers traveler-index)]
+                         (fn [a] (assoc (into a (:ready-to-learn board-defs/travelers))
+                                   :x x
+                                   :y y)))
+           (sp/setval [(sp/keypath :travelers traveler-index :last-touched)] (:id piece))))
 
     (->> statemap
          (sp/setval [(sp/keypath :travelers traveler-index :last-touched)] (:id piece)))))
