@@ -140,7 +140,7 @@
     (let [total-knowledge (reduce + (sp/select [sp/ALL sp/LAST] (:knowledge-held piece)))]
       (->> statemap
            (sp/setval [(sp/keypath :board x y :piece :key)] (if (<= 5 total-knowledge)
-                                                              :human-potential
+                                                              :enlightened-human
                                                               (:key piece)))
            (sp/setval [(sp/keypath :board x y :power)] (- power 5))
            ;(sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] true)
