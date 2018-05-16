@@ -124,19 +124,49 @@
                       ;[:div (pr-str (gc/get-selected-areas app-state))]]))
           purchasable-keys)]))
 
+
+(rum/defc knowledge-table [knowledge-map]
+  [:table
+   [:tbody
+    (let [path-map (pk/make-knowledge-path-map)
+          derived (pk/get-derived-knowledge knowledge-map)
+          sorted-derived (pk/sort-knowledge-track-map derived)]
+      (map
+        (fn [[k v]]
+          (when (not (zero? v))
+            (let [parent-count (-> path-map k count)]
+              [:tr
+               [:td.knowledge {:class (str "level-" parent-count)}
+                ;[:span.level-0 "<"]
+                (->> (-> parent-count
+                         dec
+                         (take (repeat ":")))
+                     (map-indexed (fn [i a]
+                                    [:span {:class (str "level-" (inc i))}
+                                     a])))
+                ;(repeat "\t "))))) ;"ù"))))
+                [:span {:class (str "level-" parent-count)}
+                 ">" (str/capitalize (name k))]]
+               [:td v]])))
+        sorted-derived))]])
+
 (rum/defc info-modal [{:keys [input-fn] :as app-state}]
-  (let [selected-pieces (apply sorted-set (sp/select [:board sp/ALL sp/ALL (sp/pred :selected) :piece :key] app-state))]
+  (let [selected-pieces (apply sorted-set (sp/select [:board sp/ALL sp/ALL (sp/pred :selected) :piece] app-state))]
     ;(println "selected pieces " selected-pieces)
     [:.purchase-list
      (map (fn [a] (let [{namething :name
                          {:keys [juice money knowhow] :as sells-for} :sells-for
                           :keys [type upgrades operations sprite description]
-                          :as purchasable-thing} (get board-defs/units a)]
+                          :as purchasable-thing} (get board-defs/units (:key a))]
                      [:.purchasable
                       [:.info
                        [:.name (str/capitalize namething)]
                        [:img {:src sprite}]
                        [:.description description]]
+                      (when (:knowledge-held a)
+                        [:.knowledge-held
+                         [:.label "Knowledge Held"]
+                         (knowledge-table (:knowledge-held a))])
                       "Sells for"
                       [:.cost
                        [:.juice "Magic " juice]
@@ -149,29 +179,7 @@
   [:.dungeon-state
    [:.state-section
     [:.label "Knowledge"]
-    [:table
-     [:tbody
-      (let [path-map (pk/make-knowledge-path-map)
-            derived (pk/get-derived-knowledge (:knowledge app-state))
-            sorted-derived (pk/sort-knowledge-track-map derived)]
-        (map
-          (fn [[k v]]
-            (when (not (zero? v))
-              (let [parent-count (-> path-map k count)]
-                  [:tr
-                   [:td.knowledge {:class (str "level-" parent-count)}
-                    ;[:span.level-0 "<"]
-                    (->> (-> parent-count
-                             dec
-                             (take (repeat ":")))
-                         (map-indexed (fn [i a]
-                                        [:span {:class (str "level-" (inc i))}
-                                         a])))
-                                            ;(repeat "\t "))))) ;"ù"))))
-                    [:span {:class (str "level-" parent-count)}
-                     ">" (str/capitalize (name k))]]
-                   [:td v]])))
-          sorted-derived))]]]])
+    (knowledge-table (:knowledge app-state))]])
 
 (rum/defc move-modal [{:as app-state :keys [input-fn]}]
   [:.move-buttons

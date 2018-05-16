@@ -51,7 +51,7 @@
       (->> statemap
            (sp/transform [(sp/keypath :board x y :power)] (partial + -5))
            (sp/transform [(sp/keypath :board x y :piece :knowledge-held)]
-                         (fn [a] (update-in a [knowledge] (partial + 1))))
+                         (fn [a] (update-in a [knowledge] (partial + (rand-int 2)))))
            ;(sp/transform [:knowledge ::pk/totality] inc)
            (sp/setval [(sp/keypath :board x y :unit :ready-to-learn)] false)
            (add-traveler :learning {:value 0 :x x :y y :direction direction}))

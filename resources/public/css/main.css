@@ -261,6 +261,13 @@ html #modal .interior .purchase-list .purchasable {
   font-size: 3.3vmin;
 }
 
+html #modal .interior .purchase-list .purchasable .knowledge-held {
+  border-width: 0;
+  border-bottom-width: 0.5vmin;
+  margin-bottom: 0.5vmin;
+  border-style: dashed;
+}
+
 html #modal .interior .purchase-list .purchasable .info {
   border-width: 0;
   border-bottom-width: 0.5vmin;

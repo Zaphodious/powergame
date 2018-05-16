@@ -245,6 +245,10 @@
                        ;:border-bottom-style :double
                        ;:border-width (-vmin 0.1)
                        :font-size (-vmin 3.3)}
+        [:.knowledge-held {:border-width 0
+                           :border-bottom-width (-vmin 0.5)
+                           :margin-bottom (-vmin 0.5)
+                           :border-style :dashed}]
         [:.info {:border-width 0
                  :border-bottom-width (-vmin 0.5)
                  :border-color :white
