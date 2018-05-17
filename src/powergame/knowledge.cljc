@@ -18,7 +18,11 @@
     [::arcane]
     [::arborial]
     [::maritime]]
-   [::elder]])
+   [::inemigo
+    [::sange]
+    [::guerra]
+    [::tempo]
+    [::artificio]]])
 
 (defn make-knowledge-track-map
   ([] (make-knowledge-track-map {}))
