@@ -4,6 +4,7 @@
 (def knowledge-tree
   [::totality
    [::planar
+    [::arcane]
     [::elemental
      [::raw]
      [::constructor]
@@ -15,8 +16,12 @@
      [::greed]
      [::power]]]
    [::terrestrial
-    [::arcane]
-    [::arborial]
+    [::martial
+     [::discipline]
+     [::focus]]
+    [::sylvan
+     [::fair]
+     [::bestial]]
     [::maritime]]
    [::inemigo
     [::sange]

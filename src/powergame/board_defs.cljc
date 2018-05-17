@@ -33,7 +33,7 @@
    :elf-mage          {:name          "elf-mage"
                        :description   "Uplifted and enlightened, empowered and liberated, these elves have come a long way since they came into your service. They've gained the ability to draw a little bit of power from the world, and use it to amplify power already passing through them. Don't feel bad about dismissing them from your service - when they leave, they'll go into the world a force all their own."
                        :type          :creature
-                       :knowledge     ::pk/terrestrial
+                       :knowledge     ::pk/sylvan
                        :purchasable?  false
                        :cost          {:juice 50
                                        :money 120}
@@ -45,7 +45,7 @@
    :high-elf          {:name          "high-elf"
                        :description   "An elf at the apex of his power. These masters of magic can fully utilize the power below their feet, passing it forward with or without a bolt to add to. They are no longer your servants, master. They are your allies, won through your service to them. As such, they'll teach you what more they learn."
                        :type          :creature
-                       :knowledge     ::pk/arcane
+                       :knowledge     ::pk/fair
                        :purchasable?  false
                        :upgrade-paths nil
                        :operations    (conj unit-ops-no-upgrade :move)
