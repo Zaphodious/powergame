@@ -157,9 +157,39 @@
                        :purchasable?  false
                        :sells-for     {:juice 0
                                        :money 0}
-                       :upgrade-paths []
+                       :upgrade-paths [:initiated :forsaken]
                        :operations    (conj unit-ops :move)
-                       :sprite        "img/crawl-tiles/monster/human_monk_ghost.png"}})
+                       :sprite        "img/crawl-tiles/monster/human_monk_ghost.png"}
+   :initiated {:name "initiated"
+               :description "Here stands a human who has seen beyond this reality. Next to us, all around us, and yet an unknowable distance away from us are infinite other realities. Vast wonders and immense tragedy lie in wait of discovery! This man wishes to find them all, learn them all, and bring them all back home."
+               :type :creature
+               :knowledge ::pk/planar
+               :purchasable? false
+               :cost          {:juice 260
+                               :money 40}
+               :sells-for {:juice 10
+                           :money 1}
+               :upgrade-paths []
+               :operations (conj unit-ops :move)
+               :sprite "img/crawl-tiles/monster/wizard.png"}
+   :forsaken {:name "Forsaken"
+              :description "He who gives himself up for the good of his fellows is a hero true and noble. The path before this man is a dark one. Your enemy is terrible, depraved, and merciless. None among the good understand them. In order to claim victory, that has to change... which is why this man does what he does. In his peek beyond the vail, he has seen the horrible false truths that drive your enemies. He has seen the dangers that lurk in the darkness. He is capable of understanding them, and in doing so knowing what will win the war. In the process, though, he will lose himself. He is frightened, but willing to make the sacrifice."
+              :type :creature
+              :knowledge ::pk/inemigo
+              :purchasable? false
+              :cost          {:juice 80
+                              :money 80}
+              :sells-for {:juice 80
+                          :money 40}
+              :upgrade-paths []
+              :operations (conj unit-ops :move)
+              :sprite "img/crawl-tiles/monster/necromancer_new.png"}
+   :naturist {:name "Naturist"
+              :description "The world is an immense place, full of wonder and delight."
+              :sprite "img/crawl-tiles/monster/human_slave.png"}})
+
+
+
 
 (def history ["The ancient gods who created reality made many beings to inhabit the world, and to give it meaning. All were narrow in focus, supposedly confined to their own niche and designed to work together to administer the world for the gods. Unfortunately, the gods were naive and short-sighted; The Dark Lord corrupted the hearts and minds of the fair races, and they looked upon each other with scorn and envy. For untold ages, continuous war raged. The Shining One, he who had created the bedrock of reality on which all else was placed, decided that a world of bloodshed did not please him. Thus, he created many lesser gods to manage the world, powerful enough that the Dark Lord could not corrupt them but weak enough that they could not themselves become corrupters. To serve these gods he created humanity. An individual human, unaided, has little strength or power. They are, however, inset with a small spark of divinity, and should a human choose a god they can be transformed into something incredible. These transformations can be subtle, like being given divine martial prowess. They can also be fantastical. Angels, centaurs, murfolk, and many more fantastic man-like creatures were once individual humans who gave themselves completely to the power that then changed them."])
 

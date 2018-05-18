@@ -738,6 +738,10 @@ html .board-container .unit.human {
   --sprite: url("../img/crawl-tiles/monster/human_new.png");
 }
 
+html .board-container .unit.Naturist {
+  --sprite: url("../img/crawl-tiles/monster/human_slave.png");
+}
+
 html .board-container .unit.fountain {
   --sprite: url("../img/crawl-tiles/dungeon/dry_fountain.png");
 }
@@ -764,6 +768,14 @@ html .board-container .unit.devil {
 
 html .board-container .unit.old-altar {
   --sprite: url("../img/crawl-tiles/dungeon/altars/altar_old.png");
+}
+
+html .board-container .unit.initiated {
+  --sprite: url("../img/crawl-tiles/monster/wizard.png");
+}
+
+html .board-container .unit.Forsaken {
+  --sprite: url("../img/crawl-tiles/monster/necromancer_new.png");
 }
 
 .operation.purchase {
