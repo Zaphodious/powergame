@@ -185,7 +185,7 @@
               :operations (conj unit-ops :move)
               :sprite "img/crawl-tiles/monster/necromancer_new.png"}
    :naturist {:name "Naturist"
-              :description "The world is an immense place, full of wonder and delight."
+              :description "The world is an immense place, full of wonder and delight, and this man wants to experience it all. In his peak beyond the veil, the saw the fullness of the world laid out before him in a single infinite instant, and the fate of all natural things intertwined and woven."
               :sprite "img/crawl-tiles/monster/human_slave.png"}})
 
 
