@@ -102,7 +102,8 @@
                        :description   "Eons in the past, the ancient wizards of Thraum infused the world with magic. While they only intended to make their own workings easier, their power was immense, and the results of their efforts persist to this day! We are not as powerful, so to use this magic we must build special structures to condense and concentrate it. When the fountain is full, it overflows, spilling magic onto the ground next to it. Special rituals exist which can enhance these fountains, and perhaps through them we'll get to where the ancient wizards left off..."
                        :purchasable?  true
                        :cost          {:juice 1
-                                       :money 1}
+                                       :money 1
+                                       :knowledge-held {::pk/totality 1}}
                        :sells-for     {:juice 1
                                        :money 0}
                        :upgrade-paths [:crystal-fountain]
@@ -138,7 +139,8 @@
                        :description   "Strange forces govern the world, compelling and coercing it as their whims dictate. Stranger still is their relationship with us mortals. Structures of stone and precious metals, shaped as they decree, allow us to bargain with them for reasons we cannot fathom. Take this one, for example- blasting it with the world's magic imbues you with a small amount of eldrich power directly! You might never know the name of the being giving you this power... but you're thankful all the same, no?"
                        :purchasable?  true
                        :cost          {:juice 10
-                                       :money 100}
+                                       :money 100
+                                       :knowledge-held {::pk/totality 1}}
                        :sells-for     {:juice 1
                                        :money 75}
                        :upgrade-paths nil
@@ -150,7 +152,8 @@
                        :description   "Weak, short-lived, pathetic. Humanity is little more then a blight upon the world... according to the fair races. Yet you know differently. Humanity was created with an endless hunger for knowledge and power that only the gods themselves can fulfill. Let them near secrets hidden by the ancients, and they'll be secrets no longer. Pay them in power, and they'll tell you all they know."
                        :purchasable?  true
                        :cost          {:juice 1
-                                       :money 1}
+                                       :money 1
+                                       :knowledge-held {::pk/totality 1}}
                        :sells-for     {:juice 0
                                        :money 1}
                        :upgrade-paths []
@@ -163,7 +166,7 @@
                        :purchasable?  false
                        :sells-for     {:juice 0
                                        :money 0}
-                       :upgrade-paths [:initiated :forsaken]
+                       :upgrade-paths [:initiated :forsaken :naturist]
                        :operations    (conj unit-ops :move)
                        :sprite        "img/crawl-tiles/monster/human_monk_ghost.png"}
    :initiated {:name "initiated"
@@ -172,7 +175,8 @@
                :knowledge ::pk/planar
                :purchasable? false
                :cost          {:juice 260
-                               :money 40}
+                               :money 40
+                               :knowledge-held {::pk/totality 1}}
                :sells-for {:juice 10
                            :money 1}
                :upgrade-paths []
@@ -184,7 +188,8 @@
               :knowledge ::pk/inemigo
               :purchasable? false
               :cost          {:juice 80
-                              :money 80}
+                              :money 80
+                              :knowledge-held {::pk/totality 200}}
               :sells-for {:juice 80
                           :money 40}
               :upgrade-paths []
@@ -192,6 +197,16 @@
               :sprite "img/crawl-tiles/monster/necromancer_new.png"}
    :naturist {:name "Naturist"
               :description "The world is an immense place, full of wonder and delight. It is grand beyond our grandest visions, and ancient beyond our oldest memories. In his view behind the veil this man has seen the totality of the future, and has realized that our world will endure whatever catastrophe causes us to perish. He saw how the forests will regrow, and how the seas will continue to swirl, and how whoever comes after us will struggle and triumph just as we did."
+              :type :creature
+              :knowledge ::pk/terrestrial
+              :purchasable? false
+              :cost          {:juice 80
+                              :money 80
+                              :knowledge-held {::pk/totality 30}}
+              :sells-for {:juice 80
+                          :money 40}
+              :upgrade-paths []
+              :operations (conj unit-ops :move)
               :sprite "img/crawl-tiles/monster/human_slave.png"}})
 
 

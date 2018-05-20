@@ -94,14 +94,16 @@
                       ;[:div (pr-str (gc/get-selected-areas app-state))]]))
           purchasable-keys)]))
 
-(rum/defc upgrade-modal [{:keys [input-fn] :as app-state}]
+(rum/defc upgrade-modal [{:keys [input-fn knowledge] :as app-state}]
   (let [purchasable-keys (gc/get-immediate-upgrades-for (:key (:piece (first (gc/get-selected-areas app-state)))))]
     [:.purchase-list
      (map (fn [a] (let [{namething :name
-                         {:keys [juice money knowhow] :as cost} :cost
-                         {selljuice :juice sellmoney :money sellknowhow :knowhow} :sells-for
+                         {:keys [juice money knowledge-held] :as cost} :cost
+                         {selljuice :juice sellmoney :money} :sells-for
                           :keys [type upgrades operations sprite description]
-                          :as purchasable-thing} (get board-defs/units a)]
+                          :as purchasable-thing} (get board-defs/units a)
+                        knowledge-is-enough? (pk/satasfies? knowledge knowledge-held)]
+                    (when knowledge-is-enough?
                      [:.purchasable
                       [:.info
                        [:.name (str/capitalize namething)]
@@ -120,7 +122,7 @@
                       [:.button-bar
                        [:button {:type :button
                                  :onClick #(input-fn {:type :unit :value a :pay-cost true})}
-                        "Purchase"]]]))
+                        "Purchase"]]])))
                       ;[:div (pr-str (gc/get-selected-areas app-state))]]))
           purchasable-keys)]))
 

@@ -62,9 +62,10 @@
 (defn deselect-all [{:keys [board] :as state-map}]
   (sp/setval [:board sp/ALL sp/ALL :selected] false state-map))
 
-(defn get-purchasable-units [{:keys [board] :as state-map}]
+(defn get-purchasable-units [{:keys [board knowledge] :as state-map}]
   (let [all-purchasable (->> board-defs/units
                              (filter #(-> % second :purchasable?))
+                             (filter #(->> % second :cost :knowledge-held (pk/satasfies? knowledge)))
                              (map first))]
     all-purchasable))
 
