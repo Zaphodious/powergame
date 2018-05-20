@@ -96,3 +96,10 @@
              [k (reduce + a)]))
       (reduce (fn [rm [k a]] (assoc rm k a)) {}))))
 
+(defn satasfies? [knowledge-map prereq-map]
+  (when prereq-map
+    (let [total-knowledge (get-derived-knowledge knowledge-map)]
+      (->> prereq-map
+           (filter (fn [[k v]] (< (k total-knowledge) v)))
+           first
+           nil?))))
