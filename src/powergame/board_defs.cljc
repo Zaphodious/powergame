@@ -24,7 +24,8 @@
                        :knowledge     ::pk/terrestrial
                        :purchasable?  true
                        :cost          {:juice 0
-                                       :money 10}
+                                       :money 10
+                                       :knowledge-held {::pk/terrestrial 1}}
                        :sells-for     {:juice 0
                                        :money 6}
                        :upgrade-paths [:elf-mage]
@@ -36,7 +37,8 @@
                        :knowledge     ::pk/sylvan
                        :purchasable?  false
                        :cost          {:juice 50
-                                       :money 120}
+                                       :money 120
+                                       :knowledge-held {::pk/sylvan 1}}
                        :sells-for     {:juice 45
                                        :money 60}
                        :upgrade-paths [:high-elf]
@@ -50,7 +52,8 @@
                        :upgrade-paths nil
                        :operations    (conj unit-ops-no-upgrade :move)
                        :cost          {:juice 1000
-                                       :money 750}
+                                       :money 750
+                                       :knowledge-held {::pk/fair 1}}
                        :sells-for     {:juice 1100
                                        :money 850}
                        :sprite        "img/crawl-tiles/monster/deep_elf_sorcerer.png"}
@@ -60,7 +63,8 @@
                        :description   "Untrustworthy. Vexing. Litigious. They're only pliant because their Hellish liege is hungry for your magic. Unfortunately for you, the first ones sent up are weak, barely capable of flying let alone trans-dimensional power transfer. Should their liege receive an impressive enough gift, he'll send a more capable (and more efficient) collector to replace them."
                        :purchasable?  true
                        :cost          {:juice 1
-                                       :money 0}
+                                       :money 0
+                                       :knowledge-held {::pk/planar 1}}
                        :sells-for     {:juice 1
                                        :money 0}
                        :upgrade-paths [:corpulent-devil]
@@ -72,7 +76,8 @@
                        :description   "A devil grown slovenly and fat. Decidedly older then the usual devil, and therefore smarter- which is usually a very dangerous thing. Not for you, not now. Your contract with their liege still holds. These fiends are far more capable then their younger brothers, and can transmit more power back home and get a much better price per point of energy sent."
                        :purchasable?  false
                        :cost          {:juice 50
-                                       :money 0}
+                                       :money 0
+                                       :knowledge-held {::pk/demonic 1}}
                        :sells-for     {:juice 5
                                        :money 0}
                        :upgrade-paths [:gold-devil]
@@ -84,7 +89,8 @@
                        :description   "The devil lord's most senior collectors. These evil minions have handled so much gold that their essence is now partially made of the stuff. They are ancient, wise, and might grant you hellish secrets if they stay in your dungeon for long enough."
                        :purchasable?  false
                        :cost          {:juice 1000
-                                       :money 0}
+                                       :money 0
+                                       :knowledge-held {::pk/greed 1}}
                        :sells-for     {:juice 500
                                        :money 0}
                        :upgrade-paths nil
@@ -185,7 +191,7 @@
               :operations (conj unit-ops :move)
               :sprite "img/crawl-tiles/monster/necromancer_new.png"}
    :naturist {:name "Naturist"
-              :description "The world is an immense place, full of wonder and delight."
+              :description "The world is an immense place, full of wonder and delight. It is grand beyond our grandest visions, and ancient beyond our oldest memories. In his view behind the veil this man has seen the totality of the future, and has realized that our world will endure whatever catastrophe causes us to perish. He saw how the forests will regrow, and how the seas will continue to swirl, and how whoever comes after us will struggle and triumph just as we did."
               :sprite "img/crawl-tiles/monster/human_slave.png"}})
 
 
